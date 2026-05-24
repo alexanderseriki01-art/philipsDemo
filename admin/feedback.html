@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Feedback — Phillips Consulting Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/tokens.css" />
+    <link rel="stylesheet" href="../assets/css/base.css" />
+    <link rel="stylesheet" href="../assets/css/admin.css" />
+    <link rel="stylesheet" href="../assets/css/portal.css" />
+</head>
+<body>
+
+<div class="app active">
+    <aside class="sidebar">
+        <a class="logo logo--sm" href="./"><span class="logo-mark">phillips</span><span class="logo-sub">CONSULTING</span></a>
+        <div class="sidebar-section">Operations</div>
+        <nav class="sidebar-nav">
+            <a href="./">Overview</a>
+            <a href="participants.html">Participants</a>
+            <a href="trainings.html">Trainings</a>
+            <a href="attendance.html">Attendance</a>
+        </nav>
+        <div class="sidebar-section">Revenue</div>
+        <nav class="sidebar-nav">
+            <a href="payments.html">Payments</a>
+            <a href="refunds.html">Refunds</a>
+        </nav>
+        <div class="sidebar-section">Learning</div>
+        <nav class="sidebar-nav">
+            <a href="materials.html">Materials</a>
+            <a href="certificates.html">Certificates</a>
+            <a href="feedback.html" class="active">Feedback</a>
+        </nav>
+        <div class="sidebar-section">System</div>
+        <nav class="sidebar-nav">
+            <a href="reports.html">Reports</a>
+            <a href="settings.html">Settings</a>
+            <a href="../">Back to site</a>
+        </nav>
+        <div class="sidebar-user">
+            <div class="avatar blue">TO</div>
+            <div>
+                <div class="name">Tunde Okafor</div>
+                <div class="role">Programme Administrator</div>
+            </div>
+        </div>
+    </aside>
+
+    <main>
+        <header class="topbar">
+            <h1>Feedback</h1>
+            <div class="topbar-right">
+                <div class="bell"><div class="dot"></div></div>
+                <div class="avatar blue">TO</div>
+            </div>
+        </header>
+
+        <div class="page-content">
+
+            <div class="stat-row">
+                <div class="stat"><div class="label">Avg Rating</div><div class="value">4.7</div><span class="delta up">Across 312 responses</span></div>
+                <div class="stat"><div class="label">Response Rate</div><div class="value">78%</div><span class="delta up">+4 pts MoM</span></div>
+                <div class="stat"><div class="label">Positive Sentiment</div><div class="value">94%</div><span class="delta up">NLP-tagged comments</span></div>
+                <div class="stat"><div class="label">Action Items</div><div class="value">6</div><span class="delta down">Open improvements</span></div>
+            </div>
+
+            <div class="col-grid" style="margin-bottom:18px;">
+                <div class="card">
+                    <div class="card-head"><h3>Rating Breakdown</h3></div>
+                    <div class="card-body">
+                        <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px;">
+                            <span style="font-family:var(--font-display);font-size:54px;color:var(--ink-900);letter-spacing:-0.03em;line-height:1;">4.7</span>
+                            <span style="font-size:14px;color:var(--ink-400);">/ 5.0</span>
+                        </div>
+                        <p style="font-size:12px;color:var(--ink-400);margin-bottom:18px;">312 responses across 11 cohorts</p>
+
+                        <div style="display:flex;flex-direction:column;gap:10px;">
+                            <div>
+                                <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--ink-500);margin-bottom:4px;"><span>Content Quality</span><span>4.8</span></div>
+                                <div class="progress"><span style="width:96%"></span></div>
+                            </div>
+                            <div>
+                                <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--ink-500);margin-bottom:4px;"><span>Facilitator Effectiveness</span><span>4.9</span></div>
+                                <div class="progress success"><span style="width:98%"></span></div>
+                            </div>
+                            <div>
+                                <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--ink-500);margin-bottom:4px;"><span>Venue &amp; Logistics</span><span>4.3</span></div>
+                                <div class="progress warn"><span style="width:86%"></span></div>
+                            </div>
+                            <div>
+                                <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--ink-500);margin-bottom:4px;"><span>Materials &amp; Resources</span><span>4.6</span></div>
+                                <div class="progress"><span style="width:92%"></span></div>
+                            </div>
+                            <div>
+                                <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--ink-500);margin-bottom:4px;"><span>Overall Experience</span><span>4.7</span></div>
+                                <div class="progress"><span style="width:94%"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-head"><h3>By Programme</h3></div>
+                    <table class="table">
+                        <thead><tr><th>Programme</th><th>Responses</th><th>Rating</th></tr></thead>
+                        <tbody>
+                            <tr><td>Adv. Leadership</td><td class="cell-muted">84</td><td><strong>4.8</strong></td></tr>
+                            <tr><td>PMP Prep</td><td class="cell-muted">62</td><td><strong>4.7</strong></td></tr>
+                            <tr><td>Finance Mgrs</td><td class="cell-muted">71</td><td><strong>4.6</strong></td></tr>
+                            <tr><td>Strategic HR</td><td class="cell-muted">48</td><td><strong>4.8</strong></td></tr>
+                            <tr><td>Strategic Comms</td><td class="cell-muted">28</td><td><strong>4.9</strong></td></tr>
+                            <tr><td>Data Analytics</td><td class="cell-muted">19</td><td><strong>4.5</strong></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-head">
+                    <h3>Recent Feedback</h3>
+                    <button class="btn btn-ghost btn-sm" onclick="toast('Exporting all feedback')">Export</button>
+                </div>
+                <div class="card-body" style="padding:0;">
+                    <div style="padding:20px 22px;border-bottom:1px solid var(--line);">
+                        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+                            <div>
+                                <strong style="color:var(--ink-900);">Adaeze Okonkwo</strong>
+                                <span class="cell-muted" style="margin-left:8px;font-size:12.5px;">&middot; Adv. Leadership</span>
+                            </div>
+                            <div style="color:var(--blue-600);font-size:13px;letter-spacing:0.04em;">★★★★<span style="color:var(--ink-200);">★</span></div>
+                        </div>
+                        <p style="font-size:14px;color:var(--ink-700);line-height:1.6;">Day 1 was spectacular. Day 2's sectoral cases felt rushed &mdash; I'd trade two of them for deeper time on one. Faculty quality is exceptional throughout.</p>
+                        <div style="margin-top:10px;display:flex;gap:8px;">
+                            <span class="tag tag-warn" style="font-size:10.5px;">Action Item</span>
+                            <button class="btn btn-ghost btn-sm" onclick="toast('Reply draft opened')">Reply</button>
+                        </div>
+                    </div>
+                    <div style="padding:20px 22px;border-bottom:1px solid var(--line);">
+                        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+                            <div>
+                                <strong style="color:var(--ink-900);">Emeka Nwosu</strong>
+                                <span class="cell-muted" style="margin-left:8px;font-size:12.5px;">&middot; PMP Prep</span>
+                            </div>
+                            <div style="color:var(--blue-600);font-size:13px;letter-spacing:0.04em;">★★★★★</div>
+                        </div>
+                        <p style="font-size:14px;color:var(--ink-700);line-height:1.6;">The cleanest certification process I've experienced. Verified payment, digital attendance, certificate in my portal within hours of completion.</p>
+                    </div>
+                    <div style="padding:20px 22px;">
+                        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+                            <div>
+                                <strong style="color:var(--ink-900);">Chidinma Ezeh</strong>
+                                <span class="cell-muted" style="margin-left:8px;font-size:12.5px;">&middot; Strategic HR</span>
+                            </div>
+                            <div style="color:var(--blue-600);font-size:13px;letter-spacing:0.04em;">★★★★★</div>
+                        </div>
+                        <p style="font-size:14px;color:var(--ink-700);line-height:1.6;">Enrolled 23 managers across two cohorts. Admin dashboard tracks attendance and completion in real time &mdash; a week of reporting reduced to a click.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<script src="../assets/js/app.js"></script>
+</body>
+</html>

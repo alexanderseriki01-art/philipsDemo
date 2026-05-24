@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Materials — Phillips Consulting TMS</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="../assets/css/tokens.css" />
+    <link rel="stylesheet" href="../assets/css/base.css" />
+    <link rel="stylesheet" href="../assets/css/admin.css" />
+    <link rel="stylesheet" href="../assets/css/portal.css" />
+</head>
+<body>
+
+<div class="app active portal">
+
+    <aside class="sidebar">
+        <a class="logo logo--sm" href="../"><span class="logo-mark">phillips</span><span class="logo-sub">CONSULTING</span></a>
+        <div class="sidebar-section">My Learning</div>
+        <nav class="sidebar-nav">
+            <a href="./">Dashboard</a>
+            <a href="trainings.html">My Trainings</a>
+            <a href="attendance.html">Attendance</a>
+            <a href="materials.html" class="active">Materials</a>
+        </nav>
+        <div class="sidebar-section">Achievements</div>
+        <nav class="sidebar-nav">
+            <a href="certificate.html">Certificates</a>
+            <a href="feedback.html">Feedback</a>
+        </nav>
+        <div class="sidebar-section">Account</div>
+        <nav class="sidebar-nav">
+            <a href="payments.html">Payments</a>
+            <a href="profile.html">Profile</a>
+            <a href="../">Sign out</a>
+        </nav>
+        <div class="sidebar-user">
+            <div class="avatar">AO</div>
+            <div>
+                <div class="name">Adaeze Okonkwo</div>
+                <div class="role">Participant</div>
+            </div>
+        </div>
+    </aside>
+
+    <main>
+        <header class="topbar">
+            <h1>Materials</h1>
+            <div class="topbar-right">
+                <div class="bell"><div class="dot"></div></div>
+                <div class="avatar">AO</div>
+            </div>
+        </header>
+
+        <div class="page-content">
+
+            <div class="stat-row">
+                <div class="stat"><div class="label">Total Files</div><div class="value">18</div><span class="delta up">Across 4 programmes</span></div>
+                <div class="stat"><div class="label">Downloaded</div><div class="value">14</div><span class="delta up">78% of library</span></div>
+                <div class="stat"><div class="label">Pending</div><div class="value">4</div><span class="delta up">Unlocks after Day 4</span></div>
+                <div class="stat"><div class="label">Library Size</div><div class="value">412 MB</div><span class="delta up">PDF · ZIP · MP4</span></div>
+            </div>
+
+            <input class="page-search" type="search" placeholder="Search materials by name, programme, or type…" />
+
+            <div class="filter-bar">
+                <button class="filter-chip active">All</button>
+                <button class="filter-chip">Adv. Leadership</button>
+                <button class="filter-chip">PMP Prep</button>
+                <button class="filter-chip">Finance Mgrs</button>
+                <button class="filter-chip">Strategic Comms</button>
+            </div>
+
+            <div class="materials-grid">
+
+                <div class="material-card">
+                    <div class="file-icon"><span class="ext">PDF</span></div>
+                    <div>
+                        <h4>Adv. Leadership &mdash; Participant Handbook</h4>
+                        <div class="meta"><span>4.2 MB</span><span>120 pages</span><span>Day 1</span></div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn btn-primary btn-sm" onclick="toast('Downloading handbook')">Download</button>
+                        <button class="btn btn-ghost btn-sm" onclick="toast('Preview opened')">Preview</button>
+                    </div>
+                </div>
+
+                <div class="material-card">
+                    <div class="file-icon"><span class="ext">ZIP</span></div>
+                    <div>
+                        <h4>Cross-Sector Case Studies Bundle</h4>
+                        <div class="meta"><span>38.6 MB</span><span>12 cases</span><span>Day 2&ndash;3</span></div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn btn-primary btn-sm" onclick="toast('Downloading bundle')">Download</button>
+                    </div>
+                </div>
+
+                <div class="material-card">
+                    <div class="file-icon"><span class="ext">PDF</span></div>
+                    <div>
+                        <h4>PMP Prep &mdash; Process Group Reference</h4>
+                        <div class="meta"><span>2.8 MB</span><span>Quick reference</span><span>Pre-read</span></div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn btn-primary btn-sm" onclick="toast('Downloading reference')">Download</button>
+                        <button class="btn btn-ghost btn-sm" onclick="toast('Preview opened')">Preview</button>
+                    </div>
+                </div>
+
+                <div class="material-card">
+                    <div class="file-icon"><span class="ext">MP4</span></div>
+                    <div>
+                        <h4>Practice Exam Walkthrough (Module 1)</h4>
+                        <div class="meta"><span>184 MB</span><span>42 min</span><span>Day 4</span></div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn btn-primary btn-sm" onclick="toast('Streaming video')">Watch</button>
+                        <button class="btn btn-ghost btn-sm" onclick="toast('Queued for download')">Download</button>
+                    </div>
+                </div>
+
+                <div class="material-card">
+                    <div class="file-icon"><span class="ext">XLS</span></div>
+                    <div>
+                        <h4>Financial Ratio Analysis Workbook</h4>
+                        <div class="meta"><span>980 KB</span><span>Excel</span><span>Day 1</span></div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn btn-primary btn-sm" onclick="toast('Downloading workbook')">Download</button>
+                    </div>
+                </div>
+
+                <div class="material-card">
+                    <div class="file-icon"><span class="ext">PDF</span></div>
+                    <div>
+                        <h4>Finance for Non-Finance &mdash; Slide Deck</h4>
+                        <div class="meta"><span>6.4 MB</span><span>78 slides</span><span>Completed</span></div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn btn-primary btn-sm" onclick="toast('Downloading deck')">Download</button>
+                    </div>
+                </div>
+
+                <div class="material-card">
+                    <div class="file-icon"><span class="ext">PDF</span></div>
+                    <div>
+                        <h4>Strategic Comms &mdash; Workshop Pack</h4>
+                        <div class="meta"><span>3.1 MB</span><span>Templates included</span><span>Completed</span></div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn btn-primary btn-sm" onclick="toast('Downloading pack')">Download</button>
+                    </div>
+                </div>
+
+                <div class="material-card" style="opacity:.55;">
+                    <div class="file-icon" style="background:var(--paper-2);"><span class="ext" style="color:var(--ink-400);">PDF</span></div>
+                    <div>
+                        <h4>PMP Prep &mdash; Final Mock Exam</h4>
+                        <div class="meta"><span>Locked</span><span>Unlocks Day 4</span></div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn btn-ghost btn-sm" disabled style="cursor:not-allowed;">Locked</button>
+                    </div>
+                </div>
+
+                <div class="material-card" style="opacity:.55;">
+                    <div class="file-icon" style="background:var(--paper-2);"><span class="ext" style="color:var(--ink-400);">ZIP</span></div>
+                    <div>
+                        <h4>Adv. Leadership &mdash; Post-Programme Toolkit</h4>
+                        <div class="meta"><span>Locked</span><span>Unlocks on completion</span></div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn btn-ghost btn-sm" disabled style="cursor:not-allowed;">Locked</button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<script src="../assets/js/app.js"></script>
+<script>
+    document.querySelectorAll('.filter-chip').forEach((c) => {
+        c.addEventListener('click', () => {
+            document.querySelectorAll('.filter-chip').forEach((x) => x.classList.remove('active'));
+            c.classList.add('active');
+            toast('Filtering: ' + c.textContent.trim());
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Attendance — Phillips Consulting Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/tokens.css" />
+    <link rel="stylesheet" href="../assets/css/base.css" />
+    <link rel="stylesheet" href="../assets/css/admin.css" />
+    <link rel="stylesheet" href="../assets/css/portal.css" />
+</head>
+<body>
+
+<div class="app active">
+    <aside class="sidebar">
+        <a class="logo logo--sm" href="./"><span class="logo-mark">phillips</span><span class="logo-sub">CONSULTING</span></a>
+        <div class="sidebar-section">Operations</div>
+        <nav class="sidebar-nav">
+            <a href="./">Overview</a>
+            <a href="participants.html">Participants</a>
+            <a href="trainings.html">Trainings</a>
+            <a href="attendance.html" class="active">Attendance</a>
+        </nav>
+        <div class="sidebar-section">Revenue</div>
+        <nav class="sidebar-nav">
+            <a href="payments.html">Payments</a>
+            <a href="refunds.html">Refunds</a>
+        </nav>
+        <div class="sidebar-section">Learning</div>
+        <nav class="sidebar-nav">
+            <a href="materials.html">Materials</a>
+            <a href="certificates.html">Certificates</a>
+            <a href="feedback.html">Feedback</a>
+        </nav>
+        <div class="sidebar-section">System</div>
+        <nav class="sidebar-nav">
+            <a href="reports.html">Reports</a>
+            <a href="settings.html">Settings</a>
+            <a href="../">Back to site</a>
+        </nav>
+        <div class="sidebar-user">
+            <div class="avatar blue">TO</div>
+            <div>
+                <div class="name">Tunde Okafor</div>
+                <div class="role">Programme Administrator</div>
+            </div>
+        </div>
+    </aside>
+
+    <main>
+        <header class="topbar">
+            <h1>Attendance</h1>
+            <div class="topbar-right">
+                <div class="bell"><div class="dot"></div></div>
+                <div class="avatar blue">TO</div>
+            </div>
+        </header>
+
+        <div class="page-content">
+
+            <div class="stat-row">
+                <div class="stat"><div class="label">Checked In Today</div><div class="value">42</div><span class="delta up">Adv. Leadership Day 1</span></div>
+                <div class="stat"><div class="label">Late</div><div class="value">3</div><span class="delta down">7% of cohort</span></div>
+                <div class="stat"><div class="label">Absent</div><div class="value">2</div><span class="delta down">Pending excusal</span></div>
+                <div class="stat"><div class="label">Attendance Rate (30d)</div><div class="value">93%</div><span class="delta up">+1 pt vs last month</span></div>
+            </div>
+
+            <div class="col-grid" style="margin-bottom:18px;">
+                <div class="card">
+                    <div class="card-head">
+                        <h3>Today &mdash; Adv. Leadership Day 1</h3>
+                        <button class="btn btn-primary btn-sm" onclick="toast('QR code generated &amp; sent to facilitator')">Generate QR Code</button>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr><th>Participant</th><th>Check-in</th><th>Status</th><th></th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Adaeze Okonkwo</td><td class="cell-muted">9:04 AM</td><td><span class="tag tag-success">Present</span></td><td>—</td></tr>
+                            <tr><td>Emeka Nwosu</td><td class="cell-muted">9:22 AM</td><td><span class="tag tag-warn">Late</span></td><td>—</td></tr>
+                            <tr><td>Chidinma Ezeh</td><td class="cell-muted">—</td><td><span class="tag tag-danger">Absent</span></td><td><button class="btn btn-ghost btn-sm" onclick="toast('Excused')">Excuse</button></td></tr>
+                            <tr><td>Babatunde Alabi</td><td class="cell-muted">8:55 AM</td><td><span class="tag tag-success">Present</span></td><td>—</td></tr>
+                            <tr><td>Ngozi Eze</td><td class="cell-muted">9:01 AM</td><td><span class="tag tag-success">Present</span></td><td>—</td></tr>
+                            <tr><td>Funmi Ade</td><td class="cell-muted">9:18 AM</td><td><span class="tag tag-warn">Late</span></td><td>—</td></tr>
+                            <tr><td>Seun Adeleke</td><td class="cell-muted">—</td><td><span class="tag tag-danger">Absent</span></td><td><button class="btn btn-ghost btn-sm" onclick="toast('Excused')">Excuse</button></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card">
+                    <div class="card-head"><h3>By Programme &middot; This Week</h3></div>
+                    <div class="card-body">
+                        <div style="margin-bottom:16px;">
+                            <div style="display:flex;justify-content:space-between;font-size:12.5px;color:var(--ink-500);margin-bottom:6px;">
+                                <span>Adv. Leadership &mdash; Day 1</span><strong style="color:var(--ink-900);">42/45</strong>
+                            </div>
+                            <div class="progress success"><span style="width:93%"></span></div>
+                        </div>
+                        <div style="margin-bottom:16px;">
+                            <div style="display:flex;justify-content:space-between;font-size:12.5px;color:var(--ink-500);margin-bottom:6px;">
+                                <span>Finance Mgrs &mdash; Day 2</span><strong style="color:var(--ink-900);">33/35</strong>
+                            </div>
+                            <div class="progress success"><span style="width:94%"></span></div>
+                        </div>
+                        <div style="margin-bottom:16px;">
+                            <div style="display:flex;justify-content:space-between;font-size:12.5px;color:var(--ink-500);margin-bottom:6px;">
+                                <span>PMP Prep &mdash; Day 1</span><strong style="color:var(--ink-900);">35/38</strong>
+                            </div>
+                            <div class="progress"><span style="width:92%"></span></div>
+                        </div>
+                        <div>
+                            <div style="display:flex;justify-content:space-between;font-size:12.5px;color:var(--ink-500);margin-bottom:6px;">
+                                <span>Strategic Comms &mdash; Day 1</span><strong style="color:var(--ink-900);">18/22</strong>
+                            </div>
+                            <div class="progress warn"><span style="width:82%"></span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-head">
+                    <h3>Attendance Log &mdash; Last 7 Days</h3>
+                    <button class="btn btn-ghost btn-sm" onclick="toast('Exporting CSV')">Export</button>
+                </div>
+                <table class="table">
+                    <thead><tr><th>Date</th><th>Programme</th><th>Cohort Size</th><th>Present</th><th>Late</th><th>Absent</th><th>Rate</th></tr></thead>
+                    <tbody>
+                        <tr><td class="cell-muted">24 Apr</td><td>Adv. Leadership Day 1</td><td>45</td><td>40</td><td>3</td><td>2</td><td><span class="tag tag-success">95%</span></td></tr>
+                        <tr><td class="cell-muted">23 Apr</td><td>Strategic Comms Day 2</td><td>22</td><td>20</td><td>1</td><td>1</td><td><span class="tag tag-success">95%</span></td></tr>
+                        <tr><td class="cell-muted">22 Apr</td><td>Strategic Comms Day 1</td><td>22</td><td>18</td><td>2</td><td>2</td><td><span class="tag tag-warn">82%</span></td></tr>
+                        <tr><td class="cell-muted">19 Apr</td><td>Finance Mgrs Day 2</td><td>35</td><td>33</td><td>1</td><td>1</td><td><span class="tag tag-success">94%</span></td></tr>
+                        <tr><td class="cell-muted">18 Apr</td><td>Finance Mgrs Day 1</td><td>35</td><td>34</td><td>0</td><td>1</td><td><span class="tag tag-success">97%</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<script src="../assets/js/app.js"></script>
+</body>
+</html>

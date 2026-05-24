@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Console — Phillips Consulting TMS</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="../assets/css/tokens.css" />
+    <link rel="stylesheet" href="../assets/css/base.css" />
+    <link rel="stylesheet" href="../assets/css/admin.css" />
+</head>
+<body>
+
+<!-- ═════════════════════ LOGIN GATE — two-card console ═════════════════════ -->
+<section class="admin-login" id="admin-login">
+
+    <div class="admin-login-bg" aria-hidden="true">
+        <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=2400&q=80"
+             alt=""
+             loading="eager" />
+    </div>
+
+    <header class="admin-login-top">
+        <a class="logo logo--light" href="../">
+            <span class="logo-mark">phillips</span>
+            <span class="logo-sub">CONSULTING</span>
+        </a>
+        <a class="admin-login-back" href="../">&larr; Back to site</a>
+    </header>
+
+    <main class="admin-login-stage">
+        <section class="admin-card" aria-labelledby="admin-title">
+            <span class="eyebrow eyebrow-line">Restricted access</span>
+            <h2 id="admin-title">Administrator <em>sign-in.</em></h2>
+            <p class="sub">Use your work credentials. Participant accounts sign in on the main site. Sessions are audit-logged.</p>
+
+            <form id="admin-login-form">
+                <div class="field">
+                    <label>Work Email</label>
+                    <input class="input" type="email" value="tunde.okafor@phillipsconsulting.net" autocomplete="email" />
+                </div>
+                <div class="field">
+                    <label>Password</label>
+                    <div class="password-field">
+                        <input class="input" type="password" value="passphrase" autocomplete="current-password" id="admin-pwd" />
+                        <button type="button" class="pwd-toggle" aria-label="Show password" onclick="togglePwd(this)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+                                <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="12" cy="12" r="3" />
+                                <line class="eye-strike" x1="4" y1="4" x2="20" y2="20" stroke-linecap="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin:4px 0 22px;">
+                    <label class="checkbox"><input type="checkbox" />Keep me signed in</label>
+                    <a class="link-blue" href="#" style="font-size:13px;">Reset password</a>
+                </div>
+                <button class="btn btn-primary btn-block btn-lg btn-arrow" type="submit">Enter Console</button>
+            </form>
+
+            <div class="sec-strip">
+                <span class="sec-chip">Encrypted</span>
+                <span class="sec-chip">Audit logged</span>
+                <span class="sec-chip">2FA enforced</span>
+            </div>
+
+            <p class="admin-toggle">
+                Not an administrator? <a href="../login/">Sign in as a participant</a>
+            </p>
+        </section>
+    </main>
+
+    <footer class="admin-login-foot">
+        <span class="left">Your session is encrypted and every action is <em>audited</em>.</span>
+        <span>© 2026 Phillips Consulting Limited <span class="sep">·</span> Lagos</span>
+    </footer>
+</section>
+
+<script>
+    function togglePwd(btn) {
+        const input = btn.parentElement.querySelector('input');
+        const showing = input.type === 'text';
+        input.type = showing ? 'password' : 'text';
+        btn.classList.toggle('showing', !showing);
+        btn.setAttribute('aria-label', showing ? 'Show password' : 'Hide password');
+    }
+</script>
+
+<!-- ═════════════════════ APP SHELL ═════════════════════ -->
+<div class="app" id="admin-app">
+
+    <aside class="sidebar">
+        <a class="logo logo--sm" href="#">
+            <span class="logo-mark">phillips</span>
+            <span class="logo-sub">CONSULTING</span>
+        </a>
+
+        <div class="sidebar-section">Operations</div>
+        <nav class="sidebar-nav">
+            <a href="./" class="active">Overview</a>
+            <a href="participants.html">Participants</a>
+            <a href="trainings.html">Trainings</a>
+            <a href="attendance.html">Attendance</a>
+        </nav>
+
+        <div class="sidebar-section">Revenue</div>
+        <nav class="sidebar-nav">
+            <a href="payments.html">Payments</a>
+            <a href="refunds.html">Refunds</a>
+        </nav>
+
+        <div class="sidebar-section">Learning</div>
+        <nav class="sidebar-nav">
+            <a href="materials.html">Materials</a>
+            <a href="certificates.html">Certificates</a>
+            <a href="feedback.html">Feedback</a>
+        </nav>
+
+        <div class="sidebar-section">System</div>
+        <nav class="sidebar-nav">
+            <a href="reports.html">Reports</a>
+            <a href="settings.html">Settings</a>
+            <a href="../">Back to site</a>
+        </nav>
+
+        <div class="sidebar-user">
+            <div class="avatar blue">TO</div>
+            <div>
+                <div class="name">Tunde Okafor</div>
+                <div class="role">Programme Administrator</div>
+            </div>
+        </div>
+    </aside>
+
+    <main>
+        <header class="topbar">
+            <h1>Overview</h1>
+            <div class="topbar-right">
+                <input class="search-input" type="text" placeholder="Search participants, programmes…" />
+                <div class="bell"><div class="dot"></div></div>
+                <div class="avatar blue">TO</div>
+            </div>
+        </header>
+
+        <div class="page-content">
+
+            <!-- Stat row -->
+            <div class="stat-row">
+                <div class="stat">
+                    <div class="label">Total Participants</div>
+                    <div class="value" data-count="347">0</div>
+                    <span class="delta up">+42 this month</span>
+                </div>
+                <div class="stat">
+                    <div class="label">Active Programmes</div>
+                    <div class="value" data-count="18">0</div>
+                    <span class="delta up">3 upcoming</span>
+                </div>
+                <div class="stat">
+                    <div class="label">Certificates Issued</div>
+                    <div class="value" data-count="289">0</div>
+                    <span class="delta up">+28 this week</span>
+                </div>
+                <div class="stat">
+                    <div class="label">Collection Rate</div>
+                    <div class="value" data-count="94" data-suffix="%">0</div>
+                    <span class="delta up">+2 pts vs last month</span>
+                </div>
+            </div>
+
+            <!-- Quick actions -->
+            <div class="quick-actions">
+                <button class="quick-action add" onclick="toast('Open: Create new training')">
+                    <div class="glyph"></div><div class="lbl">New Training</div>
+                </button>
+                <button class="quick-action up" onclick="toast('Open: Upload materials')">
+                    <div class="glyph"></div><div class="lbl">Upload Materials</div>
+                </button>
+                <button class="quick-action check" onclick="toast('Open: Mark attendance')">
+                    <div class="glyph"></div><div class="lbl">Mark Attendance</div>
+                </button>
+                <button class="quick-action card" onclick="toast('Open: Payment approvals')">
+                    <div class="glyph"></div><div class="lbl">Approve Payments</div>
+                </button>
+                <button class="quick-action cert" onclick="window.location.href='certificates.html'">
+                    <div class="glyph"></div><div class="lbl">Issue Certificates</div>
+                </button>
+                <button class="quick-action report" onclick="toast('Report exported as PDF')">
+                    <div class="glyph"></div><div class="lbl">Export Reports</div>
+                </button>
+            </div>
+
+            <!-- Chart + donut -->
+            <div class="col-grid" style="margin-bottom:24px;">
+                <div class="card chart-card">
+                    <div class="card-head" style="border:0;padding:0 0 16px;">
+                        <div>
+                            <h3>Revenue &amp; Enrolment</h3>
+                            <p style="font-size:12.5px;color:var(--ink-400);margin-top:4px;">Monthly &mdash; ₦ millions</p>
+                        </div>
+                        <select class="select" style="height:36px;width:auto;font-size:12.5px;">
+                            <option>Last 12 months</option>
+                            <option>This quarter</option>
+                            <option>YTD</option>
+                        </select>
+                    </div>
+                    <div class="legend">
+                        <span><i></i>Confirmed revenue</span>
+                        <span class="alt"><i></i>Last year</span>
+                    </div>
+                    <svg id="revenue-chart" preserveAspectRatio="none"></svg>
+                </div>
+
+                <div class="card donut-card">
+                    <div class="card-head" style="border:0;padding:0 0 12px;width:100%;">
+                        <h3>Payment Collection</h3>
+                    </div>
+                    <div class="donut" data-percent="94"><div class="v" data-count="94">0</div></div>
+                    <div class="donut-meta">
+                        <div class="pill">
+                            <div class="v" style="color:var(--success);">₦48.3M</div>
+                            <div class="l">Confirmed</div>
+                        </div>
+                        <div class="pill">
+                            <div class="v" style="color:var(--warn);">₦4.2M</div>
+                            <div class="l">Pending</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Participants + attendance tables -->
+            <div class="col-grid" style="margin-bottom:24px;">
+                <div class="card">
+                    <div class="card-head">
+                        <h3>Recent Participants</h3>
+                        <span class="tag tag-blue">347 total</span>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr><th>Participant</th><th>Programme</th><th>Payment</th><th></th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Adaeze Okonkwo</td><td class="cell-muted">Adv. Leadership</td><td><span class="tag tag-success">Paid</span></td><td style="text-align:right;"><a class="link-blue" href="../portal/certificate.html">Cert &rarr;</a></td></tr>
+                            <tr><td>Emeka Nwosu</td><td class="cell-muted">PMP Prep</td><td><span class="tag tag-warn">Pending</span></td><td style="text-align:right;"><button class="btn btn-ghost btn-sm" onclick="toast('Payment approved')">Approve</button></td></tr>
+                            <tr><td>Chidinma Ezeh</td><td class="cell-muted">Strategic HR</td><td><span class="tag tag-success">Paid</span></td><td style="text-align:right;"><a class="link-blue" href="../portal/certificate.html">Cert &rarr;</a></td></tr>
+                            <tr><td>Babatunde Alabi</td><td class="cell-muted">Finance Mgrs</td><td><span class="tag tag-success">Paid</span></td><td style="text-align:right;"><a class="link-blue" href="../portal/certificate.html">Cert &rarr;</a></td></tr>
+                            <tr><td>Ngozi Eze</td><td class="cell-muted">Adv. Leadership</td><td><span class="tag tag-warn">Pending</span></td><td style="text-align:right;"><button class="btn btn-ghost btn-sm" onclick="toast('Payment approved')">Approve</button></td></tr>
+                            <tr><td>Seun Adeleke</td><td class="cell-muted">PMP Prep</td><td><span class="tag tag-danger">Overdue</span></td><td style="text-align:right;"><button class="btn btn-ghost btn-sm" onclick="toast('Reminder sent')">Remind</button></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="display:flex;flex-direction:column;gap:18px;">
+                    <div class="card">
+                        <div class="card-head"><h3>Programme Enrolment</h3></div>
+                        <div class="card-body">
+                            <div style="margin-bottom:18px;">
+                                <div style="display:flex;justify-content:space-between;font-size:12.5px;color:var(--ink-500);margin-bottom:6px;">
+                                    <span>Adv. Leadership &amp; Management</span><strong style="color:var(--ink-900);">42/50</strong>
+                                </div>
+                                <div class="progress"><span data-w="84" style="width:0"></span></div>
+                            </div>
+                            <div style="margin-bottom:18px;">
+                                <div style="display:flex;justify-content:space-between;font-size:12.5px;color:var(--ink-500);margin-bottom:6px;">
+                                    <span>PMP Prep Course</span><strong style="color:var(--ink-900);">38/40</strong>
+                                </div>
+                                <div class="progress success"><span data-w="95" style="width:0"></span></div>
+                            </div>
+                            <div style="margin-bottom:18px;">
+                                <div style="display:flex;justify-content:space-between;font-size:12.5px;color:var(--ink-500);margin-bottom:6px;">
+                                    <span>Finance for Non-Finance Mgrs</span><strong style="color:var(--ink-900);">29/35</strong>
+                                </div>
+                                <div class="progress"><span data-w="83" style="width:0"></span></div>
+                            </div>
+                            <div>
+                                <div style="display:flex;justify-content:space-between;font-size:12.5px;color:var(--ink-500);margin-bottom:6px;">
+                                    <span>Strategic HR Management</span><strong style="color:var(--ink-900);">22/40</strong>
+                                </div>
+                                <div class="progress warn"><span data-w="55" style="width:0"></span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-head"><h3>Feedback Summary</h3></div>
+                        <div class="card-body">
+                            <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px;">
+                                <span style="font-family:var(--font-serif);font-size:54px;color:var(--ink-900);letter-spacing:-0.03em;line-height:1;">4.7</span>
+                                <span style="font-size:14px;color:var(--ink-400);">/ 5.0</span>
+                            </div>
+                            <p style="font-size:12px;color:var(--ink-400);margin-bottom:18px;">Based on 312 responses</p>
+
+                            <div style="display:flex;flex-direction:column;gap:10px;">
+                                <div>
+                                    <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--ink-500);margin-bottom:4px;">
+                                        <span>Content Quality</span><span>4.8</span>
+                                    </div>
+                                    <div class="progress"><span data-w="96" style="width:0"></span></div>
+                                </div>
+                                <div>
+                                    <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--ink-500);margin-bottom:4px;">
+                                        <span>Facilitator Effectiveness</span><span>4.9</span>
+                                    </div>
+                                    <div class="progress success"><span data-w="98" style="width:0"></span></div>
+                                </div>
+                                <div>
+                                    <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--ink-500);margin-bottom:4px;">
+                                        <span>Venue &amp; Logistics</span><span>4.3</span>
+                                    </div>
+                                    <div class="progress warn"><span data-w="86" style="width:0"></span></div>
+                                </div>
+                                <div>
+                                    <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--ink-500);margin-bottom:4px;">
+                                        <span>Overall Experience</span><span>4.7</span>
+                                    </div>
+                                    <div class="progress"><span data-w="94" style="width:0"></span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Today's attendance -->
+            <div class="card">
+                <div class="card-head">
+                    <h3>Today&rsquo;s Attendance &mdash; Adv. Leadership Day 1</h3>
+                    <span class="tag tag-blue">24 Apr 2026</span>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr><th>Participant</th><th>Check-in</th><th>Status</th><th>Action</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Adaeze Okonkwo</td><td class="cell-muted">9:04 AM</td><td><span class="tag tag-success">Present</span></td><td>—</td></tr>
+                        <tr><td>Emeka Nwosu</td><td class="cell-muted">9:22 AM</td><td><span class="tag tag-warn">Late</span></td><td>—</td></tr>
+                        <tr><td>Chidinma Ezeh</td><td class="cell-muted">—</td><td><span class="tag tag-danger">Absent</span></td><td><button class="btn btn-ghost btn-sm" onclick="toast('Excused absence recorded')">Excuse</button></td></tr>
+                        <tr><td>Babatunde Alabi</td><td class="cell-muted">8:55 AM</td><td><span class="tag tag-success">Present</span></td><td>—</td></tr>
+                        <tr><td>Ngozi Eze</td><td class="cell-muted">9:01 AM</td><td><span class="tag tag-success">Present</span></td><td>—</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<script src="../assets/js/app.js"></script>
+<script src="../assets/js/admin.js"></script>
+</body>
+</html>

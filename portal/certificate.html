@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Certificate — Phillips Consulting TMS</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="../assets/css/tokens.css" />
+    <link rel="stylesheet" href="../assets/css/base.css" />
+    <link rel="stylesheet" href="../assets/css/portal.css" />
+</head>
+<body>
+
+<div class="cert-page">
+
+    <div class="cert-back">
+        <div class="crumb"><a class="link-blue" href="./">&larr; Back to portal</a></div>
+        <a class="logo logo--sm" href="../"><span class="logo-mark">phillips</span><span class="logo-sub">CONSULTING</span></a>
+    </div>
+
+    <div class="cert-paper">
+        <div class="cert-watermark">phillips</div>
+
+        <div class="cert-head">
+            <div class="org">Phillips Consulting Limited</div>
+            <div class="org-sub">Professional Development Division</div>
+            <div class="kicker">Certificate of Completion</div>
+        </div>
+
+        <div class="cert-body">
+            <div class="cert-presented">This certificate is presented to</div>
+            <div class="cert-name">Adaeze Okonkwo</div>
+            <div class="cert-for">for the successful completion of the programme</div>
+            <div class="cert-course">Finance for Non-Finance Managers</div>
+
+            <div class="cert-meta">
+                <div class="item">
+                    <div class="lbl">Date of Completion</div>
+                    <div class="val">13 March 2026</div>
+                </div>
+                <div class="item">
+                    <div class="lbl">Duration</div>
+                    <div class="val">2 Days · 14 CPD Hours</div>
+                </div>
+                <div class="item">
+                    <div class="lbl">Certificate No.</div>
+                    <div class="val">PC&middot;2026&middot;FNF&middot;0847</div>
+                </div>
+            </div>
+
+            <div class="cert-sigs">
+                <div class="cert-sig">
+                    <div class="line"></div>
+                    <div class="name">Dr. Bode Agusto</div>
+                    <div class="role">Managing Director &amp; CEO</div>
+                </div>
+                <div class="cert-sig">
+                    <div class="line"></div>
+                    <div class="name">Mrs. Folake Osei</div>
+                    <div class="role">Programme Director, Professional Development</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cert-foot">
+            <div>Verify at phillipsconsulting.net/verify &middot; Code PC&middot;2026&middot;FNF&middot;0847</div>
+            <div>Issued: 14 March 2026</div>
+        </div>
+    </div>
+
+    <div class="cert-actions">
+        <a class="btn btn-primary btn-lg btn-arrow"
+           href="../assets/pdf/cert-template.pdf"
+           download="Certificate_Adaeze_Okonkwo_FNF.pdf"
+           onclick="toast('Downloading Certificate_Adaeze_Okonkwo_FNF.pdf')">
+            Download Certificate (PDF)
+        </a>
+        <button class="btn btn-outline btn-lg" onclick="copyVerifyLink()">Copy Verification Link</button>
+        <button class="btn btn-ghost btn-lg" onclick="window.print()">Print</button>
+        <a class="btn btn-ghost btn-lg" href="./">Back to Portal</a>
+    </div>
+
+</div>
+
+<script src="../assets/js/app.js"></script>
+<script>
+    function copyVerifyLink() {
+        const url = new URL('../verify/?code=PC-2026-FNF-0847', window.location.href).href;
+        navigator.clipboard?.writeText(url);
+        toast('Verification link copied');
+    }
+</script>
+
+</body>
+</html>

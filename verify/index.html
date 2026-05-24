@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Verify a Certificate — Phillips Consulting</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="../assets/css/tokens.css" />
+    <link rel="stylesheet" href="../assets/css/base.css" />
+
+    <style>
+        .verify-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(180deg, var(--white) 0%, var(--paper) 100%);
+        }
+        .verify-nav {
+            padding: 22px 28px;
+            border-bottom: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: var(--maxw);
+            width: 100%;
+            margin: 0 auto;
+        }
+        .verify-main {
+            flex: 1;
+            max-width: 760px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 80px 28px;
+        }
+        .verify-head { text-align: center; margin-bottom: 48px; }
+        .verify-head h1 { font-size: clamp(38px, 4vw, 56px); margin: 18px 0; }
+        .verify-head h1 em { color: var(--blue-600); font-style: italic; font-weight: 300; }
+        .verify-head p { font-size: 17px; color: var(--ink-500); max-width: 52ch; margin: 0 auto; }
+
+        .verify-form {
+            background: var(--white);
+            border: 1px solid var(--line);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .verify-form .input-row { display: flex; gap: 12px; }
+        .verify-form .input-row .input {
+            flex: 1;
+            font-family: var(--font-mono);
+            letter-spacing: 0.08em;
+            font-size: 15px;
+        }
+        .verify-form .hint {
+            font-size: 12.5px;
+            color: var(--ink-400);
+            margin-top: 4px;
+        }
+
+        .verify-result {
+            margin-top: 32px;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--line);
+            background: var(--white);
+            padding: 36px;
+            display: none;
+            box-shadow: var(--shadow-sm);
+        }
+        .verify-result.show {
+            display: block;
+            animation: revealResult 0.6s var(--ease-out);
+        }
+        @keyframes revealResult {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: none; }
+        }
+        .verify-result .seal {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 7px 14px;
+            border-radius: 99px;
+            background: var(--success-soft);
+            color: var(--success);
+            font-size: 12.5px;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            margin-bottom: 20px;
+        }
+        .verify-result .seal::before {
+            content: "";
+            width: 16px; height: 16px;
+            border-radius: 50%;
+            background: var(--success);
+            position: relative;
+            background-image:
+                linear-gradient(45deg, transparent 49%, #fff 49%, #fff 51%, transparent 51%),
+                linear-gradient(-45deg, transparent 47%, #fff 47%, #fff 53%, transparent 53%);
+            background-size: 9px 1.5px, 6px 1.5px;
+            background-repeat: no-repeat;
+            background-position: center 9px, center 7px;
+        }
+        .verify-result h2 {
+            font-family: var(--font-serif);
+            font-size: 32px;
+            font-weight: 500;
+            margin-bottom: 4px;
+            font-style: italic;
+            color: var(--ink-900);
+        }
+        .verify-result .course {
+            font-size: 14px;
+            color: var(--ink-500);
+            margin-bottom: 28px;
+        }
+        .verify-result .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+            padding: 24px 0;
+            margin-bottom: 28px;
+        }
+        .verify-result .grid .label {
+            font-size: 11px;
+            color: var(--ink-400);
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            margin-bottom: 4px;
+        }
+        .verify-result .grid .val {
+            font-family: var(--font-serif);
+            font-size: 15.5px;
+            color: var(--ink-900);
+        }
+        .verify-result .footnote {
+            font-size: 12.5px;
+            color: var(--ink-400);
+            line-height: 1.5;
+        }
+
+        .verify-foot {
+            border-top: 1px solid var(--line);
+            padding: 28px;
+            text-align: center;
+            font-size: 12.5px;
+            color: var(--ink-400);
+        }
+
+        .verify-empty {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--ink-400);
+            font-size: 14px;
+        }
+
+        .qr-shape {
+            width: 64px; height: 64px;
+            border-radius: var(--radius-sm);
+            background: var(--ink-900);
+            position: relative;
+            overflow: hidden;
+            float: right;
+            margin-left: 16px;
+        }
+        .qr-shape::before, .qr-shape::after {
+            content: "";
+            position: absolute;
+            background:
+                radial-gradient(circle, var(--white) 1px, transparent 1.5px) 0 0 / 7px 7px;
+            inset: 6px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="verify-page">
+
+    <header class="verify-nav">
+        <a class="logo" href="../">
+            <span class="logo-mark">phillips</span>
+            <span class="logo-sub">CONSULTING</span>
+        </a>
+        <a class="link-blue" href="../" style="font-size:13.5px;">Back to site &rarr;</a>
+    </header>
+
+    <main class="verify-main">
+        <div class="verify-head">
+            <span class="eyebrow eyebrow-line">Public verification</span>
+            <h1>Verify a Phillips Consulting <em>certificate.</em></h1>
+            <p>Enter the unique certificate code printed on the bottom of the certificate to confirm its authenticity.</p>
+        </div>
+
+        <form class="verify-form" id="verify-form">
+            <label class="field-label">Certificate Code</label>
+            <div class="input-row">
+                <input id="code-input" class="input" type="text" placeholder="PC-2026-XXX-0000" value="PC-2026-FNF-0847" autocomplete="off" />
+                <button class="btn btn-primary btn-arrow" type="submit">Verify</button>
+            </div>
+            <div class="hint">Try the demo code <code style="font-family:var(--font-mono);">PC-2026-FNF-0847</code> &mdash; format <code style="font-family:var(--font-mono);">PC-YYYY-XXX-####</code></div>
+        </form>
+
+        <div class="verify-result" id="verify-result">
+            <div class="qr-shape" aria-hidden="true"></div>
+            <span class="seal">Certificate verified</span>
+            <h2 id="r-name">Adaeze Okonkwo</h2>
+            <div class="course" id="r-course">Finance for Non-Finance Managers</div>
+            <div class="grid">
+                <div>
+                    <div class="label">Certificate No.</div>
+                    <div class="val" id="r-code">PC&middot;2026&middot;FNF&middot;0847</div>
+                </div>
+                <div>
+                    <div class="label">Date of Completion</div>
+                    <div class="val">13 March 2026</div>
+                </div>
+                <div>
+                    <div class="label">Duration</div>
+                    <div class="val">2 Days &middot; 14 CPD Hours</div>
+                </div>
+                <div>
+                    <div class="label">Organisation</div>
+                    <div class="val">Stanbic IBTC Bank PLC</div>
+                </div>
+            </div>
+            <p class="footnote">This certificate was issued by Phillips Consulting Limited&rsquo;s Professional Development Division. The named participant successfully completed the programme&rsquo;s attendance and assessment requirements.</p>
+        </div>
+    </main>
+
+    <footer class="verify-foot">
+        © 2026 Phillips Consulting Limited &middot; <a class="link-blue" href="../">www.phillipsconsulting.net</a>
+    </footer>
+</div>
+
+<script>
+    // Pre-fill from ?code= and auto-verify
+    const params = new URLSearchParams(window.location.search);
+    const initial = params.get('code');
+    const codeInput = document.getElementById('code-input');
+    if (initial) codeInput.value = initial;
+
+    const sampleDB = {
+        'PC-2026-FNF-0847': { name: 'Adaeze Okonkwo',    course: 'Finance for Non-Finance Managers' },
+        'PC-2026-ALM-0312': { name: 'Emeka Nwosu',       course: 'Advanced Leadership & Management' },
+        'PC-2026-PMP-0501': { name: 'Chidinma Ezeh',     course: 'Project Management Professional Prep' }
+    };
+
+    const form = document.getElementById('verify-form');
+    const result = document.getElementById('verify-result');
+
+    function runVerify(code) {
+        const normalized = code.trim().toUpperCase();
+        result.classList.remove('show');
+        if (!normalized) return;
+        const hit = sampleDB[normalized];
+        // Accept any code matching pattern for demo — fallback to default record
+        const record = hit || { name: 'Adaeze Okonkwo', course: 'Finance for Non-Finance Managers' };
+        document.getElementById('r-name').textContent = record.name;
+        document.getElementById('r-course').textContent = record.course;
+        document.getElementById('r-code').textContent = normalized.replace(/-/g, '·');
+        // Trigger reflow then show
+        void result.offsetWidth;
+        result.classList.add('show');
+    }
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        runVerify(codeInput.value);
+    });
+
+    if (initial) runVerify(initial);
+</script>
+
+</body>
+</html>

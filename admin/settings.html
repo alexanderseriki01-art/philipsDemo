@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Settings — Phillips Consulting Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/tokens.css" />
+    <link rel="stylesheet" href="../assets/css/base.css" />
+    <link rel="stylesheet" href="../assets/css/admin.css" />
+    <link rel="stylesheet" href="../assets/css/portal.css" />
+</head>
+<body>
+
+<div class="app active">
+    <aside class="sidebar">
+        <a class="logo logo--sm" href="./"><span class="logo-mark">phillips</span><span class="logo-sub">CONSULTING</span></a>
+        <div class="sidebar-section">Operations</div>
+        <nav class="sidebar-nav">
+            <a href="./">Overview</a>
+            <a href="participants.html">Participants</a>
+            <a href="trainings.html">Trainings</a>
+            <a href="attendance.html">Attendance</a>
+        </nav>
+        <div class="sidebar-section">Revenue</div>
+        <nav class="sidebar-nav">
+            <a href="payments.html">Payments</a>
+            <a href="refunds.html">Refunds</a>
+        </nav>
+        <div class="sidebar-section">Learning</div>
+        <nav class="sidebar-nav">
+            <a href="materials.html">Materials</a>
+            <a href="certificates.html">Certificates</a>
+            <a href="feedback.html">Feedback</a>
+        </nav>
+        <div class="sidebar-section">System</div>
+        <nav class="sidebar-nav">
+            <a href="reports.html">Reports</a>
+            <a href="settings.html" class="active">Settings</a>
+            <a href="../">Back to site</a>
+        </nav>
+        <div class="sidebar-user">
+            <div class="avatar blue">TO</div>
+            <div>
+                <div class="name">Tunde Okafor</div>
+                <div class="role">Programme Administrator</div>
+            </div>
+        </div>
+    </aside>
+
+    <main>
+        <header class="topbar">
+            <h1>Settings</h1>
+            <div class="topbar-right">
+                <div class="bell"><div class="dot"></div></div>
+                <div class="avatar blue">TO</div>
+            </div>
+        </header>
+
+        <div class="page-content">
+
+            <div class="filter-bar">
+                <button class="filter-chip active">Organisation</button>
+                <button class="filter-chip">Team</button>
+                <button class="filter-chip">Integrations</button>
+                <button class="filter-chip">Billing</button>
+                <button class="filter-chip">Security</button>
+            </div>
+
+            <div class="col-grid">
+
+                <div style="display:flex;flex-direction:column;gap:18px;">
+                    <div class="card">
+                        <div class="card-head">
+                            <h3>Organisation Profile</h3>
+                            <button class="btn btn-ghost btn-sm" onclick="toast('Edit mode enabled')">Edit</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="field"><label>Legal Name</label><input class="input" value="Phillips Consulting Limited" /></div>
+                            <div class="field"><label>Brand Display Name</label><input class="input" value="Phillips Consulting" /></div>
+                            <div class="field-row">
+                                <div class="field"><label>Registered Address</label><input class="input" value="27 Gerrard Road, Ikoyi" /></div>
+                                <div class="field"><label>City</label><input class="input" value="Lagos" /></div>
+                            </div>
+                            <div class="field-row">
+                                <div class="field"><label>Phone</label><input class="input" value="+234 1 279 8000" /></div>
+                                <div class="field"><label>Support Email</label><input class="input" value="training@phillipsconsulting.net" /></div>
+                            </div>
+                            <button class="btn btn-primary btn-arrow" onclick="toast('Profile saved')">Save Changes</button>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-head"><h3>Team Members</h3><button class="btn btn-primary btn-sm" onclick="toast('Invite modal opened')">+ Invite Member</button></div>
+                        <table class="table">
+                            <thead><tr><th>Name</th><th>Role</th><th>Last Active</th><th></th></tr></thead>
+                            <tbody>
+                                <tr><td>Tunde Okafor</td><td><span class="tag tag-blue">Super Admin</span></td><td class="cell-muted">Now</td><td style="text-align:right;"><button class="btn btn-ghost btn-sm">Edit</button></td></tr>
+                                <tr><td>Folake Osei</td><td><span class="tag tag-blue">Programme Director</span></td><td class="cell-muted">2 hrs ago</td><td style="text-align:right;"><button class="btn btn-ghost btn-sm">Edit</button></td></tr>
+                                <tr><td>Bode Agusto</td><td><span class="tag tag-blue">Read-only</span></td><td class="cell-muted">Yesterday</td><td style="text-align:right;"><button class="btn btn-ghost btn-sm">Edit</button></td></tr>
+                                <tr><td>K. Adeleke</td><td><span>Finance</span></td><td class="cell-muted">3 days ago</td><td style="text-align:right;"><button class="btn btn-ghost btn-sm">Edit</button></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div style="display:flex;flex-direction:column;gap:18px;">
+                    <div class="card">
+                        <div class="card-head"><h3>Integrations</h3></div>
+                        <div class="card-body">
+                            <div class="toggle-row">
+                                <div>
+                                    <div class="lbl">Paystack &mdash; primary gateway</div>
+                                    <div class="lbl-sub">Card payments &middot; Connected as <strong>Phillips Consulting</strong></div>
+                                </div>
+                                <div class="toggle on" data-toggle></div>
+                            </div>
+                            <div class="toggle-row">
+                                <div>
+                                    <div class="lbl">Flutterwave</div>
+                                    <div class="lbl-sub">Backup gateway &middot; Connected</div>
+                                </div>
+                                <div class="toggle on" data-toggle></div>
+                            </div>
+                            <div class="toggle-row">
+                                <div>
+                                    <div class="lbl">Microsoft 365 SSO</div>
+                                    <div class="lbl-sub">Tenant: <code style="font-family:var(--font-mono);background:var(--paper-2);padding:1px 6px;border-radius:3px;">phillipsconsulting.net</code></div>
+                                </div>
+                                <div class="toggle on" data-toggle></div>
+                            </div>
+                            <div class="toggle-row">
+                                <div>
+                                    <div class="lbl">Zoom &mdash; hybrid programmes</div>
+                                    <div class="lbl-sub">Auto-create meetings for hybrid cohorts</div>
+                                </div>
+                                <div class="toggle on" data-toggle></div>
+                            </div>
+                            <div class="toggle-row">
+                                <div>
+                                    <div class="lbl">Mailchimp &mdash; programme marketing</div>
+                                    <div class="lbl-sub">Sync prospects to "Training" audience</div>
+                                </div>
+                                <div class="toggle" data-toggle></div>
+                            </div>
+                            <button class="btn btn-outline btn-block" style="margin-top:14px;" onclick="toast('Integrations catalogue opened')">+ Add Integration</button>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-head"><h3>Notification Routing</h3></div>
+                        <div class="card-body">
+                            <div class="toggle-row">
+                                <div>
+                                    <div class="lbl">New payment submitted</div>
+                                    <div class="lbl-sub">Email + in-app to Finance role</div>
+                                </div>
+                                <div class="toggle on" data-toggle></div>
+                            </div>
+                            <div class="toggle-row">
+                                <div>
+                                    <div class="lbl">Refund request</div>
+                                    <div class="lbl-sub">Email to Programme Director</div>
+                                </div>
+                                <div class="toggle on" data-toggle></div>
+                            </div>
+                            <div class="toggle-row">
+                                <div>
+                                    <div class="lbl">Attendance below 80% (live)</div>
+                                    <div class="lbl-sub">Slack alert to #ops channel</div>
+                                </div>
+                                <div class="toggle on" data-toggle></div>
+                            </div>
+                            <div class="toggle-row">
+                                <div>
+                                    <div class="lbl">Daily KPI digest</div>
+                                    <div class="lbl-sub">8 AM email to leadership</div>
+                                </div>
+                                <div class="toggle" data-toggle></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-head"><h3>Security</h3></div>
+                        <div class="card-body">
+                            <div class="toggle-row">
+                                <div>
+                                    <div class="lbl">Enforce SSO for all admins</div>
+                                    <div class="lbl-sub">Blocks password sign-in for admin accounts</div>
+                                </div>
+                                <div class="toggle on" data-toggle></div>
+                            </div>
+                            <div class="toggle-row">
+                                <div>
+                                    <div class="lbl">2FA required for sensitive actions</div>
+                                    <div class="lbl-sub">Payments, refunds, certificate revocations</div>
+                                </div>
+                                <div class="toggle on" data-toggle></div>
+                            </div>
+                            <div class="toggle-row">
+                                <div>
+                                    <div class="lbl">Auto-logout after inactivity</div>
+                                    <div class="lbl-sub">After 30 minutes of no activity</div>
+                                </div>
+                                <div class="toggle on" data-toggle></div>
+                            </div>
+                            <a class="btn btn-outline btn-sm" href="#" onclick="event.preventDefault(); toast('Opening audit log');" style="margin-top:10px;display:inline-block;">View Audit Log &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<script src="../assets/js/app.js"></script>
+<script>
+    document.querySelectorAll('[data-toggle]').forEach((el) => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('on');
+            toast(el.classList.contains('on') ? 'Enabled' : 'Disabled');
+        });
+    });
+    document.querySelectorAll('.filter-chip').forEach((c) => c.addEventListener('click', () => {
+        document.querySelectorAll('.filter-chip').forEach((x) => x.classList.remove('active'));
+        c.classList.add('active');
+        toast('Section: ' + c.textContent.trim());
+    }));
+</script>
+</body>
+</html>

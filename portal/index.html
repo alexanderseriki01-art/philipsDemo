@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Participant Portal — Phillips Consulting TMS</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="../assets/css/tokens.css" />
+    <link rel="stylesheet" href="../assets/css/base.css" />
+    <link rel="stylesheet" href="../assets/css/admin.css" />
+    <link rel="stylesheet" href="../assets/css/portal.css" />
+</head>
+<body>
+
+<div class="app active portal">
+
+    <aside class="sidebar">
+        <a class="logo logo--sm" href="../">
+            <span class="logo-mark">phillips</span>
+            <span class="logo-sub">CONSULTING</span>
+        </a>
+
+        <div class="sidebar-section">My Learning</div>
+        <nav class="sidebar-nav">
+            <a href="./" class="active">Dashboard</a>
+            <a href="trainings.html">My Trainings</a>
+            <a href="attendance.html">Attendance</a>
+            <a href="materials.html">Materials</a>
+        </nav>
+
+        <div class="sidebar-section">Achievements</div>
+        <nav class="sidebar-nav">
+            <a href="certificate.html">Certificates</a>
+            <a href="feedback.html">Feedback</a>
+        </nav>
+
+        <div class="sidebar-section">Account</div>
+        <nav class="sidebar-nav">
+            <a href="payments.html">Payments</a>
+            <a href="profile.html">Profile</a>
+            <a href="../">Sign out</a>
+        </nav>
+
+        <div class="sidebar-user">
+            <div class="avatar">AO</div>
+            <div>
+                <div class="name">Adaeze Okonkwo</div>
+                <div class="role">Participant</div>
+            </div>
+        </div>
+    </aside>
+
+    <main>
+        <header class="topbar">
+            <h1>Dashboard</h1>
+            <div class="topbar-right">
+                <input class="search-input" type="text" placeholder="Search trainings, materials…" />
+                <div class="bell"><div class="dot"></div></div>
+                <div class="avatar">AO</div>
+            </div>
+        </header>
+
+        <div class="page-content">
+
+            <div class="welcome">
+                <h2>Good morning, Adaeze.</h2>
+                <p>You have 1 upcoming training this week. Your certificate for Finance for Non-Finance Managers is ready to download.</p>
+            </div>
+
+            <!-- Your Journey — 7-stage participant tracker for the active programme -->
+            <section class="journey" aria-label="Your training journey">
+                <div class="journey-head">
+                    <h3>Your Journey</h3>
+                    <div class="programme">Active programme &middot; <strong>Advanced Leadership &amp; Management</strong> &middot; 24 Apr 2026</div>
+                </div>
+
+                <div class="journey-track" style="--progress: 57.1%;">
+                    <div class="journey-node done">
+                        <div class="pin"><span>01</span></div>
+                        <div class="label">Email<br>Confirmation</div>
+                    </div>
+                    <div class="journey-node done">
+                        <div class="pin"><span>02</span></div>
+                        <div class="label">Registration</div>
+                    </div>
+                    <div class="journey-node done">
+                        <div class="pin"><span>03</span></div>
+                        <div class="label">Payment</div>
+                    </div>
+                    <div class="journey-node done">
+                        <div class="pin"><span>04</span></div>
+                        <div class="label">Payment<br>Confirmed</div>
+                    </div>
+                    <div class="journey-node current">
+                        <div class="pin"><span>05</span></div>
+                        <div class="label">Training<br>Attendance</div>
+                    </div>
+                    <div class="journey-node">
+                        <div class="pin"><span>06</span></div>
+                        <div class="label">Certificate</div>
+                    </div>
+                    <div class="journey-node">
+                        <div class="pin"><span>07</span></div>
+                        <div class="label">Feedback</div>
+                    </div>
+                </div>
+
+                <div class="journey-foot">
+                    <div>Currently at stage <strong>05 &middot; Training Attendance</strong>. Day 1 begins 24 April at 9:00 AM, Landmark Event Centre.</div>
+                    <a class="btn btn-ghost btn-sm" href="attendance.html">View attendance &rarr;</a>
+                </div>
+            </section>
+
+            <div class="stat-row">
+                <div class="stat">
+                    <div class="label">Enrolled Programmes</div>
+                    <div class="value" data-count="3">0</div>
+                    <span class="delta up">1 active</span>
+                </div>
+                <div class="stat">
+                    <div class="label">Completed</div>
+                    <div class="value" data-count="2">0</div>
+                    <span class="delta up">+1 this quarter</span>
+                </div>
+                <div class="stat">
+                    <div class="label">Certificate Ready</div>
+                    <div class="value" data-count="1">0</div>
+                    <span class="delta up">Download available</span>
+                </div>
+                <div class="stat">
+                    <div class="label">Pending Payment</div>
+                    <div class="value" data-count="1">0</div>
+                    <span class="delta down">Action required</span>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <!-- Left -->
+                <div style="display:flex;flex-direction:column;gap:18px;">
+
+                    <div class="card">
+                        <div class="card-head">
+                            <h3>Upcoming &amp; Active Trainings</h3>
+                            <span class="tag tag-blue">3 enrolled</span>
+                        </div>
+
+                        <div class="training-item">
+                            <div class="date-chip">
+                                <div class="d">24</div>
+                                <div class="m">Apr</div>
+                            </div>
+                            <div class="training-info">
+                                <h4>Advanced Leadership &amp; Management Programme</h4>
+                                <div class="where">4-Day Intensive &middot; Landmark Event Centre, Lagos</div>
+                                <div class="training-meta">
+                                    <span>9:00 AM – 5:00 PM</span>
+                                    <span class="tag tag-success">Confirmed</span>
+                                    <span class="tag tag-blue">Paid</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="training-item">
+                            <div class="date-chip live">
+                                <div class="d">15</div>
+                                <div class="m">May</div>
+                            </div>
+                            <div class="training-info">
+                                <h4>Project Management Professional (PMP) Prep</h4>
+                                <div class="where">5-Day Course &middot; Virtual (Zoom) + Lagos Hub</div>
+                                <div class="training-meta">
+                                    <span>8:30 AM – 4:00 PM</span>
+                                    <span class="tag tag-warn">Payment Pending</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="training-item">
+                            <div class="date-chip success">
+                                <div class="d">12</div>
+                                <div class="m">Mar</div>
+                            </div>
+                            <div class="training-info">
+                                <h4>Finance for Non-Finance Managers</h4>
+                                <div class="where">2-Day Workshop &middot; Phillips Consulting HQ, Ikoyi</div>
+                                <div class="training-meta">
+                                    <span>Completed 13 Mar 2026</span>
+                                    <span class="tag tag-success">Completed</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-head"><h3>Attendance Record</h3></div>
+                        <table class="table">
+                            <thead>
+                                <tr><th>Programme</th><th>Date</th><th>Day</th><th>Status</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Finance for Non-Finance Managers</td><td class="cell-muted">12 Mar 2026</td><td class="cell-muted">Day 1</td><td><span class="tag tag-success">Present</span></td></tr>
+                                <tr><td>Finance for Non-Finance Managers</td><td class="cell-muted">13 Mar 2026</td><td class="cell-muted">Day 2</td><td><span class="tag tag-success">Present</span></td></tr>
+                                <tr><td>Adv. Leadership Programme</td><td class="cell-muted">24 Apr 2026</td><td class="cell-muted">Day 1</td><td><span class="tag tag-blue">Upcoming</span></td></tr>
+                                <tr><td>Adv. Leadership Programme</td><td class="cell-muted">25 Apr 2026</td><td class="cell-muted">Day 2</td><td><span class="tag tag-blue">Upcoming</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-head">
+                            <h3>Submit Training Feedback</h3>
+                            <span class="tag tag-warn">1 pending</span>
+                        </div>
+                        <div class="card-body">
+                            <p style="font-size:13.5px;margin-bottom:18px;">Share your experience for <strong style="color:var(--ink-900);">Finance for Non-Finance Managers</strong>.</p>
+
+                            <label class="field-label" style="display:block;margin-bottom:8px;">Overall Rating</label>
+                            <div class="stars" id="stars">
+                                <div class="star" data-rate="1"></div>
+                                <div class="star" data-rate="2"></div>
+                                <div class="star" data-rate="3"></div>
+                                <div class="star" data-rate="4"></div>
+                                <div class="star" data-rate="5"></div>
+                            </div>
+
+                            <div class="field">
+                                <label>What did you find most valuable?</label>
+                                <textarea class="textarea">The financial ratio analysis sessions were particularly insightful and directly applicable to my role in treasury management.</textarea>
+                            </div>
+                            <div class="field">
+                                <label>Areas for improvement</label>
+                                <textarea class="textarea">More case studies specific to the Nigerian banking sector would be helpful.</textarea>
+                            </div>
+                            <div class="field">
+                                <label>Recommend to a colleague?</label>
+                                <select class="select">
+                                    <option>Strongly recommend</option>
+                                    <option>Recommend</option>
+                                    <option>Neutral</option>
+                                    <option>Would not recommend</option>
+                                </select>
+                            </div>
+
+                            <button class="btn btn-primary btn-arrow" onclick="toast('Feedback submitted. Thank you.')">Submit Feedback</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right -->
+                <div style="display:flex;flex-direction:column;gap:18px;">
+                    <div class="card">
+                        <div class="card-head"><h3>Quick Actions</h3></div>
+                        <div class="actions">
+                            <div class="action dl">
+                                <div class="glyph"></div>
+                                <div>
+                                    <div class="label">Download Materials</div>
+                                    <div class="sub">Finance for Non-Finance Mgrs</div>
+                                </div>
+                                <button class="btn btn-ghost btn-sm right" onclick="toast('Downloading Finance_NonFinance_Materials.zip')">Download</button>
+                            </div>
+                            <div class="action cert">
+                                <div class="glyph"></div>
+                                <div>
+                                    <div class="label">Download Certificate</div>
+                                    <div class="sub">Finance for Non-Finance Mgrs</div>
+                                </div>
+                                <a class="btn btn-primary btn-sm right" href="certificate.html">View &amp; Download</a>
+                            </div>
+                            <div class="action lock muted">
+                                <div class="glyph"></div>
+                                <div>
+                                    <div class="label">Certificate &mdash; PMP Prep</div>
+                                    <div class="sub">Pending payment confirmation</div>
+                                </div>
+                                <button class="btn btn-ghost btn-sm right" disabled style="opacity:.45;cursor:not-allowed;">Locked</button>
+                            </div>
+                            <div class="action pay">
+                                <div class="glyph"></div>
+                                <div>
+                                    <div class="label">View Payment Status</div>
+                                    <div class="sub">PMP Prep &mdash; pending</div>
+                                </div>
+                                <button class="btn btn-ghost btn-sm right" onclick="toast('Opening payment status')">View</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-head"><h3>Payment Status</h3></div>
+                        <div class="card-body">
+                            <div style="display:flex;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);">
+                                <span class="tag tag-success">Paid</span>
+                                <div>
+                                    <div style="font-size:13.5px;color:var(--ink-900);">Finance for Non-Finance Managers</div>
+                                    <div style="font-size:12px;color:var(--ink-500);margin-top:2px;">₦185,000 &middot; confirmed</div>
+                                </div>
+                            </div>
+                            <div style="display:flex;gap:12px;align-items:center;padding:14px 0;">
+                                <span class="tag tag-warn">Pending</span>
+                                <div>
+                                    <div style="font-size:13.5px;color:var(--ink-900);">Project Management Professional Prep</div>
+                                    <div style="font-size:12px;color:var(--ink-500);margin-top:2px;">₦240,000 &middot; awaiting admin approval</div>
+                                </div>
+                            </div>
+                            <button class="btn btn-outline btn-block" onclick="toast('Loading payment details')" style="margin-top:8px;">View Payment Details</button>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-head"><h3>Next Training</h3></div>
+                        <div class="countdown">
+                            <div class="label">Advanced Leadership Programme</div>
+                            <div class="clock">
+                                <div class="unit"><div class="v" id="cd-d">12</div><div class="l">Days</div></div>
+                                <div class="sep">:</div>
+                                <div class="unit"><div class="v" id="cd-h">08</div><div class="l">Hours</div></div>
+                                <div class="sep">:</div>
+                                <div class="unit"><div class="v" id="cd-m">33</div><div class="l">Mins</div></div>
+                            </div>
+                            <div class="where">Landmark Event Centre, Lagos &middot; 24 April 2026, 9:00 AM</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<script src="../assets/js/app.js"></script>
+<script>
+    // Counter animation (reuse logic locally)
+    document.querySelectorAll('[data-count]').forEach((el) => {
+        const target = parseFloat(el.dataset.count);
+        const suffix = el.dataset.suffix || '';
+        const decimals = parseInt(el.dataset.decimals || '0', 10);
+        const dur = 1200;
+        const start = performance.now();
+        function step(now) {
+            const p = Math.min(1, (now - start) / dur);
+            const eased = 1 - Math.pow(1 - p, 3);
+            el.textContent = (target * eased).toFixed(decimals) + suffix;
+            if (p < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+    });
+
+    // Star rating
+    const stars = document.querySelectorAll('#stars .star');
+    stars.forEach((s) => {
+        s.addEventListener('click', () => {
+            const v = parseInt(s.dataset.rate, 10);
+            stars.forEach((x, i) => x.classList.toggle('on', i < v));
+        });
+    });
+
+    // Live countdown (decrement minute every minute for show)
+    function tickCountdown() {
+        const m = document.getElementById('cd-m');
+        if (!m) return;
+        let val = parseInt(m.textContent, 10);
+        val = (val - 1 + 60) % 60;
+        m.textContent = String(val).padStart(2, '0');
+    }
+    setInterval(tickCountdown, 60000);
+</script>
+
+</body>
+</html>

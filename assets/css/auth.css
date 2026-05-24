@@ -1,0 +1,334 @@
+/* ==========================================================================
+   Auth pages — /login and /register
+   Single centred glass card floating over an animated dark backdrop.
+   ========================================================================== */
+
+.auth-page {
+    min-height: 100vh;
+    background:
+        radial-gradient(ellipse at 50% 0%, #102957 0%, #061026 55%, #02061a 100%);
+    color: var(--white);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ── Animated dark backdrop ─────────────────────────────────────────── */
+.auth-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+.auth-bg .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.85;
+    mix-blend-mode: screen;
+}
+.auth-bg .orb-1 {
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(47, 107, 242, 0.55), transparent 60%);
+    top: -200px; left: -200px;
+    animation: aOrb1 22s ease-in-out infinite;
+}
+.auth-bg .orb-2 {
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(136, 177, 255, 0.40), transparent 60%);
+    bottom: -180px; right: -140px;
+    animation: aOrb2 26s ease-in-out infinite;
+}
+.auth-bg .orb-3 {
+    width: 460px; height: 460px;
+    background: radial-gradient(circle, rgba(95, 145, 255, 0.32), transparent 60%);
+    top: 45%; left: 50%;
+    animation: aOrb3 28s ease-in-out infinite;
+}
+@keyframes aOrb1 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50%      { transform: translate(60px, 40px) scale(1.05); }
+}
+@keyframes aOrb2 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50%      { transform: translate(-50px, -30px) scale(1.08); }
+}
+@keyframes aOrb3 {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); }
+    50%      { transform: translate(-65%, -38%) scale(1.10); }
+}
+
+.auth-bg .grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(95, 145, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(95, 145, 255, 0.05) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse at 50% 50%, black, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse at 50% 50%, black, transparent 75%);
+}
+
+/* ── Top bar ─────────────────────────────────────────────────────────── */
+.auth-top {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 36px;
+}
+.auth-top-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.65);
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 99px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+.auth-top-link:hover {
+    color: var(--white);
+    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+/* ── Three.js mount (used on /login/) ────────────────────────────────── */
+.three-mount {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+.three-mount canvas {
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+}
+
+/* When 3JS is active, dim or hide the CSS orbs to avoid double motion */
+.auth-page--immersive .auth-bg .orb { opacity: 0.35; }
+.auth-page--immersive .auth-bg .grid { opacity: 0.65; }
+
+/* ── Centred card region ─────────────────────────────────────────────── */
+.auth-main {
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 28px;
+}
+
+/* Login: pin the card to the right so the 3JS scene reads on the left */
+.auth-page--immersive .auth-main {
+    justify-content: flex-end;
+    padding-right: clamp(28px, 7vw, 110px);
+    padding-left: clamp(28px, 7vw, 110px);
+}
+
+.auth-card {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    background: var(--white);
+    color: var(--ink-700);
+    padding: 48px 44px;
+    border-radius: var(--radius-lg);
+    box-shadow:
+        0 40px 100px -20px rgba(0, 0, 0, 0.55),
+        0 0 0 1px rgba(255, 255, 255, 0.05);
+    animation: cardEnter 0.6s var(--ease-out) both;
+}
+.auth-card.wide { max-width: 560px; }
+
+@keyframes cardEnter {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: none; }
+}
+
+/* Soft blue glow underneath the card */
+.auth-card::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: var(--radius-lg);
+    background: linear-gradient(135deg, rgba(47, 107, 242, 0.6), transparent 45%, rgba(136, 177, 255, 0.4));
+    z-index: -1;
+    filter: blur(28px);
+    opacity: 0.55;
+}
+
+/* Decorative corner marker */
+.auth-card::after {
+    content: "";
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 22px;
+    height: 22px;
+    border-top: 1px solid var(--blue-300);
+    border-right: 1px solid var(--blue-300);
+    opacity: 0.7;
+}
+
+.auth-card .eyebrow-line {
+    display: inline-flex;
+    margin-bottom: 20px;
+}
+
+.auth-card h2 {
+    font-size: 30px;
+    line-height: 1.15;
+    margin-bottom: 8px;
+    color: var(--ink-900);
+    letter-spacing: -0.018em;
+}
+.auth-card h2 em {
+    color: var(--blue-600);
+    font-style: italic;
+    font-weight: 400;
+}
+.auth-card .auth-sub {
+    color: var(--ink-500);
+    font-size: 14.5px;
+    margin-bottom: 32px;
+    line-height: 1.55;
+}
+
+/* Decorated divider used inside the card */
+.auth-or {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 26px 0 22px;
+    color: var(--ink-300);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+}
+.auth-or::before,
+.auth-or::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+}
+
+/* Provider/quick buttons */
+.auth-provider {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 6px;
+}
+.auth-provider .btn {
+    flex: 1;
+    height: 44px;
+    background: var(--white);
+    color: var(--ink-700);
+    border: 1px solid var(--line);
+    font-size: 13.5px;
+    font-weight: 500;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+.auth-provider .btn:hover {
+    border-color: var(--blue-400);
+    color: var(--ink-900);
+    background: var(--blue-50);
+}
+.auth-provider .glyph {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    border-radius: 3px;
+    background: var(--blue-100);
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+}
+.auth-provider .glyph.sso { background: var(--ink-900); }
+.auth-provider .glyph.org { background: var(--blue-600); }
+
+/* Toggle row footer inside card */
+.auth-toggle {
+    margin-top: 28px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    font-size: 13.5px;
+    color: var(--ink-500);
+}
+.auth-toggle a {
+    color: var(--blue-600);
+    font-weight: 500;
+    text-decoration: none;
+}
+.auth-toggle a:hover { text-decoration: underline; }
+
+.auth-admin-link {
+    margin-top: 14px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--ink-400);
+}
+.auth-admin-link code {
+    font-family: var(--font-mono);
+    background: var(--paper-2);
+    padding: 1px 6px;
+    border-radius: 4px;
+    color: var(--ink-700);
+}
+
+/* ── Bottom trust strip ──────────────────────────────────────────────── */
+.auth-bottom {
+    position: relative;
+    z-index: 2;
+    padding: 20px 36px 32px;
+}
+.auth-stats {
+    max-width: 880px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 22px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 0.04em;
+}
+.auth-stats strong {
+    color: var(--white);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 14px;
+    margin-right: 4px;
+}
+.dot-sep {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────── */
+@media (max-width: 720px) {
+    .auth-top { padding: 18px 22px; }
+    .auth-top-link { padding: 7px 12px; font-size: 12px; }
+    .auth-main { padding: 20px 18px; }
+    .auth-page--immersive .auth-main {
+        justify-content: center;
+        padding-right: 18px;
+        padding-left: 18px;
+    }
+    .auth-card { padding: 36px 26px; border-radius: var(--radius); }
+    .auth-card h2 { font-size: 24px; }
+    .auth-stats { gap: 12px; font-size: 11px; }
+    .dot-sep { display: none; }
+}

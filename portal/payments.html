@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payments — Phillips Consulting TMS</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="../assets/css/tokens.css" />
+    <link rel="stylesheet" href="../assets/css/base.css" />
+    <link rel="stylesheet" href="../assets/css/admin.css" />
+    <link rel="stylesheet" href="../assets/css/portal.css" />
+</head>
+<body>
+
+<div class="app active portal">
+
+    <aside class="sidebar">
+        <a class="logo logo--sm" href="../"><span class="logo-mark">phillips</span><span class="logo-sub">CONSULTING</span></a>
+        <div class="sidebar-section">My Learning</div>
+        <nav class="sidebar-nav">
+            <a href="./">Dashboard</a>
+            <a href="trainings.html">My Trainings</a>
+            <a href="attendance.html">Attendance</a>
+            <a href="materials.html">Materials</a>
+        </nav>
+        <div class="sidebar-section">Achievements</div>
+        <nav class="sidebar-nav">
+            <a href="certificate.html">Certificates</a>
+            <a href="feedback.html">Feedback</a>
+        </nav>
+        <div class="sidebar-section">Account</div>
+        <nav class="sidebar-nav">
+            <a href="payments.html" class="active">Payments</a>
+            <a href="profile.html">Profile</a>
+            <a href="../">Sign out</a>
+        </nav>
+        <div class="sidebar-user">
+            <div class="avatar">AO</div>
+            <div>
+                <div class="name">Adaeze Okonkwo</div>
+                <div class="role">Participant</div>
+            </div>
+        </div>
+    </aside>
+
+    <main>
+        <header class="topbar">
+            <h1>Payments</h1>
+            <div class="topbar-right">
+                <div class="bell"><div class="dot"></div></div>
+                <div class="avatar">AO</div>
+            </div>
+        </header>
+
+        <div class="page-content">
+
+            <div class="stat-row">
+                <div class="stat"><div class="label">Lifetime Spend</div><div class="value">₦1.32M</div><span class="delta up">5 programmes</span></div>
+                <div class="stat"><div class="label">Confirmed</div><div class="value">₦1.08M</div><span class="delta up">4 transactions</span></div>
+                <div class="stat"><div class="label">Pending Approval</div><div class="value">₦240K</div><span class="delta down">PMP Prep</span></div>
+                <div class="stat"><div class="label">Refunded</div><div class="value">₦275K</div><span class="delta up">1 cancellation</span></div>
+            </div>
+
+            <div class="col-grid" style="margin-bottom:18px;">
+                <div class="card">
+                    <div class="card-head">
+                        <h3>Outstanding</h3>
+                        <span class="tag tag-warn">1 pending</span>
+                    </div>
+                    <div class="card-body">
+                        <div style="display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:18px;border-bottom:1px solid var(--line);margin-bottom:18px;">
+                            <div>
+                                <div style="font-family:var(--font-display);font-size:18px;color:var(--ink-900);font-weight:600;margin-bottom:6px;">Project Management Professional Prep</div>
+                                <div style="font-size:13px;color:var(--ink-500);margin-bottom:4px;">Reference: <span style="font-family:var(--font-mono);">PC-PAY-2026-0518</span></div>
+                                <div style="font-size:12px;color:var(--ink-400);">Submitted 20 March 2026 &middot; via bank transfer</div>
+                            </div>
+                            <div style="text-align:right;">
+                                <div style="font-family:var(--font-display);font-size:24px;color:var(--ink-900);">₦240,000</div>
+                                <span class="tag tag-warn" style="margin-top:6px;">Awaiting admin approval</span>
+                            </div>
+                        </div>
+                        <p style="font-size:13px;color:var(--ink-500);margin-bottom:14px;">Our team will confirm bank-transfer payments within 24&ndash;48 hours of submission. Once approved, programme materials and certificate access will unlock automatically.</p>
+                        <div style="display:flex;gap:10px;">
+                            <button class="btn btn-primary btn-sm" onclick="toast('Receipt downloaded')">Download Receipt</button>
+                            <button class="btn btn-ghost btn-sm" onclick="toast('Reminder sent to admin')">Nudge Admin</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-head"><h3>Saved Methods</h3></div>
+                    <div class="card-body">
+                        <div style="display:flex;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);">
+                            <div style="width:44px;height:30px;border-radius:5px;background:linear-gradient(135deg,var(--blue-600),var(--blue-900));"></div>
+                            <div style="flex:1;">
+                                <div style="font-size:13.5px;color:var(--ink-900);font-weight:600;">Stanbic IBTC &middot; •••• 4571</div>
+                                <div style="font-size:12px;color:var(--ink-400);">Bank transfer · Primary</div>
+                            </div>
+                            <button class="btn btn-ghost btn-sm">Edit</button>
+                        </div>
+                        <div style="display:flex;gap:14px;align-items:center;padding:14px 0;">
+                            <div style="width:44px;height:30px;border-radius:5px;background:linear-gradient(135deg,#0EA5E9,#0369A1);position:relative;">
+                                <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:white;font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:0.05em;">PAYSTACK</div>
+                            </div>
+                            <div style="flex:1;">
+                                <div style="font-size:13.5px;color:var(--ink-900);font-weight:600;">Paystack &middot; Visa •••• 8842</div>
+                                <div style="font-size:12px;color:var(--ink-400);">Card · Expires 06/30</div>
+                            </div>
+                            <button class="btn btn-ghost btn-sm">Edit</button>
+                        </div>
+                        <button class="btn btn-outline btn-sm" style="width:100%;margin-top:10px;" onclick="toast('Add payment method')">+ Add Payment Method</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-head">
+                    <h3>Transaction History</h3>
+                    <button class="btn btn-ghost btn-sm" onclick="toast('Exporting all transactions')">Export CSV</button>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr><th>Reference</th><th>Programme</th><th>Method</th><th>Date</th><th>Amount</th><th>Status</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span style="font-family:var(--font-mono);font-size:12px;">PC-PAY-2026-0518</span></td>
+                            <td>PMP Prep</td>
+                            <td class="cell-muted">Bank Transfer</td>
+                            <td class="cell-muted">20 Mar 2026</td>
+                            <td>₦240,000</td>
+                            <td><span class="tag tag-warn">Pending</span></td>
+                        </tr>
+                        <tr>
+                            <td><span style="font-family:var(--font-mono);font-size:12px;">PC-PAY-2026-0492</span></td>
+                            <td>Adv. Leadership Programme</td>
+                            <td class="cell-muted">Paystack &middot; Visa</td>
+                            <td class="cell-muted">02 Mar 2026</td>
+                            <td>₦485,000</td>
+                            <td><span class="tag tag-success">Confirmed</span></td>
+                        </tr>
+                        <tr>
+                            <td><span style="font-family:var(--font-mono);font-size:12px;">PC-PAY-2025-1180</span></td>
+                            <td>Data Analytics (Cancelled)</td>
+                            <td class="cell-muted">Flutterwave</td>
+                            <td class="cell-muted">15 Jul 2025</td>
+                            <td>₦275,000</td>
+                            <td><span class="tag tag-blue">Refunded</span></td>
+                        </tr>
+                        <tr>
+                            <td><span style="font-family:var(--font-mono);font-size:12px;">PC-PAY-2025-0903</span></td>
+                            <td>Strategic Communications</td>
+                            <td class="cell-muted">Bank Transfer</td>
+                            <td class="cell-muted">25 Oct 2025</td>
+                            <td>₦175,000</td>
+                            <td><span class="tag tag-success">Confirmed</span></td>
+                        </tr>
+                        <tr>
+                            <td><span style="font-family:var(--font-mono);font-size:12px;">PC-PAY-2025-0391</span></td>
+                            <td>Finance for Non-Finance Mgrs</td>
+                            <td class="cell-muted">Bank Transfer</td>
+                            <td class="cell-muted">10 Mar 2025</td>
+                            <td>₦185,000</td>
+                            <td><span class="tag tag-success">Confirmed</span></td>
+                        </tr>
+                        <tr>
+                            <td><span style="font-family:var(--font-mono);font-size:12px;">PC-PAY-2024-1142</span></td>
+                            <td>Executive Coaching (1-on-1)</td>
+                            <td class="cell-muted">Paystack &middot; Visa</td>
+                            <td class="cell-muted">14 Nov 2024</td>
+                            <td>₦220,000</td>
+                            <td><span class="tag tag-success">Confirmed</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<script src="../assets/js/app.js"></script>
+</body>
+</html>

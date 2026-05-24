@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trainings — Phillips Consulting Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/tokens.css" />
+    <link rel="stylesheet" href="../assets/css/base.css" />
+    <link rel="stylesheet" href="../assets/css/admin.css" />
+    <link rel="stylesheet" href="../assets/css/portal.css" />
+</head>
+<body>
+
+<div class="app active">
+    <aside class="sidebar">
+        <a class="logo logo--sm" href="./"><span class="logo-mark">phillips</span><span class="logo-sub">CONSULTING</span></a>
+        <div class="sidebar-section">Operations</div>
+        <nav class="sidebar-nav">
+            <a href="./">Overview</a>
+            <a href="participants.html">Participants</a>
+            <a href="trainings.html" class="active">Trainings</a>
+            <a href="attendance.html">Attendance</a>
+        </nav>
+        <div class="sidebar-section">Revenue</div>
+        <nav class="sidebar-nav">
+            <a href="payments.html">Payments</a>
+            <a href="refunds.html">Refunds</a>
+        </nav>
+        <div class="sidebar-section">Learning</div>
+        <nav class="sidebar-nav">
+            <a href="materials.html">Materials</a>
+            <a href="certificates.html">Certificates</a>
+            <a href="feedback.html">Feedback</a>
+        </nav>
+        <div class="sidebar-section">System</div>
+        <nav class="sidebar-nav">
+            <a href="reports.html">Reports</a>
+            <a href="settings.html">Settings</a>
+            <a href="../">Back to site</a>
+        </nav>
+        <div class="sidebar-user">
+            <div class="avatar blue">TO</div>
+            <div>
+                <div class="name">Tunde Okafor</div>
+                <div class="role">Programme Administrator</div>
+            </div>
+        </div>
+    </aside>
+
+    <main>
+        <header class="topbar">
+            <h1>Trainings</h1>
+            <div class="topbar-right">
+                <div class="bell"><div class="dot"></div></div>
+                <div class="avatar blue">TO</div>
+            </div>
+        </header>
+
+        <div class="page-content">
+
+            <div class="stat-row">
+                <div class="stat"><div class="label">Active Programmes</div><div class="value">18</div><span class="delta up">3 running today</span></div>
+                <div class="stat"><div class="label">Upcoming Cohorts</div><div class="value">7</div><span class="delta up">Next: 24 Apr</span></div>
+                <div class="stat"><div class="label">Completed (YTD)</div><div class="value">42</div><span class="delta up">+14 vs last yr</span></div>
+                <div class="stat"><div class="label">Avg Enrolment Rate</div><div class="value">82%</div><span class="delta up">Across all cohorts</span></div>
+            </div>
+
+            <div class="filter-bar">
+                <button class="filter-chip active">All</button>
+                <button class="filter-chip">Active</button>
+                <button class="filter-chip">Upcoming</button>
+                <button class="filter-chip">Draft</button>
+                <button class="filter-chip">Archived</button>
+            </div>
+
+            <div class="card">
+                <div class="card-head">
+                    <h3>Programme Catalogue</h3>
+                    <button class="btn btn-primary btn-sm" onclick="toast('New programme wizard would open')">+ New Programme</button>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr><th>Programme</th><th>Cohort Dates</th><th>Enrolment</th><th>Revenue</th><th>Status</th><th></th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Advanced Leadership &amp; Management</strong><div class="cell-muted" style="font-size:11.5px;">4-day &middot; Landmark Lagos &middot; ₦485,000/seat</div></td>
+                            <td class="cell-muted">24–27 Apr 2026</td>
+                            <td>
+                                <div style="display:flex;align-items:center;gap:10px;">
+                                    <div style="width:80px;"><div class="progress"><span style="width:84%"></span></div></div>
+                                    <span style="font-size:12px;color:var(--ink-700);">42/50</span>
+                                </div>
+                            </td>
+                            <td><strong>₦20.3M</strong></td>
+                            <td><span class="tag tag-success">Confirmed</span></td>
+                            <td style="text-align:right;"><button class="btn btn-ghost btn-sm">Manage</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Project Management Professional Prep</strong><div class="cell-muted" style="font-size:11.5px;">5-day &middot; Hybrid (Zoom + Lagos) &middot; ₦240,000/seat</div></td>
+                            <td class="cell-muted">15–19 May 2026</td>
+                            <td>
+                                <div style="display:flex;align-items:center;gap:10px;">
+                                    <div style="width:80px;"><div class="progress success"><span style="width:95%"></span></div></div>
+                                    <span style="font-size:12px;color:var(--ink-700);">38/40</span>
+                                </div>
+                            </td>
+                            <td><strong>₦9.1M</strong></td>
+                            <td><span class="tag tag-warn">Nearly Full</span></td>
+                            <td style="text-align:right;"><button class="btn btn-ghost btn-sm">Manage</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Finance for Non-Finance Managers</strong><div class="cell-muted" style="font-size:11.5px;">2-day &middot; Phillips HQ &middot; ₦185,000/seat</div></td>
+                            <td class="cell-muted">12–13 Jun 2026</td>
+                            <td>
+                                <div style="display:flex;align-items:center;gap:10px;">
+                                    <div style="width:80px;"><div class="progress"><span style="width:83%"></span></div></div>
+                                    <span style="font-size:12px;color:var(--ink-700);">29/35</span>
+                                </div>
+                            </td>
+                            <td><strong>₦5.4M</strong></td>
+                            <td><span class="tag tag-success">Confirmed</span></td>
+                            <td style="text-align:right;"><button class="btn btn-ghost btn-sm">Manage</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Strategic HR Management</strong><div class="cell-muted" style="font-size:11.5px;">3-day &middot; Phillips HQ &middot; ₦310,000/seat</div></td>
+                            <td class="cell-muted">3–5 Jul 2026</td>
+                            <td>
+                                <div style="display:flex;align-items:center;gap:10px;">
+                                    <div style="width:80px;"><div class="progress warn"><span style="width:55%"></span></div></div>
+                                    <span style="font-size:12px;color:var(--ink-700);">22/40</span>
+                                </div>
+                            </td>
+                            <td><strong>₦6.8M</strong></td>
+                            <td><span class="tag tag-warn">Under Target</span></td>
+                            <td style="text-align:right;"><button class="btn btn-ghost btn-sm" onclick="toast('Marketing boost scheduled')">Boost</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Data Analytics for Decision Makers</strong><div class="cell-muted" style="font-size:11.5px;">3-day &middot; Hybrid &middot; ₦275,000/seat</div></td>
+                            <td class="cell-muted">22–24 Jul 2026</td>
+                            <td>
+                                <div style="display:flex;align-items:center;gap:10px;">
+                                    <div style="width:80px;"><div class="progress"><span style="width:42%"></span></div></div>
+                                    <span style="font-size:12px;color:var(--ink-700);">17/40</span>
+                                </div>
+                            </td>
+                            <td><strong>₦4.7M</strong></td>
+                            <td><span class="tag tag-blue">Open</span></td>
+                            <td style="text-align:right;"><button class="btn btn-ghost btn-sm">Manage</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Executive Communication &amp; Influence</strong><div class="cell-muted" style="font-size:11.5px;">2-day &middot; Landmark Lagos &middot; ₦220,000/seat</div></td>
+                            <td class="cell-muted">14–15 Aug 2026</td>
+                            <td>
+                                <div style="display:flex;align-items:center;gap:10px;">
+                                    <div style="width:80px;"><div class="progress"><span style="width:25%"></span></div></div>
+                                    <span style="font-size:12px;color:var(--ink-700);">9/36</span>
+                                </div>
+                            </td>
+                            <td><strong>₦2.0M</strong></td>
+                            <td><span class="tag tag-blue">Open</span></td>
+                            <td style="text-align:right;"><button class="btn btn-ghost btn-sm">Manage</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<script src="../assets/js/app.js"></script>
+<script>
+    document.querySelectorAll('.filter-chip').forEach((c) => c.addEventListener('click', () => {
+        document.querySelectorAll('.filter-chip').forEach((x) => x.classList.remove('active'));
+        c.classList.add('active');
+        toast('Filter: ' + c.textContent.trim());
+    }));
+</script>
+</body>
+</html>

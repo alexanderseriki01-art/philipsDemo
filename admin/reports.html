@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reports — Phillips Consulting Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/tokens.css" />
+    <link rel="stylesheet" href="../assets/css/base.css" />
+    <link rel="stylesheet" href="../assets/css/admin.css" />
+    <link rel="stylesheet" href="../assets/css/portal.css" />
+</head>
+<body>
+
+<div class="app active">
+    <aside class="sidebar">
+        <a class="logo logo--sm" href="./"><span class="logo-mark">phillips</span><span class="logo-sub">CONSULTING</span></a>
+        <div class="sidebar-section">Operations</div>
+        <nav class="sidebar-nav">
+            <a href="./">Overview</a>
+            <a href="participants.html">Participants</a>
+            <a href="trainings.html">Trainings</a>
+            <a href="attendance.html">Attendance</a>
+        </nav>
+        <div class="sidebar-section">Revenue</div>
+        <nav class="sidebar-nav">
+            <a href="payments.html">Payments</a>
+            <a href="refunds.html">Refunds</a>
+        </nav>
+        <div class="sidebar-section">Learning</div>
+        <nav class="sidebar-nav">
+            <a href="materials.html">Materials</a>
+            <a href="certificates.html">Certificates</a>
+            <a href="feedback.html">Feedback</a>
+        </nav>
+        <div class="sidebar-section">System</div>
+        <nav class="sidebar-nav">
+            <a href="reports.html" class="active">Reports</a>
+            <a href="settings.html">Settings</a>
+            <a href="../">Back to site</a>
+        </nav>
+        <div class="sidebar-user">
+            <div class="avatar blue">TO</div>
+            <div>
+                <div class="name">Tunde Okafor</div>
+                <div class="role">Programme Administrator</div>
+            </div>
+        </div>
+    </aside>
+
+    <main>
+        <header class="topbar">
+            <h1>Reports</h1>
+            <div class="topbar-right">
+                <div class="bell"><div class="dot"></div></div>
+                <div class="avatar blue">TO</div>
+            </div>
+        </header>
+
+        <div class="page-content">
+
+            <div class="stat-row">
+                <div class="stat"><div class="label">Generated (30d)</div><div class="value">38</div><span class="delta up">+12 vs prior period</span></div>
+                <div class="stat"><div class="label">Scheduled</div><div class="value">9</div><span class="delta up">Next: monthly P&amp;L</span></div>
+                <div class="stat"><div class="label">Exports (30d)</div><div class="value">142</div><span class="delta up">CSV · PDF · XLSX</span></div>
+                <div class="stat"><div class="label">Shared Dashboards</div><div class="value">5</div><span class="delta up">3 board-level</span></div>
+            </div>
+
+            <div class="card" style="margin-bottom:18px;">
+                <div class="card-head"><h3>Quick Reports</h3></div>
+                <div class="card-body">
+                    <div class="quick-actions" style="margin-bottom:0;">
+                        <button class="quick-action add" onclick="toast('Generating Revenue Report')">
+                            <div class="glyph"></div><div class="lbl">Revenue Report</div>
+                        </button>
+                        <button class="quick-action up" onclick="toast('Generating Cohort Performance Report')">
+                            <div class="glyph"></div><div class="lbl">Cohort Performance</div>
+                        </button>
+                        <button class="quick-action check" onclick="toast('Generating Attendance Report')">
+                            <div class="glyph"></div><div class="lbl">Attendance Report</div>
+                        </button>
+                        <button class="quick-action card" onclick="toast('Generating Payment Report')">
+                            <div class="glyph"></div><div class="lbl">Payment Aging</div>
+                        </button>
+                        <button class="quick-action cert" onclick="toast('Generating Certification Report')">
+                            <div class="glyph"></div><div class="lbl">Certification Roll</div>
+                        </button>
+                        <button class="quick-action report" onclick="toast('Generating Feedback Report')">
+                            <div class="glyph"></div><div class="lbl">Feedback Summary</div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-grid">
+                <div class="card">
+                    <div class="card-head">
+                        <h3>Saved &amp; Scheduled Reports</h3>
+                        <button class="btn btn-primary btn-sm" onclick="toast('Report builder opened')">+ New Report</button>
+                    </div>
+                    <table class="table">
+                        <thead><tr><th>Report</th><th>Schedule</th><th>Last Run</th><th></th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Monthly Revenue P&amp;L</strong><div class="cell-muted" style="font-size:11.5px;">Filtered by programme &middot; PDF</div></td><td class="cell-muted">1st of month</td><td class="cell-muted">01 May 2026</td><td style="text-align:right;"><button class="btn btn-ghost btn-sm" onclick="toast('Running…')">Run</button></td></tr>
+                            <tr><td><strong>Weekly Cohort Snapshot</strong><div class="cell-muted" style="font-size:11.5px;">All active cohorts &middot; XLSX</div></td><td class="cell-muted">Every Mon 8:00</td><td class="cell-muted">20 May 2026</td><td style="text-align:right;"><button class="btn btn-ghost btn-sm" onclick="toast('Running…')">Run</button></td></tr>
+                            <tr><td><strong>Quarterly Faculty Performance</strong><div class="cell-muted" style="font-size:11.5px;">Feedback scoring &middot; PDF</div></td><td class="cell-muted">End of quarter</td><td class="cell-muted">31 Mar 2026</td><td style="text-align:right;"><button class="btn btn-ghost btn-sm" onclick="toast('Running…')">Run</button></td></tr>
+                            <tr><td><strong>Outstanding Payments</strong><div class="cell-muted" style="font-size:11.5px;">Aging buckets &middot; CSV</div></td><td class="cell-muted">Every Fri 17:00</td><td class="cell-muted">17 May 2026</td><td style="text-align:right;"><button class="btn btn-ghost btn-sm" onclick="toast('Running…')">Run</button></td></tr>
+                            <tr><td><strong>Board-Level KPI Pack</strong><div class="cell-muted" style="font-size:11.5px;">Custom dashboard &middot; PDF</div></td><td class="cell-muted">Monthly &middot; 25th</td><td class="cell-muted">25 Apr 2026</td><td style="text-align:right;"><button class="btn btn-ghost btn-sm" onclick="toast('Running…')">Run</button></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card">
+                    <div class="card-head"><h3>Export Centre</h3></div>
+                    <div class="card-body">
+                        <p style="font-size:13.5px;color:var(--ink-500);margin-bottom:18px;">Download raw data for any time range or programme.</p>
+                        <div class="field">
+                            <label>Date Range</label>
+                            <select class="select">
+                                <option>Last 7 days</option>
+                                <option>Last 30 days</option>
+                                <option>This quarter</option>
+                                <option>This year to date</option>
+                                <option>Custom range…</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label>Programme</label>
+                            <select class="select">
+                                <option>All programmes</option>
+                                <option>Adv. Leadership</option>
+                                <option>PMP Prep</option>
+                                <option>Finance Mgrs</option>
+                                <option>Strategic HR</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label>Format</label>
+                            <select class="select">
+                                <option>CSV</option>
+                                <option>XLSX</option>
+                                <option>PDF</option>
+                                <option>JSON</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary btn-block btn-arrow" onclick="toast('Export queued. You will be emailed when ready.')">Generate Export</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<script src="../assets/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Trainings — Phillips Consulting TMS</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="../assets/css/tokens.css" />
+    <link rel="stylesheet" href="../assets/css/base.css" />
+    <link rel="stylesheet" href="../assets/css/admin.css" />
+    <link rel="stylesheet" href="../assets/css/portal.css" />
+</head>
+<body>
+
+<div class="app active portal">
+
+    <aside class="sidebar">
+        <a class="logo logo--sm" href="../"><span class="logo-mark">phillips</span><span class="logo-sub">CONSULTING</span></a>
+        <div class="sidebar-section">My Learning</div>
+        <nav class="sidebar-nav">
+            <a href="./">Dashboard</a>
+            <a href="trainings.html" class="active">My Trainings</a>
+            <a href="attendance.html">Attendance</a>
+            <a href="materials.html">Materials</a>
+        </nav>
+        <div class="sidebar-section">Achievements</div>
+        <nav class="sidebar-nav">
+            <a href="certificate.html">Certificates</a>
+            <a href="feedback.html">Feedback</a>
+        </nav>
+        <div class="sidebar-section">Account</div>
+        <nav class="sidebar-nav">
+            <a href="payments.html">Payments</a>
+            <a href="profile.html">Profile</a>
+            <a href="../">Sign out</a>
+        </nav>
+        <div class="sidebar-user">
+            <div class="avatar">AO</div>
+            <div>
+                <div class="name">Adaeze Okonkwo</div>
+                <div class="role">Participant</div>
+            </div>
+        </div>
+    </aside>
+
+    <main>
+        <header class="topbar">
+            <h1>My Trainings</h1>
+            <div class="topbar-right">
+                <input class="search-input" type="text" placeholder="Search programmes…" />
+                <div class="bell"><div class="dot"></div></div>
+                <div class="avatar">AO</div>
+            </div>
+        </header>
+
+        <div class="page-content">
+
+            <div class="stat-row">
+                <div class="stat"><div class="label">All Programmes</div><div class="value">5</div><span class="delta up">Across 18 months</span></div>
+                <div class="stat"><div class="label">Active &amp; Upcoming</div><div class="value">2</div><span class="delta up">1 next week</span></div>
+                <div class="stat"><div class="label">Completed</div><div class="value">2</div><span class="delta up">100% pass rate</span></div>
+                <div class="stat"><div class="label">CPD Hours Earned</div><div class="value">42</div><span class="delta up">Avg 14 / prog</span></div>
+            </div>
+
+            <div class="filter-bar">
+                <button class="filter-chip active" data-filter="all">All Programmes</button>
+                <button class="filter-chip" data-filter="upcoming">Upcoming</button>
+                <button class="filter-chip" data-filter="active">Active</button>
+                <button class="filter-chip" data-filter="completed">Completed</button>
+            </div>
+
+            <div class="card">
+                <div class="training-item">
+                    <div class="date-chip"><div class="d">24</div><div class="m">Apr</div></div>
+                    <div class="training-info">
+                        <h4>Advanced Leadership &amp; Management Programme</h4>
+                        <div class="where">4-Day Intensive &middot; Landmark Event Centre, Lagos</div>
+                        <div class="training-meta">
+                            <span>9:00 AM – 5:00 PM</span>
+                            <span class="tag tag-success">Confirmed</span>
+                            <span class="tag tag-blue">Paid</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-ghost btn-sm" onclick="toast('Opening programme details')">View &rarr;</button>
+                </div>
+
+                <div class="training-item">
+                    <div class="date-chip live"><div class="d">15</div><div class="m">May</div></div>
+                    <div class="training-info">
+                        <h4>Project Management Professional (PMP) Prep</h4>
+                        <div class="where">5-Day Course &middot; Virtual (Zoom) + Lagos Hub</div>
+                        <div class="training-meta">
+                            <span>8:30 AM – 4:00 PM</span>
+                            <span class="tag tag-warn">Payment Pending</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-sm" onclick="toast('Opening payment')">Pay Now</button>
+                </div>
+
+                <div class="training-item">
+                    <div class="date-chip success"><div class="d">12</div><div class="m">Mar</div></div>
+                    <div class="training-info">
+                        <h4>Finance for Non-Finance Managers</h4>
+                        <div class="where">2-Day Workshop &middot; Phillips Consulting HQ, Ikoyi</div>
+                        <div class="training-meta">
+                            <span>Completed 13 Mar 2026</span>
+                            <span class="tag tag-success">Completed</span>
+                            <span class="tag tag-blue">Certified</span>
+                        </div>
+                    </div>
+                    <a class="btn btn-outline btn-sm" href="certificate.html">View Cert &rarr;</a>
+                </div>
+
+                <div class="training-item">
+                    <div class="date-chip success"><div class="d">06</div><div class="m">Nov</div></div>
+                    <div class="training-info">
+                        <h4>Strategic Communications Workshop</h4>
+                        <div class="where">1-Day Workshop &middot; Phillips Consulting HQ, Ikoyi</div>
+                        <div class="training-meta">
+                            <span>Completed 06 Nov 2025</span>
+                            <span class="tag tag-success">Completed</span>
+                            <span class="tag tag-blue">Certified</span>
+                        </div>
+                    </div>
+                    <a class="btn btn-outline btn-sm" href="certificate.html">View Cert &rarr;</a>
+                </div>
+
+                <div class="training-item">
+                    <div class="date-chip" style="background:var(--paper-2);color:var(--ink-400);"><div class="d">22</div><div class="m">Jul</div></div>
+                    <div class="training-info">
+                        <h4>Data Analytics for Decision Makers</h4>
+                        <div class="where">3-Day Programme &middot; Hybrid &middot; Lagos Hub</div>
+                        <div class="training-meta">
+                            <span>Cancelled — refunded 02 Aug 2025</span>
+                            <span class="tag tag-danger">Cancelled</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-ghost btn-sm" disabled style="opacity:.45;cursor:not-allowed;">Closed</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<script src="../assets/js/app.js"></script>
+<script>
+    document.querySelectorAll('.filter-chip').forEach((c) => {
+        c.addEventListener('click', () => {
+            document.querySelectorAll('.filter-chip').forEach((x) => x.classList.remove('active'));
+            c.classList.add('active');
+            toast('Filter: ' + c.textContent.trim());
+        });
+    });
+</script>
+</body>
+</html>

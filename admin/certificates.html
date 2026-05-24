@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Certificates — Phillips Consulting Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/tokens.css" />
+    <link rel="stylesheet" href="../assets/css/base.css" />
+    <link rel="stylesheet" href="../assets/css/admin.css" />
+    <link rel="stylesheet" href="../assets/css/portal.css" />
+</head>
+<body>
+
+<div class="app active">
+    <aside class="sidebar">
+        <a class="logo logo--sm" href="./"><span class="logo-mark">phillips</span><span class="logo-sub">CONSULTING</span></a>
+        <div class="sidebar-section">Operations</div>
+        <nav class="sidebar-nav">
+            <a href="./">Overview</a>
+            <a href="participants.html">Participants</a>
+            <a href="trainings.html">Trainings</a>
+            <a href="attendance.html">Attendance</a>
+        </nav>
+        <div class="sidebar-section">Revenue</div>
+        <nav class="sidebar-nav">
+            <a href="payments.html">Payments</a>
+            <a href="refunds.html">Refunds</a>
+        </nav>
+        <div class="sidebar-section">Learning</div>
+        <nav class="sidebar-nav">
+            <a href="materials.html">Materials</a>
+            <a href="certificates.html" class="active">Certificates</a>
+            <a href="feedback.html">Feedback</a>
+        </nav>
+        <div class="sidebar-section">System</div>
+        <nav class="sidebar-nav">
+            <a href="reports.html">Reports</a>
+            <a href="settings.html">Settings</a>
+            <a href="../">Back to site</a>
+        </nav>
+        <div class="sidebar-user">
+            <div class="avatar blue">TO</div>
+            <div>
+                <div class="name">Tunde Okafor</div>
+                <div class="role">Programme Administrator</div>
+            </div>
+        </div>
+    </aside>
+
+    <main>
+        <header class="topbar">
+            <h1>Certificates</h1>
+            <div class="topbar-right">
+                <input class="search-input" type="text" placeholder="Search by code, name, programme…" />
+                <div class="bell"><div class="dot"></div></div>
+                <div class="avatar blue">TO</div>
+            </div>
+        </header>
+
+        <div class="page-content">
+
+            <div class="stat-row">
+                <div class="stat"><div class="label">Issued (YTD)</div><div class="value">289</div><span class="delta up">+28 this week</span></div>
+                <div class="stat"><div class="label">Ready to Issue</div><div class="value">14</div><span class="delta up">Adv. Leadership cohort</span></div>
+                <div class="stat"><div class="label">Blocked (Pending Payment)</div><div class="value">8</div><span class="delta down">₦1.9M outstanding</span></div>
+                <div class="stat"><div class="label">Public Verifications (30d)</div><div class="value">412</div><span class="delta up">+62% MoM</span></div>
+            </div>
+
+            <div class="card" style="margin-bottom:18px;">
+                <div class="card-head">
+                    <h3>Ready to Issue</h3>
+                    <div style="display:flex;gap:8px;">
+                        <button class="btn btn-ghost btn-sm" onclick="toast('All selected')">Select All</button>
+                        <button class="btn btn-primary btn-sm" onclick="toast('14 certificates queued for generation')">Issue 14 Certificates</button>
+                    </div>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width:36px;"><input type="checkbox" /></th>
+                            <th>Participant</th><th>Programme</th><th>Attendance</th><th>Payment</th><th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><input type="checkbox" checked /></td><td>Adaeze Okonkwo</td><td class="cell-muted">Finance for Non-Finance Mgrs</td><td><span class="tag tag-success">100%</span></td><td><span class="tag tag-success">Paid</span></td><td style="text-align:right;"><a class="btn btn-ghost btn-sm" href="../portal/certificate.html">Preview</a></td></tr>
+                        <tr><td><input type="checkbox" checked /></td><td>Chidinma Ezeh</td><td class="cell-muted">Strategic HR</td><td><span class="tag tag-success">100%</span></td><td><span class="tag tag-success">Paid</span></td><td style="text-align:right;"><a class="btn btn-ghost btn-sm" href="../portal/certificate.html">Preview</a></td></tr>
+                        <tr><td><input type="checkbox" checked /></td><td>Babatunde Alabi</td><td class="cell-muted">Finance for Non-Finance Mgrs</td><td><span class="tag tag-success">100%</span></td><td><span class="tag tag-success">Paid</span></td><td style="text-align:right;"><a class="btn btn-ghost btn-sm" href="../portal/certificate.html">Preview</a></td></tr>
+                        <tr><td><input type="checkbox" checked /></td><td>Ngozi Eze</td><td class="cell-muted">Adv. Leadership</td><td><span class="tag tag-success">96%</span></td><td><span class="tag tag-success">Paid</span></td><td style="text-align:right;"><a class="btn btn-ghost btn-sm" href="../portal/certificate.html">Preview</a></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card" style="margin-bottom:18px;">
+                <div class="card-head">
+                    <h3>Blocked &mdash; Cannot Issue</h3>
+                    <span class="tag tag-warn">8 blocked</span>
+                </div>
+                <table class="table">
+                    <thead><tr><th>Participant</th><th>Programme</th><th>Reason</th><th>Action</th></tr></thead>
+                    <tbody>
+                        <tr><td>Emeka Nwosu</td><td class="cell-muted">PMP Prep</td><td><span class="tag tag-warn">Payment pending</span></td><td style="text-align:right;"><button class="btn btn-ghost btn-sm" onclick="toast('Reminder sent')">Send Reminder</button></td></tr>
+                        <tr><td>Seun Adeleke</td><td class="cell-muted">PMP Prep</td><td><span class="tag tag-danger">Attendance below 80%</span></td><td style="text-align:right;"><button class="btn btn-ghost btn-sm" onclick="toast('Override approved')">Override</button></td></tr>
+                        <tr><td>Funmi Ade</td><td class="cell-muted">Data Analytics</td><td><span class="tag tag-warn">Payment pending</span></td><td style="text-align:right;"><button class="btn btn-ghost btn-sm" onclick="toast('Reminder sent')">Send Reminder</button></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <div class="card-head">
+                    <h3>Certificate Ledger</h3>
+                    <button class="btn btn-ghost btn-sm" onclick="toast('Exporting ledger')">Export</button>
+                </div>
+                <table class="table">
+                    <thead><tr><th>Cert. No.</th><th>Participant</th><th>Programme</th><th>Issued</th><th>Verifications</th><th>Status</th></tr></thead>
+                    <tbody>
+                        <tr><td><span style="font-family:var(--font-mono);font-size:12px;">PC&middot;2026&middot;FNF&middot;0847</span></td><td>Adaeze Okonkwo</td><td class="cell-muted">Finance for Non-Finance Mgrs</td><td class="cell-muted">14 Mar 2026</td><td>23</td><td><span class="tag tag-success">Valid</span></td></tr>
+                        <tr><td><span style="font-family:var(--font-mono);font-size:12px;">PC&middot;2025&middot;SCM&middot;0721</span></td><td>Adaeze Okonkwo</td><td class="cell-muted">Strategic Comms</td><td class="cell-muted">07 Nov 2025</td><td>18</td><td><span class="tag tag-success">Valid</span></td></tr>
+                        <tr><td><span style="font-family:var(--font-mono);font-size:12px;">PC&middot;2026&middot;PMP&middot;0501</span></td><td>Chidinma Ezeh</td><td class="cell-muted">PMP Prep</td><td class="cell-muted">22 Feb 2026</td><td>9</td><td><span class="tag tag-success">Valid</span></td></tr>
+                        <tr><td><span style="font-family:var(--font-mono);font-size:12px;">PC&middot;2026&middot;ALM&middot;0312</span></td><td>Emeka Nwosu</td><td class="cell-muted">Adv. Leadership</td><td class="cell-muted">15 Jan 2026</td><td>42</td><td><span class="tag tag-success">Valid</span></td></tr>
+                        <tr><td><span style="font-family:var(--font-mono);font-size:12px;">PC&middot;2025&middot;ALM&middot;0228</span></td><td>K. Lawal</td><td class="cell-muted">Adv. Leadership</td><td class="cell-muted">28 Aug 2025</td><td>0</td><td><span class="tag tag-danger">Revoked</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<script src="../assets/js/app.js"></script>
+</body>
+</html>

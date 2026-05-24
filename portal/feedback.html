@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Feedback — Phillips Consulting TMS</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="../assets/css/tokens.css" />
+    <link rel="stylesheet" href="../assets/css/base.css" />
+    <link rel="stylesheet" href="../assets/css/admin.css" />
+    <link rel="stylesheet" href="../assets/css/portal.css" />
+</head>
+<body>
+
+<div class="app active portal">
+
+    <aside class="sidebar">
+        <a class="logo logo--sm" href="../"><span class="logo-mark">phillips</span><span class="logo-sub">CONSULTING</span></a>
+        <div class="sidebar-section">My Learning</div>
+        <nav class="sidebar-nav">
+            <a href="./">Dashboard</a>
+            <a href="trainings.html">My Trainings</a>
+            <a href="attendance.html">Attendance</a>
+            <a href="materials.html">Materials</a>
+        </nav>
+        <div class="sidebar-section">Achievements</div>
+        <nav class="sidebar-nav">
+            <a href="certificate.html">Certificates</a>
+            <a href="feedback.html" class="active">Feedback</a>
+        </nav>
+        <div class="sidebar-section">Account</div>
+        <nav class="sidebar-nav">
+            <a href="payments.html">Payments</a>
+            <a href="profile.html">Profile</a>
+            <a href="../">Sign out</a>
+        </nav>
+        <div class="sidebar-user">
+            <div class="avatar">AO</div>
+            <div>
+                <div class="name">Adaeze Okonkwo</div>
+                <div class="role">Participant</div>
+            </div>
+        </div>
+    </aside>
+
+    <main>
+        <header class="topbar">
+            <h1>Feedback</h1>
+            <div class="topbar-right">
+                <div class="bell"><div class="dot"></div></div>
+                <div class="avatar">AO</div>
+            </div>
+        </header>
+
+        <div class="page-content">
+
+            <div class="stat-row">
+                <div class="stat"><div class="label">Feedback Submitted</div><div class="value">3</div><span class="delta up">Across 4 programmes</span></div>
+                <div class="stat"><div class="label">Avg Rating Given</div><div class="value">4.6</div><span class="delta up">Out of 5.0</span></div>
+                <div class="stat"><div class="label">Pending</div><div class="value">1</div><span class="delta down">Action required</span></div>
+                <div class="stat"><div class="label">Replies Received</div><div class="value">2</div><span class="delta up">From facilitators</span></div>
+            </div>
+
+            <!-- Pending feedback prompt -->
+            <div class="card" style="margin-bottom:18px;border-color:var(--warn);background:linear-gradient(135deg, var(--warn-soft), var(--white) 60%);">
+                <div class="card-body" style="display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;">
+                    <div>
+                        <span class="tag tag-warn" style="margin-bottom:8px;">1 pending</span>
+                        <h3 style="font-family:var(--font-display);font-size:18px;color:var(--ink-900);margin-bottom:4px;">You haven&rsquo;t reviewed Finance for Non-Finance Managers yet.</h3>
+                        <p style="font-size:13.5px;color:var(--ink-500);">Your feedback helps the faculty refine future cohorts.</p>
+                    </div>
+                    <button class="btn btn-primary btn-arrow" onclick="document.getElementById('feedback-form').scrollIntoView({behavior:'smooth'})">Leave Feedback</button>
+                </div>
+            </div>
+
+            <div class="col-grid">
+
+                <!-- Submitted feedback -->
+                <div style="display:flex;flex-direction:column;gap:14px;">
+
+                    <div class="card">
+                        <div class="card-body">
+                            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;">
+                                <div>
+                                    <h4 style="font-family:var(--font-display);font-size:16px;color:var(--ink-900);font-weight:600;">Strategic Communications Workshop</h4>
+                                    <div style="font-size:12px;color:var(--ink-400);margin-top:4px;">Submitted 08 Nov 2025 &middot; Reply from facilitator</div>
+                                </div>
+                                <div style="color:var(--blue-600);font-size:14px;letter-spacing:0.04em;">★★★★★</div>
+                            </div>
+                            <p style="font-size:14px;color:var(--ink-700);line-height:1.6;margin-bottom:14px;">The board-level presentation drills were the single most valuable hour I&rsquo;ve spent in a training room. I&rsquo;ve already reused the structure twice for executive committee briefings.</p>
+                            <div style="background:var(--blue-50);border-left:3px solid var(--blue-600);padding:12px 14px;border-radius:0 6px 6px 0;font-size:13px;color:var(--ink-700);">
+                                <strong style="color:var(--ink-900);">Reply from Mrs. Folake Osei &middot; Programme Director:</strong><br>
+                                Thank you, Adaeze. We&rsquo;re building an advanced module around exactly this — we&rsquo;ll invite alumni to pilot it in Q3.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;">
+                                <div>
+                                    <h4 style="font-family:var(--font-display);font-size:16px;color:var(--ink-900);font-weight:600;">Executive Coaching (1-on-1)</h4>
+                                    <div style="font-size:12px;color:var(--ink-400);margin-top:4px;">Submitted 04 Dec 2024</div>
+                                </div>
+                                <div style="color:var(--blue-600);font-size:14px;letter-spacing:0.04em;">★★★★★</div>
+                            </div>
+                            <p style="font-size:14px;color:var(--ink-700);line-height:1.6;">My coach pushed me to think structurally about every decision I make this quarter. The 1-on-1 format suits this kind of work much better than a group session would.</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;">
+                                <div>
+                                    <h4 style="font-family:var(--font-display);font-size:16px;color:var(--ink-900);font-weight:600;">Adv. Leadership &amp; Management (Mid-Programme)</h4>
+                                    <div style="font-size:12px;color:var(--ink-400);margin-top:4px;">Submitted 26 Apr 2026 &middot; Reply from facilitator</div>
+                                </div>
+                                <div style="color:var(--blue-600);font-size:14px;letter-spacing:0.04em;">★★★★<span style="color:var(--ink-200);">★</span></div>
+                            </div>
+                            <p style="font-size:14px;color:var(--ink-700);line-height:1.6;margin-bottom:14px;">Day 1 was spectacular. Day 2&rsquo;s sectoral cases felt rushed &mdash; I&rsquo;d trade two of them for deeper time on one. Otherwise faculty quality is exceptional.</p>
+                            <div style="background:var(--blue-50);border-left:3px solid var(--blue-600);padding:12px 14px;border-radius:0 6px 6px 0;font-size:13px;color:var(--ink-700);">
+                                <strong style="color:var(--ink-900);">Reply from Dr. Tunde Okafor:</strong><br>
+                                Heard. We&rsquo;ll restructure Day 2 of the May cohort &mdash; one anchor case at 90 minutes, plus shorter contrasts. Will share the revised schedule before your final two days.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- New feedback form -->
+                <div class="card" id="feedback-form">
+                    <div class="card-head">
+                        <h3>Submit New Feedback</h3>
+                        <span class="tag tag-warn">Finance for Non-Finance Mgrs</span>
+                    </div>
+                    <div class="card-body">
+                        <p style="font-size:13.5px;color:var(--ink-500);margin-bottom:18px;">Share your experience for <strong style="color:var(--ink-900);">Finance for Non-Finance Managers</strong>. Your responses help our faculty improve future cohorts.</p>
+
+                        <label class="field-label" style="display:block;margin-bottom:8px;">Overall Rating</label>
+                        <div class="stars" id="stars">
+                            <div class="star" data-rate="1"></div>
+                            <div class="star" data-rate="2"></div>
+                            <div class="star" data-rate="3"></div>
+                            <div class="star" data-rate="4"></div>
+                            <div class="star" data-rate="5"></div>
+                        </div>
+
+                        <div class="field">
+                            <label>What did you find most valuable?</label>
+                            <textarea class="textarea" placeholder="The ratio analysis sessions were particularly insightful…"></textarea>
+                        </div>
+                        <div class="field">
+                            <label>Areas for improvement</label>
+                            <textarea class="textarea" placeholder="More case studies specific to the Nigerian banking sector…"></textarea>
+                        </div>
+                        <div class="field">
+                            <label>Would you recommend this programme?</label>
+                            <select class="select">
+                                <option>Strongly recommend</option>
+                                <option>Recommend</option>
+                                <option>Neutral</option>
+                                <option>Would not recommend</option>
+                            </select>
+                        </div>
+                        <div class="field-row">
+                            <div class="field">
+                                <label>Content Quality</label>
+                                <select class="select"><option>5 — Excellent</option><option>4</option><option>3</option><option>2</option><option>1</option></select>
+                            </div>
+                            <div class="field">
+                                <label>Facilitator</label>
+                                <select class="select"><option>5 — Excellent</option><option>4</option><option>3</option><option>2</option><option>1</option></select>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary btn-arrow btn-block" onclick="toast('Feedback submitted. Thank you.')">Submit Feedback</button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<script src="../assets/js/app.js"></script>
+<script>
+    const stars = document.querySelectorAll('#stars .star');
+    stars.forEach((s) => {
+        s.addEventListener('click', () => {
+            const v = parseInt(s.dataset.rate, 10);
+            stars.forEach((x, i) => x.classList.toggle('on', i < v));
+        });
+    });
+</script>
+</body>
+</html>

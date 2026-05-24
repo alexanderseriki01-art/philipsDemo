@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile — Phillips Consulting TMS</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="../assets/css/tokens.css" />
+    <link rel="stylesheet" href="../assets/css/base.css" />
+    <link rel="stylesheet" href="../assets/css/admin.css" />
+    <link rel="stylesheet" href="../assets/css/portal.css" />
+</head>
+<body>
+
+<div class="app active portal">
+
+    <aside class="sidebar">
+        <a class="logo logo--sm" href="../"><span class="logo-mark">phillips</span><span class="logo-sub">CONSULTING</span></a>
+        <div class="sidebar-section">My Learning</div>
+        <nav class="sidebar-nav">
+            <a href="./">Dashboard</a>
+            <a href="trainings.html">My Trainings</a>
+            <a href="attendance.html">Attendance</a>
+            <a href="materials.html">Materials</a>
+        </nav>
+        <div class="sidebar-section">Achievements</div>
+        <nav class="sidebar-nav">
+            <a href="certificate.html">Certificates</a>
+            <a href="feedback.html">Feedback</a>
+        </nav>
+        <div class="sidebar-section">Account</div>
+        <nav class="sidebar-nav">
+            <a href="payments.html">Payments</a>
+            <a href="profile.html" class="active">Profile</a>
+            <a href="../">Sign out</a>
+        </nav>
+        <div class="sidebar-user">
+            <div class="avatar">AO</div>
+            <div>
+                <div class="name">Adaeze Okonkwo</div>
+                <div class="role">Participant</div>
+            </div>
+        </div>
+    </aside>
+
+    <main>
+        <header class="topbar">
+            <h1>Profile</h1>
+            <div class="topbar-right">
+                <div class="bell"><div class="dot"></div></div>
+                <div class="avatar">AO</div>
+            </div>
+        </header>
+
+        <div class="page-content">
+
+            <div class="profile-grid">
+
+                <div style="display:flex;flex-direction:column;gap:18px;">
+                    <div class="profile-id">
+                        <div class="pic">AO</div>
+                        <div>
+                            <h3>Adaeze Okonkwo</h3>
+                            <div class="role">Head of Treasury &middot; Stanbic IBTC Bank</div>
+                        </div>
+                        <span class="verify">Verified Participant</span>
+                        <div class="stats-row">
+                            <div class="stat-cell"><div class="v">5</div><div class="l">Programmes</div></div>
+                            <div class="stat-cell"><div class="v">2</div><div class="l">Certificates</div></div>
+                            <div class="stat-cell"><div class="v">42</div><div class="l">CPD Hours</div></div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-head"><h3>Membership</h3></div>
+                        <div class="card-body">
+                            <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line);font-size:13px;">
+                                <span style="color:var(--ink-500);">Member since</span><strong style="color:var(--ink-900);">14 Mar 2025</strong>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line);font-size:13px;">
+                                <span style="color:var(--ink-500);">Participant ID</span><span style="font-family:var(--font-mono);color:var(--ink-900);">PC-P-2025-0847</span>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;padding:10px 0;font-size:13px;">
+                                <span style="color:var(--ink-500);">Tier</span><span class="tag tag-blue">Corporate Plus</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display:flex;flex-direction:column;gap:18px;">
+
+                    <div class="card">
+                        <div class="card-head">
+                            <h3>Personal Information</h3>
+                            <button class="btn btn-ghost btn-sm" onclick="toast('Edit mode enabled')">Edit</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="field-row">
+                                <div class="field">
+                                    <label>First Name</label>
+                                    <input class="input" value="Adaeze" />
+                                </div>
+                                <div class="field">
+                                    <label>Last Name</label>
+                                    <input class="input" value="Okonkwo" />
+                                </div>
+                            </div>
+                            <div class="field-row">
+                                <div class="field">
+                                    <label>Email</label>
+                                    <input class="input" type="email" value="adaeze.okonkwo@stanbicibtc.com" />
+                                </div>
+                                <div class="field">
+                                    <label>Phone</label>
+                                    <input class="input" type="tel" value="+234 802 555 4421" />
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>Job Title</label>
+                                <input class="input" value="Head of Treasury" />
+                            </div>
+                            <div class="field-row">
+                                <div class="field">
+                                    <label>Organisation</label>
+                                    <input class="input" value="Stanbic IBTC Bank PLC" />
+                                </div>
+                                <div class="field">
+                                    <label>Department</label>
+                                    <input class="input" value="Corporate &amp; Investment Banking" />
+                                </div>
+                            </div>
+                            <button class="btn btn-primary btn-arrow" onclick="toast('Profile updated')">Save Changes</button>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-head"><h3>Notification Preferences</h3></div>
+                        <div class="card-body">
+                            <div class="toggle-row">
+                                <div>
+                                    <div class="lbl">Programme reminders</div>
+                                    <div class="lbl-sub">Email me 7 days, 2 days, and morning-of for any training.</div>
+                                </div>
+                                <div class="toggle on" data-toggle></div>
+                            </div>
+                            <div class="toggle-row">
+                                <div>
+                                    <div class="lbl">Payment confirmations</div>
+                                    <div class="lbl-sub">When the admin confirms or refunds a payment.</div>
+                                </div>
+                                <div class="toggle on" data-toggle></div>
+                            </div>
+                            <div class="toggle-row">
+                                <div>
+                                    <div class="lbl">Certificate issued</div>
+                                    <div class="lbl-sub">Email + PDF attached as soon as a cert is generated.</div>
+                                </div>
+                                <div class="toggle on" data-toggle></div>
+                            </div>
+                            <div class="toggle-row">
+                                <div>
+                                    <div class="lbl">New programmes &amp; offers</div>
+                                    <div class="lbl-sub">Monthly digest of upcoming cohorts and early-bird pricing.</div>
+                                </div>
+                                <div class="toggle" data-toggle></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-head"><h3>Security</h3></div>
+                        <div class="card-body">
+                            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);">
+                                <div>
+                                    <div style="font-size:13.5px;color:var(--ink-900);font-weight:600;">Password</div>
+                                    <div style="font-size:12px;color:var(--ink-400);margin-top:2px;">Last changed 18 February 2026</div>
+                                </div>
+                                <button class="btn btn-outline btn-sm" onclick="toast('Password reset email sent')">Change</button>
+                            </div>
+                            <div class="toggle-row">
+                                <div>
+                                    <div class="lbl">Two-factor authentication</div>
+                                    <div class="lbl-sub">SMS code on every new sign-in.</div>
+                                </div>
+                                <div class="toggle on" data-toggle></div>
+                            </div>
+                            <div style="padding-top:16px;">
+                                <button class="btn btn-ghost btn-sm" style="color:var(--danger);" onclick="toast('Account deletion requires admin approval')">Request Account Deletion</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<script src="../assets/js/app.js"></script>
+<script>
+    document.querySelectorAll('[data-toggle]').forEach((el) => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('on');
+            toast(el.classList.contains('on') ? 'Preference enabled' : 'Preference disabled');
+        });
+    });
+</script>
+</body>
+</html>

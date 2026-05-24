@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Participants — Phillips Consulting Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/tokens.css" />
+    <link rel="stylesheet" href="../assets/css/base.css" />
+    <link rel="stylesheet" href="../assets/css/admin.css" />
+    <link rel="stylesheet" href="../assets/css/portal.css" />
+</head>
+<body>
+
+<div class="app active">
+    <aside class="sidebar">
+        <a class="logo logo--sm" href="./"><span class="logo-mark">phillips</span><span class="logo-sub">CONSULTING</span></a>
+        <div class="sidebar-section">Operations</div>
+        <nav class="sidebar-nav">
+            <a href="./">Overview</a>
+            <a href="participants.html" class="active">Participants</a>
+            <a href="trainings.html">Trainings</a>
+            <a href="attendance.html">Attendance</a>
+        </nav>
+        <div class="sidebar-section">Revenue</div>
+        <nav class="sidebar-nav">
+            <a href="payments.html">Payments</a>
+            <a href="refunds.html">Refunds</a>
+        </nav>
+        <div class="sidebar-section">Learning</div>
+        <nav class="sidebar-nav">
+            <a href="materials.html">Materials</a>
+            <a href="certificates.html">Certificates</a>
+            <a href="feedback.html">Feedback</a>
+        </nav>
+        <div class="sidebar-section">System</div>
+        <nav class="sidebar-nav">
+            <a href="reports.html">Reports</a>
+            <a href="settings.html">Settings</a>
+            <a href="../">Back to site</a>
+        </nav>
+        <div class="sidebar-user">
+            <div class="avatar blue">TO</div>
+            <div>
+                <div class="name">Tunde Okafor</div>
+                <div class="role">Programme Administrator</div>
+            </div>
+        </div>
+    </aside>
+
+    <main>
+        <header class="topbar">
+            <h1>Participants</h1>
+            <div class="topbar-right">
+                <input class="search-input" type="text" placeholder="Search by name, email, organisation…" />
+                <div class="bell"><div class="dot"></div></div>
+                <div class="avatar blue">TO</div>
+            </div>
+        </header>
+
+        <div class="page-content">
+
+            <div class="stat-row">
+                <div class="stat"><div class="label">Total Participants</div><div class="value" data-count="347">0</div><span class="delta up">+42 this month</span></div>
+                <div class="stat"><div class="label">New This Month</div><div class="value" data-count="42">0</div><span class="delta up">vs 28 last month</span></div>
+                <div class="stat"><div class="label">Verified KYC</div><div class="value" data-count="318">0</div><span class="delta up">92% complete</span></div>
+                <div class="stat"><div class="label">Pending Action</div><div class="value" data-count="9">0</div><span class="delta down">3 awaiting docs</span></div>
+            </div>
+
+            <div class="filter-bar">
+                <button class="filter-chip active">All Participants</button>
+                <button class="filter-chip">Active</button>
+                <button class="filter-chip">VIP / Corporate</button>
+                <button class="filter-chip">Pending KYC</button>
+                <button class="filter-chip">Suspended</button>
+            </div>
+
+            <div class="card">
+                <div class="card-head">
+                    <h3>Participant Directory</h3>
+                    <div style="display:flex;gap:8px;">
+                        <button class="btn btn-ghost btn-sm" onclick="toast('Exporting CSV…')">Export</button>
+                        <button class="btn btn-primary btn-sm" onclick="toast('Invite modal would open')">Invite Participant</button>
+                    </div>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr><th>Name</th><th>Organisation</th><th>Programmes</th><th>Last Active</th><th>Status</th><th></th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Adaeze Okonkwo</strong><div class="cell-muted" style="font-size:11.5px;">adaeze.okonkwo@stanbicibtc.com</div></td>
+                            <td class="cell-muted">Stanbic IBTC Bank</td>
+                            <td class="cell-muted">5</td>
+                            <td class="cell-muted">2 min ago</td>
+                            <td><span class="tag tag-success">Active</span></td>
+                            <td style="text-align:right;"><button class="btn btn-ghost btn-sm">View</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Emeka Nwosu</strong><div class="cell-muted" style="font-size:11.5px;">emeka@dangote.com</div></td>
+                            <td class="cell-muted">Dangote Industries</td>
+                            <td class="cell-muted">3</td>
+                            <td class="cell-muted">1 hr ago</td>
+                            <td><span class="tag tag-warn">KYC Pending</span></td>
+                            <td style="text-align:right;"><button class="btn btn-ghost btn-sm" onclick="toast('KYC docs requested')">Request KYC</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Chidinma Ezeh</strong><div class="cell-muted" style="font-size:11.5px;">chidinma@accessbankplc.com</div></td>
+                            <td class="cell-muted">Access Holdings</td>
+                            <td class="cell-muted">12</td>
+                            <td class="cell-muted">38 min ago</td>
+                            <td><span class="tag tag-blue">VIP Corporate</span></td>
+                            <td style="text-align:right;"><button class="btn btn-ghost btn-sm">View</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Babatunde Alabi</strong><div class="cell-muted" style="font-size:11.5px;">balabi@firs.gov.ng</div></td>
+                            <td class="cell-muted">FIRS</td>
+                            <td class="cell-muted">4</td>
+                            <td class="cell-muted">3 hrs ago</td>
+                            <td><span class="tag tag-success">Active</span></td>
+                            <td style="text-align:right;"><button class="btn btn-ghost btn-sm">View</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ngozi Eze</strong><div class="cell-muted" style="font-size:11.5px;">n.eze@nnpcgroup.com</div></td>
+                            <td class="cell-muted">NNPC Limited</td>
+                            <td class="cell-muted">7</td>
+                            <td class="cell-muted">5 hrs ago</td>
+                            <td><span class="tag tag-success">Active</span></td>
+                            <td style="text-align:right;"><button class="btn btn-ghost btn-sm">View</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Seun Adeleke</strong><div class="cell-muted" style="font-size:11.5px;">seun.a@mtn.ng</div></td>
+                            <td class="cell-muted">MTN Nigeria</td>
+                            <td class="cell-muted">2</td>
+                            <td class="cell-muted">2 days ago</td>
+                            <td><span class="tag tag-danger">Suspended</span></td>
+                            <td style="text-align:right;"><button class="btn btn-ghost btn-sm" onclick="toast('Reactivation requested')">Reactivate</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Funmi Ade</strong><div class="cell-muted" style="font-size:11.5px;">funmi.ade@firstbanknigeria.com</div></td>
+                            <td class="cell-muted">First Bank</td>
+                            <td class="cell-muted">6</td>
+                            <td class="cell-muted">15 hrs ago</td>
+                            <td><span class="tag tag-success">Active</span></td>
+                            <td style="text-align:right;"><button class="btn btn-ghost btn-sm">View</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Olumide Sanusi</strong><div class="cell-muted" style="font-size:11.5px;">o.sanusi@fmnplc.com</div></td>
+                            <td class="cell-muted">Flour Mills of Nigeria</td>
+                            <td class="cell-muted">1</td>
+                            <td class="cell-muted">21 hrs ago</td>
+                            <td><span class="tag tag-warn">KYC Pending</span></td>
+                            <td style="text-align:right;"><button class="btn btn-ghost btn-sm" onclick="toast('KYC docs requested')">Request KYC</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div style="padding:14px 22px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-400);">
+                    Showing 8 of 347 participants
+                    <div style="display:flex;gap:6px;">
+                        <button class="btn btn-ghost btn-sm" disabled style="opacity:.5;">&larr; Prev</button>
+                        <button class="btn btn-ghost btn-sm">Next &rarr;</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<script src="../assets/js/app.js"></script>
+<script>
+    document.querySelectorAll('[data-count]').forEach((el) => {
+        const target = parseFloat(el.dataset.count);
+        const dur = 1200, start = performance.now();
+        function step(now) {
+            const p = Math.min(1, (now - start) / dur);
+            const eased = 1 - Math.pow(1 - p, 3);
+            el.textContent = Math.round(target * eased).toLocaleString();
+            if (p < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+    });
+    document.querySelectorAll('.filter-chip').forEach((c) => c.addEventListener('click', () => {
+        document.querySelectorAll('.filter-chip').forEach((x) => x.classList.remove('active'));
+        c.classList.add('active');
+        toast('Filter: ' + c.textContent.trim());
+    }));
+</script>
+</body>
+</html>

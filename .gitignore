@@ -1,0 +1,15 @@
+# Claude Code internals
+.claude/
+
+# Original proposal & training source materials (kept locally, not in repo)
+Cert.pdf
+PROPOSAL_*.pdf
+Data Analytic and Planning training.zip
+Data Analytic and Planning training/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/

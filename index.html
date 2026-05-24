@@ -1,3370 +1,693 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phillips Consulting – Training Management System</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap"
-        rel="stylesheet">
-    <style>
-        :root {
-            --navy: #0A1628;
-            --navy-mid: #112240;
-            --blue: #1A3A6B;
-            --blue-bright: #1E5FC2;
-            --accent: #C8A96E;
-            --accent-light: #E8D5A3;
-            --white: #FFFFFF;
-            --grey-light: #F4F6FA;
-            --grey-mid: #E2E8F0;
-            --grey: #94A3B8;
-            --text: #1E293B;
-            --text-muted: #64748B;
-            --success: #10B981;
-            --warning: #F59E0B;
-            --danger: #EF4444;
-            --sidebar-w: 260px;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'DM Sans', sans-serif;
-            color: var(--text);
-            background: var(--white);
-            overflow-x: hidden;
-        }
-
-        /* ── PAGE ROUTER ── */
-        .page {
-            display: none;
-        }
-
-        .page.active {
-            display: block;
-        }
-
-        /* ── UTILS ── */
-        .btn-primary {
-            background: var(--blue-bright);
-            color: #fff;
-            border: none;
-            padding: 13px 28px;
-            border-radius: 4px;
-            font-family: 'DM Sans', sans-serif;
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            letter-spacing: .4px;
-            transition: all .25s;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-primary:hover {
-            background: #163FA8;
-            transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(30, 95, 194, .35);
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: var(--white);
-            border: 1.5px solid rgba(255, 255, 255, .6);
-            padding: 12px 26px;
-            border-radius: 4px;
-            font-family: 'DM Sans', sans-serif;
-            font-weight: 500;
-            font-size: 14px;
-            cursor: pointer;
-            letter-spacing: .4px;
-            transition: all .25s;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-outline:hover {
-            background: rgba(255, 255, 255, .1);
-            border-color: #fff;
-        }
-
-        .btn-ghost {
-            background: transparent;
-            color: var(--blue-bright);
-            border: 1.5px solid var(--blue-bright);
-            padding: 10px 22px;
-            border-radius: 4px;
-            font-family: 'DM Sans', sans-serif;
-            font-weight: 500;
-            font-size: 13px;
-            cursor: pointer;
-            transition: all .25s;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-ghost:hover {
-            background: var(--blue-bright);
-            color: #fff;
-        }
-
-        .btn-sm {
-            padding: 8px 18px;
-            font-size: 13px;
-        }
-
-        .tag {
-            display: inline-block;
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .tag-success {
-            background: #D1FAE5;
-            color: #065F46;
-        }
-
-        .tag-warning {
-            background: #FEF3C7;
-            color: #92400E;
-        }
-
-        .tag-danger {
-            background: #FEE2E2;
-            color: #991B1B;
-        }
-
-        .tag-blue {
-            background: #DBEAFE;
-            color: #1E40AF;
-        }
-
-        /* ══════════════════════════════════════
-     1. LANDING PAGE
-  ══════════════════════════════════════ */
-        /* NAV */
-        .nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            background: rgba(10, 22, 40, .97);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, .08);
-            padding: 0 5%;
-        }
-
-        .nav-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            height: 68px;
-        }
-
-        .nav-logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-        }
-
-        .nav-logo-icon {
-            width: 36px;
-            height: 36px;
-            background: var(--accent);
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-            color: var(--navy);
-            font-size: 16px;
-        }
-
-        .nav-logo-text {
-            font-family: 'Playfair Display', serif;
-            font-size: 17px;
-            color: #fff;
-            font-weight: 600;
-        }
-
-        .nav-logo-sub {
-            font-size: 10px;
-            color: var(--grey);
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            margin-top: -2px;
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 28px;
-        }
-
-        .nav-links a {
-            color: rgba(255, 255, 255, .75);
-            font-size: 13.5px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color .2s;
-            letter-spacing: .2px;
-        }
-
-        .nav-links a:hover {
-            color: #fff;
-        }
-
-        .nav-cta {
-            display: flex;
-            gap: 10px;
-        }
-
-        /* HERO */
-        .hero {
-            min-height: 100vh;
-            background: var(--navy);
-            display: flex;
-            align-items: center;
-            padding: 120px 5% 80px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-bg {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            background: radial-gradient(ellipse 80% 60% at 70% 50%, rgba(30, 95, 194, .18) 0%, transparent 70%),
-                radial-gradient(ellipse 40% 40% at 20% 80%, rgba(200, 169, 110, .08) 0%, transparent 60%);
-        }
-
-        .hero-grid {
-            position: absolute;
-            inset: 0;
-            opacity: .04;
-            background-image: linear-gradient(rgba(255, 255, 255, .3) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, .3) 1px, transparent 1px);
-            background-size: 60px 60px;
-        }
-
-        .hero-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero-label {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(200, 169, 110, .15);
-            border: 1px solid rgba(200, 169, 110, .3);
-            padding: 6px 14px;
-            border-radius: 20px;
-            margin-bottom: 24px;
-            color: var(--accent-light);
-            font-size: 12px;
-            font-weight: 600;
-            letter-spacing: 1.2px;
-            text-transform: uppercase;
-            animation: fadeUp .6s ease both;
-        }
-
-        .hero-label::before {
-            content: '';
-            width: 6px;
-            height: 6px;
-            background: var(--accent);
-            border-radius: 50%;
-        }
-
-        .hero h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(36px, 4.5vw, 56px);
-            color: #fff;
-            font-weight: 700;
-            line-height: 1.12;
-            margin-bottom: 22px;
-            animation: fadeUp .6s .1s ease both;
-        }
-
-        .hero h1 span {
-            color: var(--accent);
-        }
-
-        .hero-desc {
-            color: rgba(255, 255, 255, .65);
-            font-size: 16px;
-            line-height: 1.75;
-            max-width: 500px;
-            margin-bottom: 36px;
-            animation: fadeUp .6s .2s ease both;
-        }
-
-        .hero-btns {
-            display: flex;
-            gap: 14px;
-            flex-wrap: wrap;
-            animation: fadeUp .6s .3s ease both;
-        }
-
-        .hero-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1px;
-            margin-top: 50px;
-            border-top: 1px solid rgba(255, 255, 255, .1);
-            padding-top: 40px;
-            animation: fadeUp .6s .4s ease both;
-        }
-
-        .hero-stat {
-            text-align: center;
-            padding: 0 10px;
-        }
-
-        .hero-stat:not(:last-child) {
-            border-right: 1px solid rgba(255, 255, 255, .1);
-        }
-
-        .hero-stat-num {
-            font-family: 'Playfair Display', serif;
-            font-size: 32px;
-            color: #fff;
-            font-weight: 700;
-            display: block;
-        }
-
-        .hero-stat-lbl {
-            font-size: 12px;
-            color: var(--grey);
-            letter-spacing: .5px;
-            margin-top: 4px;
-        }
-
-        /* HERO VISUAL */
-        .hero-visual {
-            animation: fadeUp .8s .2s ease both;
-        }
-
-        .hero-card-stack {
-            position: relative;
-        }
-
-        .dashboard-mock {
-            background: var(--navy-mid);
-            border: 1px solid rgba(255, 255, 255, .12);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 40px 80px rgba(0, 0, 0, .5);
-        }
-
-        .dm-bar {
-            background: #0D1B33;
-            padding: 12px 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            border-bottom: 1px solid rgba(255, 255, 255, .08);
-        }
-
-        .dm-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-        }
-
-        .dm-dot-r {
-            background: #FF5F57;
-        }
-
-        .dm-dot-y {
-            background: #FEBC2E;
-        }
-
-        .dm-dot-g {
-            background: #28C840;
-        }
-
-        .dm-url {
-            background: rgba(255, 255, 255, .07);
-            border-radius: 4px;
-            padding: 4px 14px;
-            font-size: 11px;
-            color: rgba(255, 255, 255, .4);
-            margin-left: 8px;
-            flex: 1;
-        }
-
-        .dm-body {
-            display: grid;
-            grid-template-columns: 180px 1fr;
-            min-height: 280px;
-        }
-
-        .dm-sidebar {
-            background: #0D1B33;
-            border-right: 1px solid rgba(255, 255, 255, .08);
-            padding: 16px 0;
-        }
-
-        .dm-side-item {
-            padding: 9px 16px;
-            font-size: 12px;
-            color: rgba(255, 255, 255, .5);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .dm-side-item.active {
-            background: rgba(30, 95, 194, .25);
-            color: #fff;
-            border-left: 2px solid var(--blue-bright);
-        }
-
-        .dm-side-icon {
-            width: 16px;
-            height: 16px;
-            background: rgba(255, 255, 255, .15);
-            border-radius: 3px;
-            flex-shrink: 0;
-        }
-
-        .dm-side-item.active .dm-side-icon {
-            background: var(--blue-bright);
-        }
-
-        .dm-content {
-            padding: 16px;
-        }
-
-        .dm-stat-row {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 14px;
-        }
-
-        .dm-stat-card {
-            background: rgba(255, 255, 255, .06);
-            border-radius: 8px;
-            padding: 12px;
-        }
-
-        .dm-stat-card-num {
-            font-size: 22px;
-            font-weight: 700;
-            color: #fff;
-            font-family: 'Playfair Display', serif;
-        }
-
-        .dm-stat-card-lbl {
-            font-size: 10px;
-            color: rgba(255, 255, 255, .4);
-            margin-top: 2px;
-        }
-
-        .dm-chart {
-            background: rgba(255, 255, 255, .04);
-            border-radius: 8px;
-            height: 90px;
-            display: flex;
-            align-items: flex-end;
-            padding: 12px;
-            gap: 6px;
-        }
-
-        .dm-bar-el {
-            background: var(--blue-bright);
-            border-radius: 2px 2px 0 0;
-            flex: 1;
-            opacity: .8;
-        }
-
-        /* FEATURES SECTION */
-        .features {
-            padding: 100px 5%;
-            background: var(--grey-light);
-        }
-
-        .section-label {
-            text-align: center;
-            color: var(--blue-bright);
-            font-size: 12px;
-            font-weight: 600;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 14px;
-        }
-
-        .section-title {
-            text-align: center;
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(28px, 3.5vw, 42px);
-            color: var(--navy);
-            font-weight: 700;
-            margin-bottom: 14px;
-        }
-
-        .section-desc {
-            text-align: center;
-            color: var(--text-muted);
-            max-width: 560px;
-            margin: 0 auto 60px;
-            line-height: 1.7;
-        }
-
-        .features-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-        }
-
-        .feature-card {
-            background: #fff;
-            border-radius: 8px;
-            padding: 36px 32px;
-            border: 1px solid var(--grey-mid);
-            transition: all .3s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--blue-bright);
-            transform: scaleX(0);
-            transition: transform .3s;
-            transform-origin: left;
-        }
-
-        .feature-card:hover {
-            box-shadow: 0 12px 40px rgba(10, 22, 40, .1);
-            transform: translateY(-3px);
-        }
-
-        .feature-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .feature-icon {
-            width: 52px;
-            height: 52px;
-            background: rgba(30, 95, 194, .08);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 22px;
-            font-size: 22px;
-        }
-
-        .feature-card h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 19px;
-            color: var(--navy);
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        .feature-card p {
-            color: var(--text-muted);
-            font-size: 14.5px;
-            line-height: 1.7;
-        }
-
-        /* TRUST SECTION */
-        .trust {
-            padding: 80px 5%;
-            background: var(--navy);
-        }
-
-        .trust-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-        }
-
-        .trust h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(26px, 3vw, 38px);
-            color: #fff;
-            margin-bottom: 20px;
-            line-height: 1.2;
-        }
-
-        .trust p {
-            color: rgba(255, 255, 255, .6);
-            line-height: 1.75;
-            margin-bottom: 28px;
-        }
-
-        .trust-list {
-            list-style: none;
-        }
-
-        .trust-list li {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            margin-bottom: 16px;
-            color: rgba(255, 255, 255, .75);
-            font-size: 14.5px;
-        }
-
-        .trust-list li::before {
-            content: '✓';
-            color: var(--accent);
-            font-weight: 700;
-            margin-top: 1px;
-            flex-shrink: 0;
-        }
-
-        .trust-metrics {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        .trust-metric {
-            background: rgba(255, 255, 255, .05);
-            border: 1px solid rgba(255, 255, 255, .1);
-            border-radius: 8px;
-            padding: 28px 24px;
-            text-align: center;
-        }
-
-        .trust-metric-num {
-            font-family: 'Playfair Display', serif;
-            font-size: 36px;
-            color: var(--accent);
-            font-weight: 700;
-        }
-
-        .trust-metric-lbl {
-            color: rgba(255, 255, 255, .5);
-            font-size: 13px;
-            margin-top: 6px;
-        }
-
-        /* FOOTER */
-        footer {
-            background: #060E1C;
-            border-top: 1px solid rgba(255, 255, 255, .08);
-            padding: 60px 5% 30px;
-        }
-
-        .footer-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 40px;
-            margin-bottom: 50px;
-        }
-
-        .footer-brand p {
-            color: rgba(255, 255, 255, .45);
-            font-size: 13.5px;
-            line-height: 1.7;
-            margin-top: 14px;
-            max-width: 280px;
-        }
-
-        .footer-col h4 {
-            color: #fff;
-            font-size: 13px;
-            font-weight: 600;
-            letter-spacing: .8px;
-            text-transform: uppercase;
-            margin-bottom: 18px;
-        }
-
-        .footer-col a {
-            display: block;
-            color: rgba(255, 255, 255, .45);
-            font-size: 13.5px;
-            text-decoration: none;
-            margin-bottom: 10px;
-            transition: color .2s;
-        }
-
-        .footer-col a:hover {
-            color: var(--accent);
-        }
-
-        .footer-contact p {
-            color: rgba(255, 255, 255, .45);
-            font-size: 13px;
-            margin-bottom: 8px;
-            display: flex;
-            gap: 8px;
-        }
-
-        .footer-bottom {
-            border-top: 1px solid rgba(255, 255, 255, .08);
-            padding-top: 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .footer-bottom p {
-            color: rgba(255, 255, 255, .3);
-            font-size: 12.5px;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 12px;
-        }
-
-        .social-link {
-            width: 34px;
-            height: 34px;
-            background: rgba(255, 255, 255, .07);
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: rgba(255, 255, 255, .5);
-            font-size: 14px;
-            text-decoration: none;
-            transition: all .2s;
-        }
-
-        .social-link:hover {
-            background: var(--blue-bright);
-            color: #fff;
-        }
-
-        /* ══════════════════════════════════════
-     2. AUTH PAGES
-  ══════════════════════════════════════ */
-        .auth-page {
-            min-height: 100vh;
-            background: var(--navy);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .auth-bg {
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(30, 95, 194, .2) 0%, transparent 70%);
-        }
-
-        .auth-card {
-            background: #fff;
-            border-radius: 12px;
-            width: 100%;
-            max-width: 440px;
-            padding: 44px 40px;
-            position: relative;
-            z-index: 2;
-            box-shadow: 0 40px 80px rgba(0, 0, 0, .4);
-        }
-
-        .auth-logo {
-            text-align: center;
-            margin-bottom: 32px;
-        }
-
-        .auth-logo-icon {
-            width: 48px;
-            height: 48px;
-            background: var(--navy);
-            border-radius: 8px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-            color: var(--accent);
-            font-size: 20px;
-            margin-bottom: 12px;
-        }
-
-        .auth-logo-name {
-            font-family: 'Playfair Display', serif;
-            font-size: 18px;
-            color: var(--navy);
-            font-weight: 700;
-            display: block;
-        }
-
-        .auth-logo-sub {
-            font-size: 11px;
-            color: var(--grey);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .auth-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 24px;
-            color: var(--navy);
-            margin-bottom: 6px;
-            text-align: center;
-        }
-
-        .auth-subtitle {
-            color: var(--text-muted);
-            font-size: 14px;
-            text-align: center;
-            margin-bottom: 28px;
-        }
-
-        .form-group {
-            margin-bottom: 18px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--text);
-            margin-bottom: 6px;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 11px 14px;
-            border: 1.5px solid var(--grey-mid);
-            border-radius: 6px;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 14px;
-            color: var(--text);
-            outline: none;
-            transition: border-color .2s;
-        }
-
-        .form-control:focus {
-            border-color: var(--blue-bright);
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-        }
-
-        .auth-footer {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 13px;
-            color: var(--text-muted);
-        }
-
-        .auth-footer a {
-            color: var(--blue-bright);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .auth-tabs {
-            display: flex;
-            margin-bottom: 28px;
-            border-bottom: 2px solid var(--grey-mid);
-        }
-
-        .auth-tab {
-            flex: 1;
-            text-align: center;
-            padding: 10px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--text-muted);
-            border-bottom: 2px solid transparent;
-            margin-bottom: -2px;
-            transition: all .2s;
-        }
-
-        .auth-tab.active {
-            color: var(--blue-bright);
-            border-bottom-color: var(--blue-bright);
-        }
-
-        /* ══════════════════════════════════════
-     3. PARTICIPANT DASHBOARD
-  ══════════════════════════════════════ */
-        .portal-layout {
-            display: flex;
-            min-height: 100vh;
-            background: var(--grey-light);
-        }
-
-        .portal-sidebar {
-            width: var(--sidebar-w);
-            background: var(--navy);
-            min-height: 100vh;
-            flex-shrink: 0;
-            padding-top: 20px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            z-index: 50;
-        }
-
-        .portal-sidebar-logo {
-            padding: 12px 22px 24px;
-            border-bottom: 1px solid rgba(255, 255, 255, .08);
-            margin-bottom: 12px;
-        }
-
-        .sidebar-nav a {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 11px 22px;
-            color: rgba(255, 255, 255, .55);
-            font-size: 13.5px;
-            text-decoration: none;
-            transition: all .2s;
-            font-weight: 500;
-        }
-
-        .sidebar-nav a:hover,
-        .sidebar-nav a.active {
-            background: rgba(255, 255, 255, .07);
-            color: #fff;
-        }
-
-        .sidebar-nav a.active {
-            border-left: 3px solid var(--blue-bright);
-        }
-
-        .sidebar-nav-icon {
-            width: 18px;
-            text-align: center;
-            flex-shrink: 0;
-        }
-
-        .sidebar-divider {
-            height: 1px;
-            background: rgba(255, 255, 255, .08);
-            margin: 12px 0;
-        }
-
-        .sidebar-user {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 16px 22px;
-            border-top: 1px solid rgba(255, 255, 255, .08);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .sidebar-avatar {
-            width: 36px;
-            height: 36px;
-            background: var(--blue-bright);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            font-weight: 700;
-            font-size: 14px;
-            flex-shrink: 0;
-        }
-
-        .sidebar-user-name {
-            color: #fff;
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        .sidebar-user-role {
-            color: rgba(255, 255, 255, .45);
-            font-size: 11px;
-        }
-
-        .portal-main {
-            margin-left: var(--sidebar-w);
-            flex: 1;
-        }
-
-        .portal-topbar {
-            background: #fff;
-            border-bottom: 1px solid var(--grey-mid);
-            padding: 0 32px;
-            height: 64px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 40;
-        }
-
-        .portal-topbar-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 20px;
-            color: var(--navy);
-            font-weight: 700;
-        }
-
-        .portal-topbar-right {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .topbar-notif {
-            width: 36px;
-            height: 36px;
-            background: var(--grey-light);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            position: relative;
-            font-size: 16px;
-        }
-
-        .topbar-notif-dot {
-            position: absolute;
-            top: 7px;
-            right: 7px;
-            width: 8px;
-            height: 8px;
-            background: var(--danger);
-            border-radius: 50%;
-            border: 2px solid #fff;
-        }
-
-        .portal-content {
-            padding: 32px;
-        }
-
-        .welcome-banner {
-            background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
-            border-radius: 12px;
-            padding: 32px;
-            margin-bottom: 28px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .welcome-banner-bg {
-            position: absolute;
-            right: -20px;
-            bottom: -20px;
-            width: 200px;
-            height: 200px;
-            background: rgba(255, 255, 255, .04);
-            border-radius: 50%;
-        }
-
-        .welcome-banner h2 {
-            font-family: 'Playfair Display', serif;
-            color: #fff;
-            font-size: 22px;
-            margin-bottom: 6px;
-        }
-
-        .welcome-banner p {
-            color: rgba(255, 255, 255, .65);
-            font-size: 14px;
-        }
-
-        .stats-row {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 18px;
-            margin-bottom: 28px;
-        }
-
-        .stat-card {
-            background: #fff;
-            border-radius: 10px;
-            padding: 22px 20px;
-            border: 1px solid var(--grey-mid);
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .stat-card-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            flex-shrink: 0;
-        }
-
-        .stat-card-icon.blue {
-            background: rgba(30, 95, 194, .1);
-        }
-
-        .stat-card-icon.green {
-            background: rgba(16, 185, 129, .1);
-        }
-
-        .stat-card-icon.gold {
-            background: rgba(200, 169, 110, .15);
-        }
-
-        .stat-card-icon.red {
-            background: rgba(239, 68, 68, .1);
-        }
-
-        .stat-card-num {
-            font-family: 'Playfair Display', serif;
-            font-size: 26px;
-            color: var(--navy);
-            font-weight: 700;
-            display: block;
-        }
-
-        .stat-card-lbl {
-            color: var(--text-muted);
-            font-size: 12.5px;
-        }
-
-        .content-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 22px;
-        }
-
-        .card {
-            background: #fff;
-            border-radius: 10px;
-            border: 1px solid var(--grey-mid);
-            overflow: hidden;
-        }
-
-        .card-header {
-            padding: 18px 24px;
-            border-bottom: 1px solid var(--grey-mid);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .card-header h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 17px;
-            color: var(--navy);
-            font-weight: 600;
-        }
-
-        .card-body {
-            padding: 20px 24px;
-        }
-
-        .training-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 14px;
-            padding: 14px 0;
-            border-bottom: 1px solid var(--grey-mid);
-        }
-
-        .training-item:last-child {
-            border-bottom: none;
-        }
-
-        .training-date-box {
-            background: var(--navy);
-            color: #fff;
-            border-radius: 8px;
-            padding: 8px 12px;
-            text-align: center;
-            min-width: 52px;
-            flex-shrink: 0;
-        }
-
-        .training-date-box .day {
-            font-family: 'Playfair Display', serif;
-            font-size: 22px;
-            font-weight: 700;
-            line-height: 1;
-        }
-
-        .training-date-box .month {
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: .5px;
-            opacity: .75;
-            margin-top: 2px;
-        }
-
-        .training-info h4 {
-            font-size: 14.5px;
-            font-weight: 600;
-            color: var(--navy);
-            margin-bottom: 4px;
-        }
-
-        .training-info p {
-            font-size: 13px;
-            color: var(--text-muted);
-        }
-
-        .training-meta {
-            display: flex;
-            gap: 8px;
-            margin-top: 6px;
-            flex-wrap: wrap;
-        }
-
-        .t-meta {
-            font-size: 12px;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .actions-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .action-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 14px 16px;
-            border-radius: 8px;
-            background: var(--grey-light);
-            border: 1px solid var(--grey-mid);
-        }
-
-        .action-item-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .action-icon {
-            font-size: 18px;
-        }
-
-        .action-label {
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--navy);
-        }
-
-        .action-sub {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        .attendance-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13.5px;
-        }
-
-        .attendance-table th {
-            padding: 10px 14px;
-            text-align: left;
-            background: var(--grey-light);
-            color: var(--text-muted);
-            font-size: 12px;
-            font-weight: 600;
-            letter-spacing: .5px;
-            text-transform: uppercase;
-        }
-
-        .attendance-table td {
-            padding: 12px 14px;
-            border-top: 1px solid var(--grey-mid);
-        }
-
-        .feedback-form textarea {
-            width: 100%;
-            border: 1.5px solid var(--grey-mid);
-            border-radius: 6px;
-            padding: 12px;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 14px;
-            resize: vertical;
-            min-height: 100px;
-            color: var(--text);
-            outline: none;
-            transition: border-color .2s;
-        }
-
-        .feedback-form textarea:focus {
-            border-color: var(--blue-bright);
-        }
-
-        .star-rating {
-            display: flex;
-            gap: 6px;
-            margin-bottom: 14px;
-        }
-
-        .star {
-            font-size: 22px;
-            cursor: pointer;
-            transition: transform .15s;
-        }
-
-        .star:hover {
-            transform: scale(1.15);
-        }
-
-        .payment-status {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 14px 16px;
-            background: #D1FAE5;
-            border: 1px solid #A7F3D0;
-            border-radius: 8px;
-            margin-bottom: 16px;
-        }
-
-        .payment-status-icon {
-            font-size: 22px;
-        }
-
-        .payment-status p {
-            font-size: 14px;
-            color: #065F46;
-            font-weight: 500;
-        }
-
-        .payment-status-pending {
-            background: #FEF3C7;
-            border-color: #FDE68A;
-        }
-
-        .payment-status-pending p {
-            color: #92400E;
-        }
-
-        /* ══════════════════════════════════════
-     4. ADMIN DASHBOARD
-  ══════════════════════════════════════ */
-        .admin-sidebar {
-            background: #060E1C;
-        }
-
-        .admin-topbar {
-            background: var(--navy);
-            border-bottom: 1px solid rgba(255, 255, 255, .08);
-        }
-
-        .admin-topbar .portal-topbar-title {
-            color: #fff;
-        }
-
-        .admin-content-area {
-            background: #0A1628;
-            min-height: 100vh;
-        }
-
-        .admin-stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 18px;
-            margin-bottom: 28px;
-        }
-
-        .admin-stat {
-            background: rgba(255, 255, 255, .05);
-            border: 1px solid rgba(255, 255, 255, .1);
-            border-radius: 10px;
-            padding: 24px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .admin-stat::after {
-            content: '';
-            position: absolute;
-            top: -20px;
-            right: -20px;
-            width: 80px;
-            height: 80px;
-            background: rgba(30, 95, 194, .15);
-            border-radius: 50%;
-        }
-
-        .admin-stat-num {
-            font-family: 'Playfair Display', serif;
-            font-size: 32px;
-            color: #fff;
-            font-weight: 700;
-        }
-
-        .admin-stat-lbl {
-            color: rgba(255, 255, 255, .5);
-            font-size: 13px;
-            margin-top: 6px;
-        }
-
-        .admin-stat-change {
-            font-size: 12px;
-            color: var(--success);
-            margin-top: 8px;
-            font-weight: 500;
-        }
-
-        .admin-card {
-            background: rgba(255, 255, 255, .04);
-            border: 1px solid rgba(255, 255, 255, .1);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .admin-card-header {
-            padding: 18px 24px;
-            border-bottom: 1px solid rgba(255, 255, 255, .08);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .admin-card-header h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 17px;
-            color: #fff;
-            font-weight: 600;
-        }
-
-        .admin-card-body {
-            padding: 20px 24px;
-        }
-
-        .admin-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13.5px;
-        }
-
-        .admin-table th {
-            padding: 10px 14px;
-            text-align: left;
-            color: rgba(255, 255, 255, .4);
-            font-size: 12px;
-            font-weight: 600;
-            letter-spacing: .5px;
-            text-transform: uppercase;
-            border-bottom: 1px solid rgba(255, 255, 255, .08);
-        }
-
-        .admin-table td {
-            padding: 13px 14px;
-            border-bottom: 1px solid rgba(255, 255, 255, .06);
-            color: rgba(255, 255, 255, .8);
-        }
-
-        .admin-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .admin-table tr:hover td {
-            background: rgba(255, 255, 255, .03);
-        }
-
-        .admin-grid {
-            display: grid;
-            grid-template-columns: 1.5fr 1fr;
-            gap: 22px;
-        }
-
-        .admin-actions {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-
-        .admin-action-btn {
-            background: rgba(255, 255, 255, .06);
-            border: 1px solid rgba(255, 255, 255, .12);
-            border-radius: 8px;
-            padding: 16px;
-            cursor: pointer;
-            transition: all .2s;
-            text-align: center;
-            color: #fff;
-        }
-
-        .admin-action-btn:hover {
-            background: rgba(30, 95, 194, .25);
-            border-color: rgba(30, 95, 194, .5);
-        }
-
-        .admin-action-btn .icon {
-            font-size: 22px;
-            margin-bottom: 8px;
-            display: block;
-        }
-
-        .admin-action-btn .lbl {
-            font-size: 13px;
-            font-weight: 500;
-        }
-
-        .progress-bar {
-            height: 6px;
-            background: rgba(255, 255, 255, .1);
-            border-radius: 3px;
-            margin-top: 8px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            border-radius: 3px;
-            background: var(--blue-bright);
-        }
-
-        /* ══════════════════════════════════════
-     5. CERTIFICATE PAGE
-  ══════════════════════════════════════ */
-        .cert-page {
-            min-height: 100vh;
-            background: var(--grey-light);
-            padding: 40px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .cert-page-header {
-            text-align: center;
-            margin-bottom: 36px;
-        }
-
-        .cert-page-header h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 26px;
-            color: var(--navy);
-        }
-
-        .cert-page-header p {
-            color: var(--text-muted);
-            margin-top: 6px;
-        }
-
-        .certificate {
-            width: 100%;
-            max-width: 860px;
-            background: #fff;
-            border: 12px solid var(--navy);
-            padding: 0;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, .15);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cert-border {
-            position: absolute;
-            inset: 8px;
-            border: 2px solid var(--accent);
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .cert-inner {
-            padding: 50px 60px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .cert-header {
-            text-align: center;
-            margin-bottom: 32px;
-        }
-
-        .cert-logo-row {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 14px;
-            margin-bottom: 20px;
-        }
-
-        .cert-logo-icon {
-            width: 56px;
-            height: 56px;
-            background: var(--navy);
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-            color: var(--accent);
-            font-size: 22px;
-        }
-
-        .cert-logo-name {
-            font-family: 'Playfair Display', serif;
-            font-size: 22px;
-            color: var(--navy);
-            font-weight: 700;
-        }
-
-        .cert-logo-sub {
-            font-size: 11px;
-            color: var(--grey);
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-        }
-
-        .cert-divider {
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
-            margin: 24px 0;
-        }
-
-        .cert-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 13px;
-            color: var(--text-muted);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-bottom: 12px;
-        }
-
-        .cert-main-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 36px;
-            color: var(--navy);
-            font-weight: 700;
-            margin-bottom: 24px;
-        }
-
-        .cert-body {
-            text-align: center;
-        }
-
-        .cert-presented {
-            font-size: 14px;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-            letter-spacing: .5px;
-        }
-
-        .cert-name {
-            font-family: 'Playfair Display', serif;
-            font-size: 42px;
-            color: var(--blue-bright);
-            font-weight: 700;
-            border-bottom: 2px solid var(--accent);
-            display: inline-block;
-            padding-bottom: 6px;
-            margin-bottom: 20px;
-            font-style: italic;
-        }
-
-        .cert-for {
-            font-size: 14px;
-            color: var(--text-muted);
-            margin-bottom: 10px;
-        }
-
-        .cert-course {
-            font-family: 'Playfair Display', serif;
-            font-size: 22px;
-            color: var(--navy);
-            font-weight: 600;
-            margin-bottom: 24px;
-        }
-
-        .cert-meta {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-bottom: 36px;
-        }
-
-        .cert-meta-item {
-            text-align: center;
-        }
-
-        .cert-meta-item .lbl {
-            font-size: 11px;
-            color: var(--grey);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .cert-meta-item .val {
-            font-size: 14px;
-            color: var(--text);
-            font-weight: 500;
-            margin-top: 3px;
-        }
-
-        .cert-sigs {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            margin-top: 20px;
-        }
-
-        .cert-sig {
-            text-align: center;
-        }
-
-        .sig-line {
-            height: 1px;
-            background: var(--navy);
-            margin-bottom: 8px;
-        }
-
-        .sig-name {
-            font-family: 'Playfair Display', serif;
-            font-size: 15px;
-            color: var(--navy);
-            font-weight: 600;
-        }
-
-        .sig-title {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        .cert-seal {
-            position: absolute;
-            right: 50px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            border: 4px solid var(--accent);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: rgba(200, 169, 110, .05);
-            opacity: .25;
-        }
-
-        .cert-watermark {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: .025;
-            pointer-events: none;
-            font-family: 'Playfair Display', serif;
-            font-size: 100px;
-            color: var(--navy);
-            font-weight: 700;
-            transform: rotate(-20deg);
-            white-space: nowrap;
-        }
-
-        .cert-footer {
-            text-align: center;
-            margin-top: 16px;
-            font-size: 12px;
-            color: var(--grey);
-            letter-spacing: .5px;
-        }
-
-        .cert-actions {
-            display: flex;
-            gap: 14px;
-            margin-top: 28px;
-        }
-
-        /* ══════════════════════════════════════
-     6. PAYMENT PAGE
-  ══════════════════════════════════════ */
-        .payment-page {
-            min-height: 100vh;
-            background: var(--grey-light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 40px 20px;
-        }
-
-        .payment-card {
-            background: #fff;
-            border-radius: 12px;
-            max-width: 520px;
-            width: 100%;
-            padding: 48px 44px;
-            box-shadow: 0 12px 40px rgba(0, 0, 0, .1);
-        }
-
-        .payment-icon {
-            width: 72px;
-            height: 72px;
-            background: #D1FAE5;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 24px;
-            font-size: 32px;
-        }
-
-        .payment-card h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 26px;
-            color: var(--navy);
-            text-align: center;
-            margin-bottom: 8px;
-        }
-
-        .payment-card>p {
-            color: var(--text-muted);
-            text-align: center;
-            font-size: 14px;
-            margin-bottom: 28px;
-        }
-
-        .payment-detail {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 14px 0;
-            border-bottom: 1px solid var(--grey-mid);
-            font-size: 14px;
-        }
-
-        .payment-detail:last-of-type {
-            border-bottom: none;
-        }
-
-        .payment-detail .lbl {
-            color: var(--text-muted);
-        }
-
-        .payment-detail .val {
-            color: var(--navy);
-            font-weight: 600;
-        }
-
-        .payment-notice {
-            background: #EFF6FF;
-            border: 1px solid #BFDBFE;
-            border-radius: 8px;
-            padding: 14px 16px;
-            font-size: 13.5px;
-            color: #1E40AF;
-            margin-top: 24px;
-            line-height: 1.6;
-        }
-
-        .payment-notice strong {
-            display: block;
-            margin-bottom: 4px;
-        }
-
-        /* ANIMATIONS */
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(24px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .fade-in {
-            animation: fadeUp .5s ease both;
-        }
-
-        /* ══════════════════════════════════════
-     RESPONSIVE
-  ══════════════════════════════════════ */
-        @media(max-width:1024px) {
-            .hero-inner {
-                grid-template-columns: 1fr;
-            }
-
-            .hero-visual {
-                display: none;
-            }
-
-            .stats-row {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .admin-stats {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .content-grid,
-            .admin-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .trust-inner {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        @media(max-width:768px) {
-            .portal-sidebar {
-                transform: translateX(-100%);
-                transition: transform .3s;
-            }
-
-            .portal-sidebar.open {
-                transform: translateX(0);
-            }
-
-            .portal-main {
-                margin-left: 0;
-            }
-
-            .portal-topbar {
-                padding: 0 16px;
-            }
-
-            .portal-content {
-                padding: 20px 16px;
-            }
-
-            .stats-row {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .cert-inner {
-                padding: 30px 24px;
-            }
-
-            .cert-sigs {
-                grid-template-columns: 1fr;
-                gap: 24px;
-            }
-
-            .cert-name {
-                font-size: 30px;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .footer-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .auth-card {
-                padding: 32px 24px;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-
-            .trust-metrics {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .admin-actions {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media(max-width:480px) {
-
-            .stats-row,
-            .admin-stats {
-                grid-template-columns: 1fr;
-            }
-
-            .hero-btns {
-                flex-direction: column;
-            }
-
-            .cert-meta {
-                flex-direction: column;
-                gap: 16px;
-            }
-
-            .payment-card {
-                padding: 32px 24px;
-            }
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 8px;
-        }
-
-        @media(max-width:768px) {
-            .mobile-menu-btn {
-                display: flex;
-                align-items: center;
-            }
-        }
-
-        .hamburger {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .hamburger span {
-            width: 20px;
-            height: 2px;
-            background: rgba(255, 255, 255, .7);
-            border-radius: 2px;
-        }
-    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Phillips Consulting — Digital Training & Certification</title>
+    <meta name="description" content="A centralised platform digitising the end-to-end training participant journey — registration, secure payments, attendance, automated certification, and feedback." />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="assets/css/tokens.css" />
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link rel="stylesheet" href="assets/css/landing.css" />
 </head>
-
 <body>
 
-    <!-- ═══════════════════════════════════ PAGE 1: LANDING ═══════════════════════════════════ -->
-    <div id="page-landing" class="page active">
+<!-- ════════════════════ NAV ════════════════════ -->
+<header class="site-nav">
+    <div class="site-nav-inner">
+        <a class="logo" href="/">
+            <span class="logo-mark">phillips</span>
+            <span class="logo-sub">CONSULTING</span>
+        </a>
 
-        <nav class="nav">
-            <div class="nav-inner">
-                <a class="nav-logo" href="#">
-                    <div class="nav-logo-icon">P</div>
-                    <div>
-                        <div class="nav-logo-text">Phillips Consulting</div>
-                        <div class="nav-logo-sub">Training Management</div>
-                    </div>
-                </a>
-                <div class="nav-links">
-                    <a href="#">Home</a>
-                    <a href="#">Services</a>
-                    <a href="#">Programs</a>
-                    <a href="#">About</a>
-                    <a href="#">Contact</a>
-                </div>
-                <div class="nav-cta">
-                    <button class="btn-outline btn-sm" onclick="showPage('page-login')">Admin Login</button>
-                    <button class="btn-primary btn-sm" onclick="showPage('page-signup')">Register</button>
-                </div>
-            </div>
+        <nav class="site-nav-links">
+            <a href="#capabilities">Capabilities</a>
+            <a href="#how-it-works">How it works</a>
+            <a href="#programmes">Programmes</a>
+            <a href="verify/">Verify Certificate</a>
         </nav>
 
-        <!-- HERO -->
-        <section class="hero">
-            <div class="hero-bg"></div>
-            <div class="hero-grid"></div>
-            <div class="hero-inner">
-                <div>
-                    <div class="hero-label">Enterprise Training Platform</div>
-                    <h1>Digitizing Corporate<br><span>Training & Certification</span></h1>
-                    <p class="hero-desc">A complete digital ecosystem for managing registration, tracking attendance,
-                        distributing materials, generating certified credentials, and collecting actionable feedback —
-                        all in one platform.</p>
-                    <div class="hero-btns">
-                        <button class="btn-primary" onclick="showPage('page-signup')">Register for Training</button>
-                        <button class="btn-outline" onclick="showPage('page-login')">Admin Login</button>
-                    </div>
-                    <div class="hero-stats">
-                        <div class="hero-stat"><span class="hero-stat-num">2,400+</span>
-                            <div class="hero-stat-lbl">Participants Trained</div>
-                        </div>
-                        <div class="hero-stat"><span class="hero-stat-num">98%</span>
-                            <div class="hero-stat-lbl">Certification Rate</div>
-                        </div>
-                        <div class="hero-stat"><span class="hero-stat-num">150+</span>
-                            <div class="hero-stat-lbl">Programmes Delivered</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="hero-visual">
-                    <div class="hero-card-stack">
-                        <div class="dashboard-mock">
-                            <div class="dm-bar">
-                                <div class="dm-dot dm-dot-r"></div>
-                                <div class="dm-dot dm-dot-y"></div>
-                                <div class="dm-dot dm-dot-g"></div>
-                                <div class="dm-url">phillips-consulting.com/portal</div>
-                            </div>
-                            <div class="dm-body">
-                                <div class="dm-sidebar">
-                                    <div class="dm-side-item active">
-                                        <div class="dm-side-icon"></div>Dashboard
-                                    </div>
-                                    <div class="dm-side-item">
-                                        <div class="dm-side-icon"></div>My Trainings
-                                    </div>
-                                    <div class="dm-side-item">
-                                        <div class="dm-side-icon"></div>Attendance
-                                    </div>
-                                    <div class="dm-side-item">
-                                        <div class="dm-side-icon"></div>Materials
-                                    </div>
-                                    <div class="dm-side-item">
-                                        <div class="dm-side-icon"></div>Certificates
-                                    </div>
-                                    <div class="dm-side-item">
-                                        <div class="dm-side-icon"></div>Feedback
-                                    </div>
-                                </div>
-                                <div class="dm-content">
-                                    <div class="dm-stat-row">
-                                        <div class="dm-stat-card">
-                                            <div class="dm-stat-card-num">3</div>
-                                            <div class="dm-stat-card-lbl">Trainings</div>
-                                        </div>
-                                        <div class="dm-stat-card">
-                                            <div class="dm-stat-card-num">2</div>
-                                            <div class="dm-stat-card-lbl">Completed</div>
-                                        </div>
-                                        <div class="dm-stat-card">
-                                            <div class="dm-stat-card-num">1</div>
-                                            <div class="dm-stat-card-lbl">Cert Ready</div>
-                                        </div>
-                                    </div>
-                                    <div class="dm-chart">
-                                        <div class="dm-bar-el" style="height:40%"></div>
-                                        <div class="dm-bar-el" style="height:65%"></div>
-                                        <div class="dm-bar-el" style="height:45%"></div>
-                                        <div class="dm-bar-el" style="height:80%"></div>
-                                        <div class="dm-bar-el" style="height:60%"></div>
-                                        <div class="dm-bar-el" style="height:90%"></div>
-                                        <div class="dm-bar-el" style="height:70%"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <div class="site-nav-cta">
+            <a class="btn btn-ghost btn-sm" href="login/">Sign in</a>
+            <a class="btn btn-primary btn-sm" href="register/">Register</a>
+            <button class="nav-burger" aria-label="Menu"><span></span><span></span><span></span></button>
+        </div>
+    </div>
+</header>
 
-        <!-- FEATURES -->
-        <section class="features">
-            <div class="section-label">Platform Capabilities</div>
-            <h2 class="section-title">Everything Your Training Programme Needs</h2>
-            <p class="section-desc">From enrolment to certification, Phillips Consulting TMS streamlines every step of
-                your corporate training journey.</p>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">📋</div>
-                    <h3>Participant Registration</h3>
-                    <p>Seamless online registration with automated confirmation emails, payment tracking, and
-                        participant management for all training programmes.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">✅</div>
-                    <h3>Attendance Tracking</h3>
-                    <p>Real-time digital attendance marking with automated alerts for absences, session-by-session
-                        tracking, and exportable attendance reports.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📁</div>
-                    <h3>Training Materials</h3>
-                    <p>Centralised document repository for participants to download course materials, handouts,
-                        pre-reading content, and post-training resources.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🎓</div>
-                    <h3>Automated Certificates</h3>
-                    <p>Professional digital certificates auto-generated upon completion and payment confirmation, with
-                        unique verification codes and downloadable PDFs.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">💬</div>
-                    <h3>Feedback Collection</h3>
-                    <p>Structured post-training feedback forms with rating scales, open-ended responses, and aggregated
-                        analytics for continuous programme improvement.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">💳</div>
-                    <h3>Payment Management</h3>
-                    <p>Admin-controlled payment verification workflow with status tracking, approval notifications, and
-                        certificate access gated on confirmed payment.</p>
-                </div>
-            </div>
-        </section>
+<!-- ════════════════════ HERO (dark, CSS+SVG aurora) ════════════════════ -->
+<section class="hero" id="hero">
+    <div class="hero-art">
+        <div class="atmosphere"></div>
+        <div class="mesh"></div>
+        <div id="three-hero"></div>
+    </div>
+    <div class="hero-cursor-glow"></div>
+    <div class="hero-fade"></div>
 
-        <!-- TRUST -->
-        <section class="trust">
-            <div class="trust-inner" style="max-width:1200px;margin:0 auto;">
-                <div>
-                    <h2>Trusted by Nigeria's Leading Organisations</h2>
-                    <p>Phillips Consulting has delivered world-class training management services to corporates,
-                        government agencies, NGOs, and professional bodies across Nigeria and West Africa for over two
-                        decades.</p>
-                    <ul class="trust-list">
-                        <li>ISO-aligned programme design and delivery methodology</li>
-                        <li>Experienced faculty with cross-sector expertise</li>
-                        <li>Robust digital infrastructure for large-scale cohorts</li>
-                        <li>Dedicated client success and support team</li>
-                        <li>Flexible learning formats: in-person, hybrid, and virtual</li>
-                    </ul>
-                    <button class="btn-primary" style="margin-top:24px;" onclick="showPage('page-signup')">Get Started
-                        Today</button>
-                </div>
-                <div class="trust-metrics">
-                    <div class="trust-metric">
-                        <div class="trust-metric-num">20+</div>
-                        <div class="trust-metric-lbl">Years in Business</div>
-                    </div>
-                    <div class="trust-metric">
-                        <div class="trust-metric-num">500+</div>
-                        <div class="trust-metric-lbl">Corporate Clients</div>
-                    </div>
-                    <div class="trust-metric">
-                        <div class="trust-metric-num">50K+</div>
-                        <div class="trust-metric-lbl">Professionals Trained</div>
-                    </div>
-                    <div class="trust-metric">
-                        <div class="trust-metric-num">4.9★</div>
-                        <div class="trust-metric-lbl">Client Satisfaction</div>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <div class="hero-inner">
+        <h1>
+            <span class="word">A</span>
+            <span class="word">refined</span>
+            <span class="word">system</span>
+            <span class="word">for</span>
+            <span class="word">corporate</span>
+            <span class="word"><span class="accent">learning</span></span>
+            <span class="word">&amp;</span>
+            <span class="word"><span class="accent">certification.</span></span>
+        </h1>
 
-        <!-- FOOTER -->
-        <footer>
-            <div class="footer-inner">
-                <div class="footer-grid">
-                    <div class="footer-brand">
-                        <div class="nav-logo" style="display:flex;align-items:center;gap:10px;">
-                            <div class="nav-logo-icon">P</div>
-                            <div>
-                                <div class="nav-logo-text">Phillips Consulting</div>
-                                <div class="nav-logo-sub">Training Management</div>
-                            </div>
-                        </div>
-                        <p>Empowering organisations through structured learning, capability development, and
-                            professional certification since 1999.</p>
-                    </div>
-                    <div class="footer-col">
-                        <h4>Platform</h4>
-                        <a href="#">Participant Portal</a>
-                        <a href="#">Admin Dashboard</a>
-                        <a href="#">Certificate Verify</a>
-                        <a href="#">Training Calendar</a>
-                    </div>
-                    <div class="footer-col">
-                        <h4>Services</h4>
-                        <a href="#">Corporate Training</a>
-                        <a href="#">Executive Education</a>
-                        <a href="#">Coaching & Mentoring</a>
-                        <a href="#">HR Consulting</a>
-                    </div>
-                    <div class="footer-col footer-contact">
-                        <h4>Contact</h4>
-                        <p>📍 27 Gerrard Road, Ikoyi, Lagos</p>
-                        <p>📞 +234 (0) 1 279 8000</p>
-                        <p>✉️ training@phillipsconsulting.net</p>
-                        <p>🌐 www.phillipsconsulting.net</p>
-                    </div>
-                </div>
-                <div class="footer-bottom">
-                    <p>© 2025 Phillips Consulting Limited. All rights reserved.</p>
-                    <div class="social-links">
-                        <a class="social-link" href="#">in</a>
-                        <a class="social-link" href="#">𝕏</a>
-                        <a class="social-link" href="#">f</a>
-                        <a class="social-link" href="#">▶</a>
-                    </div>
-                </div>
-            </div>
-        </footer>
-    </div><!-- /page-landing -->
+        <p class="hero-lead">
+            From enrolment and verified payment to attendance, certification, and feedback &mdash;
+            Phillips Consulting&rsquo;s digital infrastructure replaces spreadsheets, paper forms,
+            and manual approvals with one continuous, audit-ready workflow.
+        </p>
 
-
-    <!-- ═══════════════════════════════════ PAGE 2: SIGNUP / LOGIN ═══════════════════════════════════ -->
-    <div id="page-signup" class="page">
-        <div class="auth-page">
-            <div class="auth-bg"></div>
-            <div class="auth-card fade-in">
-                <div class="auth-logo">
-                    <div class="auth-logo-icon">P</div>
-                    <span class="auth-logo-name">Phillips Consulting</span>
-                    <div class="auth-logo-sub">Training Management System</div>
-                </div>
-                <div class="auth-tabs">
-                    <div class="auth-tab active" onclick="switchTab('signup')">Create Account</div>
-                    <div class="auth-tab" onclick="showPage('page-login')">Sign In</div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group"><label>First Name</label><input class="form-control" type="text"
-                            placeholder="Adaeze" value="Adaeze"></div>
-                    <div class="form-group"><label>Last Name</label><input class="form-control" type="text"
-                            placeholder="Okonkwo" value="Okonkwo"></div>
-                </div>
-                <div class="form-group"><label>Email Address</label><input class="form-control" type="email"
-                        placeholder="adaeze@company.com" value="adaeze.okonkwo@stanbicibtc.com"></div>
-                <div class="form-group"><label>Organisation</label><input class="form-control" type="text"
-                        placeholder="Company Name" value="Stanbic IBTC Bank PLC"></div>
-                <div class="form-group"><label>Select Training Programme</label>
-                    <select class="form-control">
-                        <option>Advanced Leadership & Management — April 2025</option>
-                        <option>Project Management Professional (PMP) Prep — May 2025</option>
-                        <option>Finance for Non-Finance Managers — June 2025</option>
-                        <option>Strategic HR Management — July 2025</option>
-                    </select>
-                </div>
-                <div class="form-row">
-                    <div class="form-group"><label>Password</label><input class="form-control" type="password"
-                            value="••••••••"></div>
-                    <div class="form-group"><label>Confirm Password</label><input class="form-control" type="password"
-                            value="••••••••"></div>
-                </div>
-                <button class="btn-primary" style="width:100%;margin-top:6px;"
-                    onclick="showPage('page-participant')">Complete Registration</button>
-                <div class="auth-footer">Already registered? <a href="#" onclick="showPage('page-login')">Sign in
-                        here</a></div>
-            </div>
+        <div class="hero-actions">
+            <a class="btn btn-primary btn-lg btn-arrow" href="register/">Register for a Programme</a>
+            <a class="btn btn-outline-light btn-lg" href="login/">Sign in to Portal</a>
         </div>
     </div>
 
-    <div id="page-login" class="page">
-        <div class="auth-page">
-            <div class="auth-bg"></div>
-            <div class="auth-card fade-in">
-                <div class="auth-logo">
-                    <div class="auth-logo-icon">P</div>
-                    <span class="auth-logo-name">Phillips Consulting</span>
-                    <div class="auth-logo-sub">Training Management System</div>
-                </div>
-                <h2 class="auth-title">Welcome Back</h2>
-                <p class="auth-subtitle">Sign in to access your training portal</p>
-                <div class="auth-tabs">
-                    <div class="auth-tab" onclick="showPage('page-signup')">Create Account</div>
-                    <div class="auth-tab active" onclick="switchTab('login')">Sign In</div>
-                </div>
-                <div class="form-group"><label>Email Address</label><input class="form-control" type="email"
-                        value="adaeze.okonkwo@stanbicibtc.com"></div>
-                <div class="form-group"><label>Password</label><input class="form-control" type="password"
-                        value="••••••••"></div>
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
-                    <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;">
-                        <input type="checkbox" checked> Remember me
-                    </label>
-                    <a href="#" style="font-size:13px;color:var(--blue-bright);text-decoration:none;">Forgot
-                        password?</a>
-                </div>
-                <button class="btn-primary" style="width:100%;" onclick="showPage('page-participant')">Sign In —
-                    Participant Portal</button>
-                <div style="text-align:center;margin:14px 0;color:var(--grey);font-size:13px;">or</div>
-                <button class="btn-ghost" style="width:100%;" onclick="showPage('page-admin')">Admin Dashboard Login
-                    →</button>
-                <div class="auth-footer">New participant? <a href="#" onclick="showPage('page-signup')">Register
-                        here</a></div>
-                <div style="text-align:center;margin-top:16px;"><a href="#" onclick="showPage('page-landing')"
-                        style="font-size:12px;color:var(--grey);text-decoration:none;">← Back to Homepage</a></div>
-            </div>
+    <a class="hero-scroll-cue" href="#capabilities">Scroll</a>
+</section>
+
+<!-- ════════════════════ TESTIMONIALS ════════════════════ -->
+<section class="testimonials" id="voices">
+    <div class="container">
+        <div class="section-head reveal">
+            <span class="eyebrow eyebrow-line">Voices from our cohorts</span>
+            <h2>What participants say.</h2>
+            <p>Three thousand professionals have walked through Phillips Consulting programmes. A few of their reflections.</p>
         </div>
-    </div>
 
+        <div class="testimonials-bento">
 
-    <!-- ═══════════════════════════════════ PAGE 3: PARTICIPANT DASHBOARD ═══════════════════════════════════ -->
-    <div id="page-participant" class="page">
-        <div class="portal-layout">
-            <aside class="portal-sidebar" id="participantSidebar">
-                <div class="portal-sidebar-logo">
-                    <div class="nav-logo" style="display:flex;align-items:center;gap:10px;">
-                        <div class="nav-logo-icon" style="width:32px;height:32px;font-size:14px;">P</div>
-                        <div>
-                            <div class="nav-logo-text" style="font-size:14px;">Phillips Consulting</div>
-                            <div class="nav-logo-sub">TMS Portal</div>
-                        </div>
-                    </div>
+            <article class="quote-card feature bento-feature reveal">
+                <div class="quote-mark">&ldquo;</div>
+                <div class="quote-stars" aria-label="5 out of 5">
+                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
                 </div>
-                <nav class="sidebar-nav">
-                    <a href="#" class="active" onclick="setActiveSideNav(this)"><span class="sidebar-nav-icon">⊞</span>
-                        Dashboard</a>
-                    <a href="#" onclick="setActiveSideNav(this)"><span class="sidebar-nav-icon">📅</span> My
-                        Trainings</a>
-                    <a href="#" onclick="setActiveSideNav(this)"><span class="sidebar-nav-icon">✅</span> Attendance</a>
-                    <div class="sidebar-divider"></div>
-                    <a href="#" onclick="setActiveSideNav(this)"><span class="sidebar-nav-icon">📁</span> Materials</a>
-                    <a href="#" onclick="setActiveSideNav(this)"><span class="sidebar-nav-icon">🎓</span>
-                        Certificates</a>
-                    <a href="#" onclick="setActiveSideNav(this)"><span class="sidebar-nav-icon">💬</span> Feedback</a>
-                    <div class="sidebar-divider"></div>
-                    <a href="#" onclick="setActiveSideNav(this)"><span class="sidebar-nav-icon">💳</span> Payments</a>
-                    <a href="#" onclick="setActiveSideNav(this)"><span class="sidebar-nav-icon">⚙</span> Settings</a>
-                    <a href="#" onclick="showPage('page-landing')"><span class="sidebar-nav-icon">⬅</span> Back to
-                        Home</a>
-                </nav>
-                <div class="sidebar-user">
-                    <div class="sidebar-avatar">AO</div>
-                    <div>
-                        <div class="sidebar-user-name">Adaeze Okonkwo</div>
-                        <div class="sidebar-user-role">Participant</div>
-                    </div>
-                </div>
-            </aside>
-
-            <main class="portal-main">
-                <div class="portal-topbar">
-                    <div style="display:flex;align-items:center;gap:12px;">
-                        <button class="mobile-menu-btn" onclick="toggleSidebar('participantSidebar')">
-                            <div class="hamburger"><span></span><span></span><span></span></div>
-                        </button>
-                        <div class="portal-topbar-title">Participant Dashboard</div>
-                    </div>
-                    <div class="portal-topbar-right">
-                        <div class="topbar-notif">🔔<div class="topbar-notif-dot"></div>
-                        </div>
-                        <div style="display:flex;align-items:center;gap:10px;">
-                            <div class="sidebar-avatar" style="width:34px;height:34px;font-size:13px;">AO</div>
-                            <span style="font-size:14px;font-weight:500;color:var(--text);">Adaeze O.</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="portal-content">
-                    <div class="welcome-banner">
-                        <div class="welcome-banner-bg"></div>
-                        <h2>Good morning, Adaeze 👋</h2>
-                        <p>You have 1 upcoming training this week. Your certificate for Financial Leadership is ready to
-                            download.</p>
-                    </div>
-
-                    <div class="stats-row">
-                        <div class="stat-card">
-                            <div class="stat-card-icon blue">📅</div>
-                            <div><span class="stat-card-num">3</span>
-                                <div class="stat-card-lbl">Enrolled Programmes</div>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-card-icon green">✅</div>
-                            <div><span class="stat-card-num">2</span>
-                                <div class="stat-card-lbl">Completed</div>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-card-icon gold">🎓</div>
-                            <div><span class="stat-card-num">1</span>
-                                <div class="stat-card-lbl">Certificate Ready</div>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-card-icon red">💳</div>
-                            <div><span class="stat-card-num">1</span>
-                                <div class="stat-card-lbl">Pending Payment</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="content-grid">
-                        <div>
-                            <!-- Upcoming Trainings -->
-                            <div class="card" style="margin-bottom:22px;">
-                                <div class="card-header">
-                                    <h3>Upcoming & Active Trainings</h3>
-                                    <span class="tag tag-blue">3 Enrolled</span>
-                                </div>
-                                <div class="card-body">
-                                    <div class="training-item">
-                                        <div class="training-date-box">
-                                            <div class="day">24</div>
-                                            <div class="month">Apr</div>
-                                        </div>
-                                        <div class="training-info" style="flex:1;">
-                                            <h4>Advanced Leadership & Management Programme</h4>
-                                            <p>4-Day Intensive | Landmark Event Centre, Lagos</p>
-                                            <div class="training-meta">
-                                                <span class="t-meta">⏰ 9:00 AM – 5:00 PM</span>
-                                                <span class="tag tag-success" style="font-size:11px;">Confirmed</span>
-                                                <span class="tag tag-blue" style="font-size:11px;">Paid</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="training-item">
-                                        <div class="training-date-box" style="background:var(--blue-bright);">
-                                            <div class="day">15</div>
-                                            <div class="month">May</div>
-                                        </div>
-                                        <div class="training-info" style="flex:1;">
-                                            <h4>Project Management Professional (PMP) Prep</h4>
-                                            <p>5-Day Course | Virtual (Zoom) + Lagos Hub</p>
-                                            <div class="training-meta">
-                                                <span class="t-meta">⏰ 8:30 AM – 4:00 PM</span>
-                                                <span class="tag tag-warning" style="font-size:11px;">Payment
-                                                    Pending</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="training-item">
-                                        <div class="training-date-box" style="background:var(--success);">
-                                            <div class="day">12</div>
-                                            <div class="month">Mar</div>
-                                        </div>
-                                        <div class="training-info" style="flex:1;">
-                                            <h4>Finance for Non-Finance Managers</h4>
-                                            <p>2-Day Workshop | Phillips Consulting HQ, Ikoyi</p>
-                                            <div class="training-meta">
-                                                <span class="t-meta">✓ Completed March 13</span>
-                                                <span class="tag tag-success" style="font-size:11px;">Completed</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Attendance -->
-                            <div class="card" style="margin-bottom:22px;">
-                                <div class="card-header">
-                                    <h3>Attendance Record</h3>
-                                </div>
-                                <div class="card-body" style="padding:0;">
-                                    <table class="attendance-table">
-                                        <thead>
-                                            <tr>
-                                                <th>Programme</th>
-                                                <th>Date</th>
-                                                <th>Day</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Finance for Non-Finance Managers</td>
-                                                <td>12 Mar 2025</td>
-                                                <td>Day 1</td>
-                                                <td><span class="tag tag-success">Present</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Finance for Non-Finance Managers</td>
-                                                <td>13 Mar 2025</td>
-                                                <td>Day 2</td>
-                                                <td><span class="tag tag-success">Present</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Adv. Leadership Programme</td>
-                                                <td>24 Apr 2025</td>
-                                                <td>Day 1</td>
-                                                <td><span class="tag tag-blue">Upcoming</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Adv. Leadership Programme</td>
-                                                <td>25 Apr 2025</td>
-                                                <td>Day 2</td>
-                                                <td><span class="tag tag-blue">Upcoming</span></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-
-                            <!-- Feedback Form -->
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3>Submit Training Feedback</h3><span class="tag tag-warning">1 Pending</span>
-                                </div>
-                                <div class="card-body">
-                                    <p style="font-size:13.5px;color:var(--text-muted);margin-bottom:16px;">Share your
-                                        experience for <strong>Finance for Non-Finance Managers</strong></p>
-                                    <div class="feedback-form">
-                                        <label
-                                            style="font-size:13px;font-weight:500;color:var(--text);display:block;margin-bottom:8px;">Overall
-                                            Rating</label>
-                                        <div class="star-rating" id="starRating">
-                                            <span class="star" onclick="setRating(1)">⭐</span>
-                                            <span class="star" onclick="setRating(2)">⭐</span>
-                                            <span class="star" onclick="setRating(3)">⭐</span>
-                                            <span class="star" onclick="setRating(4)">⭐</span>
-                                            <span class="star" onclick="setRating(5)">⭐</span>
-                                        </div>
-                                        <div class="form-group"><label>What did you find most valuable?</label><textarea
-                                                placeholder="The financial ratio analysis sessions were particularly insightful...">The financial ratio analysis sessions were particularly insightful and directly applicable to my role in treasury management.</textarea>
-                                        </div>
-                                        <div class="form-group"><label>Areas for improvement</label><textarea
-                                                placeholder="More case studies specific to the Nigerian banking sector would be helpful.">More case studies specific to the Nigerian banking sector would be helpful.</textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Recommend to a colleague?</label>
-                                            <select class="form-control">
-                                                <option>Strongly Recommend</option>
-                                                <option>Recommend</option>
-                                                <option>Neutral</option>
-                                                <option>Would not recommend</option>
-                                            </select>
-                                        </div>
-                                        <button class="btn-primary"
-                                            onclick="showToast('Feedback submitted successfully! Thank you.')">Submit
-                                            Feedback</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <!-- Quick Actions -->
-                            <div class="card" style="margin-bottom:22px;">
-                                <div class="card-header">
-                                    <h3>Quick Actions</h3>
-                                </div>
-                                <div class="card-body">
-                                    <div class="actions-list">
-                                        <div class="action-item">
-                                            <div class="action-item-left">
-                                                <span class="action-icon">📥</span>
-                                                <div>
-                                                    <div class="action-label">Download Materials</div>
-                                                    <div class="action-sub">Finance for Non-Finance Mgrs</div>
-                                                </div>
-                                            </div>
-                                            <button class="btn-ghost btn-sm"
-                                                onclick="showToast('Downloading: Finance_NonFinance_Materials.zip')">Download</button>
-                                        </div>
-                                        <div class="action-item">
-                                            <div class="action-item-left">
-                                                <span class="action-icon">🎓</span>
-                                                <div>
-                                                    <div class="action-label">Download Certificate</div>
-                                                    <div class="action-sub">Finance for Non-Finance Mgrs</div>
-                                                </div>
-                                            </div>
-                                            <button class="btn-primary btn-sm"
-                                                onclick="showPage('page-certificate')">View & Download</button>
-                                        </div>
-                                        <div class="action-item" style="opacity:.6;">
-                                            <div class="action-item-left">
-                                                <span class="action-icon">🎓</span>
-                                                <div>
-                                                    <div class="action-label">Certificate — PMP Prep</div>
-                                                    <div class="action-sub">Pending payment confirmation</div>
-                                                </div>
-                                            </div>
-                                            <button class="btn-ghost btn-sm" disabled
-                                                style="cursor:not-allowed;opacity:.5;">Locked</button>
-                                        </div>
-                                        <div class="action-item">
-                                            <div class="action-item-left">
-                                                <span class="action-icon">💳</span>
-                                                <div>
-                                                    <div class="action-label">View Payment Status</div>
-                                                    <div class="action-sub">PMP Prep — Pending</div>
-                                                </div>
-                                            </div>
-                                            <button class="btn-ghost btn-sm"
-                                                onclick="showPage('page-payment')">View</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Payment Status -->
-                            <div class="card" style="margin-bottom:22px;">
-                                <div class="card-header">
-                                    <h3>Payment Status</h3>
-                                </div>
-                                <div class="card-body">
-                                    <div class="payment-status">
-                                        <span class="payment-status-icon">✅</span>
-                                        <div>
-                                            <p>Finance for Non-Finance Managers<br><strong>₦185,000 — Confirmed</strong>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="payment-status payment-status-pending">
-                                        <span class="payment-status-icon">⏳</span>
-                                        <div>
-                                            <p>Project Management Professional Prep<br><strong>₦240,000 — Awaiting Admin
-                                                    Approval</strong></p>
-                                        </div>
-                                    </div>
-                                    <button class="btn-ghost" style="width:100%;margin-top:10px;"
-                                        onclick="showPage('page-payment')">View Payment Details</button>
-                                </div>
-                            </div>
-
-                            <!-- Next Training Countdown -->
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3>Next Training</h3>
-                                </div>
-                                <div class="card-body" style="text-align:center;">
-                                    <div
-                                        style="font-size:12px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">
-                                        Advanced Leadership Programme</div>
-                                    <div style="display:flex;justify-content:center;gap:14px;margin-bottom:16px;">
-                                        <div style="text-align:center;">
-                                            <div
-                                                style="font-family:'Playfair Display',serif;font-size:32px;color:var(--navy);font-weight:700;">
-                                                12</div>
-                                            <div style="font-size:11px;color:var(--grey);text-transform:uppercase;">Days
-                                            </div>
-                                        </div>
-                                        <div
-                                            style="font-family:'Playfair Display',serif;font-size:32px;color:var(--grey);align-self:flex-start;margin-top:4px;">
-                                            :</div>
-                                        <div style="text-align:center;">
-                                            <div
-                                                style="font-family:'Playfair Display',serif;font-size:32px;color:var(--navy);font-weight:700;">
-                                                08</div>
-                                            <div style="font-size:11px;color:var(--grey);text-transform:uppercase;">
-                                                Hours</div>
-                                        </div>
-                                        <div
-                                            style="font-family:'Playfair Display',serif;font-size:32px;color:var(--grey);align-self:flex-start;margin-top:4px;">
-                                            :</div>
-                                        <div style="text-align:center;">
-                                            <div
-                                                style="font-family:'Playfair Display',serif;font-size:32px;color:var(--navy);font-weight:700;">
-                                                33</div>
-                                            <div style="font-size:11px;color:var(--grey);text-transform:uppercase;">Mins
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div style="font-size:13px;color:var(--text-muted);">📍 Landmark Event Centre,
-                                        Lagos<br>24 April 2025 at 9:00 AM</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </main>
-        </div>
-    </div><!-- /page-participant -->
-
-
-    <!-- ═══════════════════════════════════ PAGE 4: ADMIN DASHBOARD ═══════════════════════════════════ -->
-    <div id="page-admin" class="page">
-        <div class="portal-layout">
-            <aside class="portal-sidebar admin-sidebar" id="adminSidebar">
-                <div class="portal-sidebar-logo">
-                    <div class="nav-logo" style="display:flex;align-items:center;gap:10px;">
-                        <div class="nav-logo-icon" style="width:32px;height:32px;font-size:14px;">P</div>
-                        <div>
-                            <div class="nav-logo-text" style="font-size:14px;">Phillips Consulting</div>
-                            <div class="nav-logo-sub">Admin Panel</div>
-                        </div>
-                    </div>
-                </div>
-                <nav class="sidebar-nav">
-                    <a href="#" class="active" onclick="setActiveSideNav(this)"><span class="sidebar-nav-icon">📊</span>
-                        Overview</a>
-                    <a href="#" onclick="setActiveSideNav(this)"><span class="sidebar-nav-icon">👥</span>
-                        Participants</a>
-                    <a href="#" onclick="setActiveSideNav(this)"><span class="sidebar-nav-icon">📅</span> Trainings</a>
-                    <a href="#" onclick="setActiveSideNav(this)"><span class="sidebar-nav-icon">✅</span> Attendance</a>
-                    <div class="sidebar-divider"></div>
-                    <a href="#" onclick="setActiveSideNav(this)"><span class="sidebar-nav-icon">📁</span> Materials</a>
-                    <a href="#" onclick="setActiveSideNav(this)"><span class="sidebar-nav-icon">🎓</span>
-                        Certificates</a>
-                    <a href="#" onclick="setActiveSideNav(this)"><span class="sidebar-nav-icon">💳</span> Payments</a>
-                    <a href="#" onclick="setActiveSideNav(this)"><span class="sidebar-nav-icon">💬</span> Feedback</a>
-                    <div class="sidebar-divider"></div>
-                    <a href="#" onclick="setActiveSideNav(this)"><span class="sidebar-nav-icon">📈</span> Reports</a>
-                    <a href="#" onclick="setActiveSideNav(this)"><span class="sidebar-nav-icon">⚙</span> Settings</a>
-                    <a href="#" onclick="showPage('page-landing')"><span class="sidebar-nav-icon">⬅</span> Back to
-                        Home</a>
-                </nav>
-                <div class="sidebar-user">
-                    <div class="sidebar-avatar" style="background:var(--accent);color:var(--navy);">TO</div>
-                    <div>
-                        <div class="sidebar-user-name">Tunde Okafor</div>
-                        <div class="sidebar-user-role">Programme Administrator</div>
-                    </div>
-                </div>
-            </aside>
-
-            <main class="portal-main">
-                <div class="portal-topbar admin-topbar"
-                    style="background:var(--navy-mid);border-bottom:1px solid rgba(255,255,255,.1);">
-                    <div style="display:flex;align-items:center;gap:12px;">
-                        <button class="mobile-menu-btn" onclick="toggleSidebar('adminSidebar')">
-                            <div class="hamburger"><span></span><span></span><span></span></div>
-                        </button>
-                        <div class="portal-topbar-title" style="color:#fff;">Admin Overview</div>
-                    </div>
-                    <div class="portal-topbar-right">
-                        <div class="topbar-notif" style="background:rgba(255,255,255,.1);">🔔<div
-                                class="topbar-notif-dot"></div>
-                        </div>
-                        <span style="font-size:14px;font-weight:500;color:rgba(255,255,255,.7);">Tunde O.</span>
-                    </div>
-                </div>
-
-                <div class="portal-content admin-content-area">
-                    <!-- Stats -->
-                    <div class="admin-stats">
-                        <div class="admin-stat">
-                            <div class="admin-stat-num">347</div>
-                            <div class="admin-stat-lbl">Total Participants</div>
-                            <div class="admin-stat-change">↑ +42 this month</div>
-                        </div>
-                        <div class="admin-stat">
-                            <div class="admin-stat-num">18</div>
-                            <div class="admin-stat-lbl">Active Programmes</div>
-                            <div class="admin-stat-change">↑ 3 upcoming</div>
-                        </div>
-                        <div class="admin-stat">
-                            <div class="admin-stat-num">289</div>
-                            <div class="admin-stat-lbl">Certificates Issued</div>
-                            <div class="admin-stat-change">↑ +28 this week</div>
-                        </div>
-                        <div class="admin-stat">
-                            <div class="admin-stat-num">94%</div>
-                            <div class="admin-stat-lbl">Payment Collection Rate</div>
-                            <div class="admin-stat-change">↑ +2% vs last month</div>
-                        </div>
-                    </div>
-
-                    <!-- Admin Quick Actions -->
-                    <div class="admin-card" style="margin-bottom:22px;">
-                        <div class="admin-card-header">
-                            <h3>Quick Actions</h3>
-                        </div>
-                        <div class="admin-card-body">
-                            <div class="admin-actions">
-                                <div class="admin-action-btn"
-                                    onclick="showToast('Create New Training modal would open here')"><span
-                                        class="icon">➕</span>
-                                    <div class="lbl">Create New Training</div>
-                                </div>
-                                <div class="admin-action-btn"
-                                    onclick="showToast('Upload Materials dialog would open here')"><span
-                                        class="icon">📤</span>
-                                    <div class="lbl">Upload Materials</div>
-                                </div>
-                                <div class="admin-action-btn"
-                                    onclick="showToast('Mark Attendance interface would open here')"><span
-                                        class="icon">✅</span>
-                                    <div class="lbl">Mark Attendance</div>
-                                </div>
-                                <div class="admin-action-btn" onclick="showToast('Payment approval queue opened')"><span
-                                        class="icon">💳</span>
-                                    <div class="lbl">Approve Payments</div>
-                                </div>
-                                <div class="admin-action-btn" onclick="showPage('page-certificate')"><span
-                                        class="icon">🎓</span>
-                                    <div class="lbl">Generate Certificates</div>
-                                </div>
-                                <div class="admin-action-btn" onclick="showToast('Feedback report exported as PDF')">
-                                    <span class="icon">📊</span>
-                                    <div class="lbl">Export Reports</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="admin-grid">
-                        <!-- Participants Table -->
-                        <div>
-                            <div class="admin-card" style="margin-bottom:22px;">
-                                <div class="admin-card-header">
-                                    <h3>Recent Participants</h3>
-                                    <span class="tag tag-blue">347 Total</span>
-                                </div>
-                                <div class="admin-card-body" style="padding:0;">
-                                    <table class="admin-table">
-                                        <thead>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Programme</th>
-                                                <th>Payment</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Adaeze Okonkwo</td>
-                                                <td style="font-size:12px;color:rgba(255,255,255,.5);">Adv. Leadership
-                                                </td>
-                                                <td><span class="tag tag-success">Paid</span></td>
-                                                <td><button class="btn-primary" style="padding:5px 12px;font-size:12px;"
-                                                        onclick="showPage('page-certificate')">Cert</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Emeka Nwosu</td>
-                                                <td style="font-size:12px;color:rgba(255,255,255,.5);">PMP Prep</td>
-                                                <td><span class="tag tag-warning">Pending</span></td>
-                                                <td><button class="btn-ghost btn-sm"
-                                                        style="padding:5px 12px;font-size:12px;"
-                                                        onclick="showToast('Payment approved for Emeka Nwosu')">Approve</button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Chidinma Ezeh</td>
-                                                <td style="font-size:12px;color:rgba(255,255,255,.5);">Strategic HR</td>
-                                                <td><span class="tag tag-success">Paid</span></td>
-                                                <td><button class="btn-primary" style="padding:5px 12px;font-size:12px;"
-                                                        onclick="showPage('page-certificate')">Cert</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Babatunde Alabi</td>
-                                                <td style="font-size:12px;color:rgba(255,255,255,.5);">Finance Mgrs</td>
-                                                <td><span class="tag tag-success">Paid</span></td>
-                                                <td><button class="btn-primary" style="padding:5px 12px;font-size:12px;"
-                                                        onclick="showPage('page-certificate')">Cert</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Ngozi Eze</td>
-                                                <td style="font-size:12px;color:rgba(255,255,255,.5);">Adv. Leadership
-                                                </td>
-                                                <td><span class="tag tag-warning">Pending</span></td>
-                                                <td><button class="btn-ghost btn-sm"
-                                                        style="padding:5px 12px;font-size:12px;"
-                                                        onclick="showToast('Payment approved for Ngozi Eze')">Approve</button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Seun Adeleke</td>
-                                                <td style="font-size:12px;color:rgba(255,255,255,.5);">PMP Prep</td>
-                                                <td><span class="tag tag-danger">Overdue</span></td>
-                                                <td><button class="btn-ghost btn-sm"
-                                                        style="padding:5px 12px;font-size:12px;"
-                                                        onclick="showToast('Reminder email sent to Seun Adeleke')">Remind</button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-
-                            <!-- Attendance Marking -->
-                            <div class="admin-card">
-                                <div class="admin-card-header">
-                                    <h3>Today's Attendance — Adv. Leadership Day 1</h3><span class="tag tag-blue">24 Apr
-                                        2025</span>
-                                </div>
-                                <div class="admin-card-body" style="padding:0;">
-                                    <table class="admin-table">
-                                        <thead>
-                                            <tr>
-                                                <th>Participant</th>
-                                                <th>Check-in</th>
-                                                <th>Status</th>
-                                                <th>Mark</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Adaeze Okonkwo</td>
-                                                <td style="color:rgba(255,255,255,.4);font-size:12px;">9:04 AM</td>
-                                                <td><span class="tag tag-success">Present</span></td>
-                                                <td>—</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Emeka Nwosu</td>
-                                                <td style="color:rgba(255,255,255,.4);font-size:12px;">9:22 AM</td>
-                                                <td><span class="tag tag-warning">Late</span></td>
-                                                <td>—</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Chidinma Ezeh</td>
-                                                <td style="color:rgba(255,255,255,.4);font-size:12px;">—</td>
-                                                <td><span class="tag tag-danger">Absent</span></td>
-                                                <td><button class="btn-ghost btn-sm"
-                                                        style="padding:4px 10px;font-size:12px;"
-                                                        onclick="showToast('Excused absence recorded for Chidinma Ezeh')">Excuse</button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Babatunde Alabi</td>
-                                                <td style="color:rgba(255,255,255,.4);font-size:12px;">8:55 AM</td>
-                                                <td><span class="tag tag-success">Present</span></td>
-                                                <td>—</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Ngozi Eze</td>
-                                                <td style="color:rgba(255,255,255,.4);font-size:12px;">9:01 AM</td>
-                                                <td><span class="tag tag-success">Present</span></td>
-                                                <td>—</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Right Column -->
-                        <div>
-                            <!-- Programme Progress -->
-                            <div class="admin-card" style="margin-bottom:22px;">
-                                <div class="admin-card-header">
-                                    <h3>Programme Enrolment</h3>
-                                </div>
-                                <div class="admin-card-body">
-                                    <div style="margin-bottom:18px;">
-                                        <div
-                                            style="display:flex;justify-content:space-between;font-size:13px;color:rgba(255,255,255,.7);margin-bottom:6px;">
-                                            <span>Adv. Leadership & Management</span><span
-                                                style="color:#fff;font-weight:600;">42/50</span></div>
-                                        <div class="progress-bar">
-                                            <div class="progress-fill" style="width:84%;"></div>
-                                        </div>
-                                    </div>
-                                    <div style="margin-bottom:18px;">
-                                        <div
-                                            style="display:flex;justify-content:space-between;font-size:13px;color:rgba(255,255,255,.7);margin-bottom:6px;">
-                                            <span>PMP Prep Course</span><span
-                                                style="color:#fff;font-weight:600;">38/40</span></div>
-                                        <div class="progress-bar">
-                                            <div class="progress-fill" style="width:95%;background:var(--accent);">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div style="margin-bottom:18px;">
-                                        <div
-                                            style="display:flex;justify-content:space-between;font-size:13px;color:rgba(255,255,255,.7);margin-bottom:6px;">
-                                            <span>Finance for Non-Finance Mgrs</span><span
-                                                style="color:#fff;font-weight:600;">29/35</span></div>
-                                        <div class="progress-bar">
-                                            <div class="progress-fill" style="width:83%;"></div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div
-                                            style="display:flex;justify-content:space-between;font-size:13px;color:rgba(255,255,255,.7);margin-bottom:6px;">
-                                            <span>Strategic HR Management</span><span
-                                                style="color:#fff;font-weight:600;">22/40</span></div>
-                                        <div class="progress-bar">
-                                            <div class="progress-fill" style="width:55%;background:var(--warning);">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Feedback Summary -->
-                            <div class="admin-card" style="margin-bottom:22px;">
-                                <div class="admin-card-header">
-                                    <h3>Feedback Summary</h3>
-                                </div>
-                                <div class="admin-card-body">
-                                    <div style="text-align:center;margin-bottom:16px;">
-                                        <div
-                                            style="font-family:'Playfair Display',serif;font-size:48px;color:var(--accent);font-weight:700;">
-                                            4.7</div>
-                                        <div style="font-size:22px;margin-bottom:4px;">⭐⭐⭐⭐⭐</div>
-                                        <div style="font-size:12px;color:rgba(255,255,255,.4);">Based on 312 responses
-                                        </div>
-                                    </div>
-                                    <div style="display:flex;flex-direction:column;gap:10px;">
-                                        <div>
-                                            <div
-                                                style="display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.6);margin-bottom:4px;">
-                                                <span>Content Quality</span><span>4.8</span></div>
-                                            <div class="progress-bar">
-                                                <div class="progress-fill" style="width:96%;"></div>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div
-                                                style="display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.6);margin-bottom:4px;">
-                                                <span>Facilitator Effectiveness</span><span>4.9</span></div>
-                                            <div class="progress-bar">
-                                                <div class="progress-fill" style="width:98%;background:var(--success);">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div
-                                                style="display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.6);margin-bottom:4px;">
-                                                <span>Venue & Logistics</span><span>4.3</span></div>
-                                            <div class="progress-bar">
-                                                <div class="progress-fill" style="width:86%;background:var(--warning);">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div
-                                                style="display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.6);margin-bottom:4px;">
-                                                <span>Overall Experience</span><span>4.7</span></div>
-                                            <div class="progress-bar">
-                                                <div class="progress-fill" style="width:94%;"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Payment Pipeline -->
-                            <div class="admin-card">
-                                <div class="admin-card-header">
-                                    <h3>Payment Pipeline</h3><span class="tag tag-warning">8 Pending</span>
-                                </div>
-                                <div class="admin-card-body">
-                                    <div
-                                        style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-                                        <div style="font-size:13px;color:rgba(255,255,255,.6);">Total Confirmed</div>
-                                        <div style="color:var(--success);font-weight:700;font-size:16px;">₦48.3M</div>
-                                    </div>
-                                    <div
-                                        style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
-                                        <div style="font-size:13px;color:rgba(255,255,255,.6);">Pending Approval</div>
-                                        <div style="color:var(--warning);font-weight:700;font-size:16px;">₦4.2M</div>
-                                    </div>
-                                    <button class="btn-primary" style="width:100%;font-size:13px;"
-                                        onclick="showToast('Opening payment approval queue...')">Review Pending Payments
-                                        (8)</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </main>
-        </div>
-    </div><!-- /page-admin -->
-
-
-    <!-- ═══════════════════════════════════ PAGE 5: CERTIFICATE ═══════════════════════════════════ -->
-    <div id="page-certificate" class="page">
-        <div class="cert-page">
-            <div class="cert-page-header">
-                <div style="display:flex;align-items:center;gap:16px;justify-content:center;margin-bottom:8px;">
-                    <button class="btn-ghost btn-sm" onclick="history.back() || showPage('page-participant')">← Back to
-                        Portal</button>
-                </div>
-                <h2>Training Certificate of Completion</h2>
-                <p>Review and download your verified certificate below</p>
-            </div>
-
-            <div class="certificate">
-                <div class="cert-border"></div>
-                <div class="cert-watermark">PHILLIPS CONSULTING</div>
-                <div class="cert-inner">
-                    <div class="cert-header">
-                        <div class="cert-logo-row">
-                            <div class="cert-logo-icon">P</div>
-                            <div>
-                                <div class="cert-logo-name">Phillips Consulting Limited</div>
-                                <div class="cert-logo-sub">Professional Development Division</div>
-                            </div>
-                        </div>
-                        <div class="cert-divider"></div>
-                        <div class="cert-title">Certificate of Completion</div>
-                        <div class="cert-main-title">This is to Certify</div>
-                    </div>
-                    <div class="cert-body">
-                        <div class="cert-presented">This certificate is proudly presented to</div>
-                        <div class="cert-name">Adaeze Okonkwo</div>
-                        <div class="cert-for">for successfully completing the programme</div>
-                        <div class="cert-course">Finance for Non-Finance Managers</div>
-                        <div class="cert-meta">
-                            <div class="cert-meta-item">
-                                <div class="lbl">Date of Completion</div>
-                                <div class="val">13 March 2025</div>
-                            </div>
-                            <div class="cert-meta-item">
-                                <div class="lbl">Duration</div>
-                                <div class="val">2 Days (14 CPD Hours)</div>
-                            </div>
-                            <div class="cert-meta-item">
-                                <div class="lbl">Certificate No.</div>
-                                <div class="val">PC-2025-FNF-0847</div>
-                            </div>
-                        </div>
-                        <div class="cert-sigs">
-                            <div class="cert-sig">
-                                <div class="sig-line"></div>
-                                <div class="sig-name">Dr. Bode Agusto</div>
-                                <div class="sig-title">Managing Director & CEO</div>
-                                <div class="sig-title">Phillips Consulting Limited</div>
-                            </div>
-                            <div class="cert-sig">
-                                <div class="sig-line"></div>
-                                <div class="sig-name">Mrs. Folake Osei</div>
-                                <div class="sig-title">Programme Director</div>
-                                <div class="sig-title">Professional Development</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div
-                    style="background:var(--navy);padding:12px 24px;display:flex;justify-content:space-between;align-items:center;">
-                    <div style="font-size:11px;color:rgba(255,255,255,.4);letter-spacing:.5px;">Verify this certificate
-                        at: phillipsconsulting.net/verify | Code: PC-2025-FNF-0847</div>
-                    <div style="font-size:11px;color:rgba(255,255,255,.3);">Issued: 14 March 2025</div>
-                </div>
-            </div>
-
-            <div class="cert-actions">
-                <button class="btn-primary"
-                    onclick="showToast('Certificate downloaded as Certificate_Adaeze_Okonkwo.pdf')">📥 Download
-                    Certificate (PDF)</button>
-                <button class="btn-ghost"
-                    onclick="showToast('Certificate link copied to clipboard. Share on LinkedIn!')">🔗 Share
-                    Certificate</button>
-                <button class="btn-outline" style="color:var(--navy);border-color:var(--navy);"
-                    onclick="window.print()">🖨️ Print</button>
-                <button class="btn-ghost" onclick="showPage('page-participant')">← Back to Portal</button>
-            </div>
-        </div>
-    </div><!-- /page-certificate -->
-
-
-    <!-- ═══════════════════════════════════ PAGE 6: PAYMENT ═══════════════════════════════════ -->
-    <div id="page-payment" class="page">
-        <div class="payment-page">
-            <div class="payment-card">
-                <div class="payment-icon">✅</div>
-                <h2>Payment Confirmed</h2>
-                <p>Your payment for the training programme below has been verified and approved by the administrator.
+                <p class="quote-body">
+                    The Advanced Leadership programme rewired how I think about strategic decision-making. The faculty challenged us with real cross-sector cases &mdash; not theoretical exercises. Six months on, my executive team meetings run noticeably differently, and three of my direct reports have already booked their own cohorts.
                 </p>
-
-                <div style="border:1px solid var(--grey-mid);border-radius:8px;padding:0 16px;margin-bottom:20px;">
-                    <div class="payment-detail"><span class="lbl">Participant Name</span><span class="val">Adaeze
-                            Okonkwo</span></div>
-                    <div class="payment-detail"><span class="lbl">Programme</span><span class="val"
-                            style="text-align:right;max-width:60%;">Finance for Non-Finance Managers</span></div>
-                    <div class="payment-detail"><span class="lbl">Organisation</span><span class="val">Stanbic IBTC Bank
-                            PLC</span></div>
-                    <div class="payment-detail"><span class="lbl">Payment Amount</span><span
-                            class="val">₦185,000.00</span></div>
-                    <div class="payment-detail"><span class="lbl">Payment Method</span><span class="val">Bank
-                            Transfer</span></div>
-                    <div class="payment-detail"><span class="lbl">Reference No.</span><span
-                            class="val">PC-PAY-2025-0391</span></div>
-                    <div class="payment-detail"><span class="lbl">Payment Date</span><span class="val">10 March
-                            2025</span></div>
-                    <div class="payment-detail"><span class="lbl">Approved By</span><span class="val">Admin — Tunde
-                            O.</span></div>
-                    <div class="payment-detail"><span class="lbl">Status</span><span class="tag tag-success">Payment
-                            Confirmed ✓</span></div>
-                </div>
-
-                <div class="payment-notice">
-                    <strong>🔒 Certificate Access Unlocked</strong>
-                    Your payment has been verified by the Phillips Consulting administrator. You may now download your
-                    Certificate of Completion from the Participant Portal.
-                </div>
-
-                <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;">
-                    <button class="btn-primary" style="flex:1;" onclick="showPage('page-certificate')">View Certificate
-                        →</button>
-                    <button class="btn-ghost" onclick="showPage('page-participant')">Back to Portal</button>
-                </div>
-
-                <div style="border-top:1px solid var(--grey-mid);margin-top:24px;padding-top:18px;">
-                    <div style="font-size:13px;font-weight:600;color:var(--navy);margin-bottom:12px;">Pending Payment
+                <div class="who">
+                    <div class="who-avatar">AO</div>
+                    <div>
+                        <div class="name">Adaeze Okonkwo</div>
+                        <div class="role">Head of Treasury &middot; Stanbic IBTC Bank</div>
                     </div>
-                    <div style="background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;padding:14px 16px;">
-                        <div style="font-size:14px;font-weight:600;color:#92400E;">Project Management Professional (PMP)
-                            Prep</div>
-                        <div style="font-size:13px;color:#92400E;margin-top:4px;">₦240,000 — Awaiting Admin Approval
-                        </div>
-                        <div style="font-size:12px;color:#B45309;margin-top:8px;">Payment submitted 20 March 2025. Our
-                            team will confirm within 24–48 hours. Certificate access will be unlocked upon approval.
+                </div>
+            </article>
+
+            <article class="quote-card bento-top reveal reveal-d1">
+                <div class="quote-mark">&ldquo;</div>
+                <div class="quote-stars">
+                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                </div>
+                <p class="quote-body">
+                    The cleanest certification process I&rsquo;ve experienced. Verified payment, digital attendance, certificate in my portal within hours.
+                </p>
+                <div class="who">
+                    <div class="who-avatar">EN</div>
+                    <div>
+                        <div class="name">Emeka Nwosu</div>
+                        <div class="role">Programme Manager &middot; Dangote Industries</div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="quote-card bento-mid reveal reveal-d2">
+                <div class="quote-mark">&ldquo;</div>
+                <div class="quote-stars">
+                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                </div>
+                <p class="quote-body">
+                    Enrolled twenty-three managers across two cohorts. The admin dashboard tracks attendance and completion in real time &mdash; a week of reporting reduced to a click.
+                </p>
+                <div class="who">
+                    <div class="who-avatar">CE</div>
+                    <div>
+                        <div class="name">Chidinma Ezeh</div>
+                        <div class="role">Head of L&amp;D &middot; Access Holdings</div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="quote-card bento-bl reveal">
+                <div class="quote-mark">&ldquo;</div>
+                <div class="quote-stars">
+                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                </div>
+                <p class="quote-body">
+                    QR attendance was the game-changer. No more paper sheets, no more guesswork &mdash; every check-in synced to the roster instantly, and absentees flagged automatically before the day was out.
+                </p>
+                <div class="who">
+                    <div class="who-avatar">BA</div>
+                    <div>
+                        <div class="name">Babatunde Alabi</div>
+                        <div class="role">Director, Capacity Development &middot; FIRS</div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="quote-card bento-br reveal reveal-d1">
+                <div class="quote-mark">&ldquo;</div>
+                <div class="quote-stars">
+                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                </div>
+                <p class="quote-body">
+                    I came in to prepare for the PMP examination and left with something more valuable &mdash; a network of senior project managers across the energy sector I still call on every month. The cohort model genuinely works.
+                </p>
+                <div class="who">
+                    <div class="who-avatar">NE</div>
+                    <div>
+                        <div class="name">Ngozi Eze</div>
+                        <div class="role">Senior Project Manager &middot; NNPC Limited</div>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════ CAPABILITIES (bento) ════════════════════ -->
+<section class="section" id="capabilities">
+    <div class="container">
+        <div class="section-head reveal">
+            <span class="eyebrow eyebrow-line">Capabilities</span>
+            <h2>One platform, every stage of the journey.</h2>
+            <p>Six tightly-integrated modules &mdash; built around the same source of truth &mdash; so registration, payment, attendance, and certification stay perfectly aligned.</p>
+        </div>
+
+        <div class="bento">
+            <!-- Featured: Automated Certification -->
+            <div class="bento-card bento-cert dark reveal">
+                <div class="step">04 / Featured Capability</div>
+                <h3>Automated Certification Engine</h3>
+                <p>Branded PDF certificates are generated only when payment and attendance criteria are met &mdash; each one signed with a unique verification code and a tamper-evident QR.</p>
+                <div class="visual">
+                    <div class="viz-cert">
+                        <div class="vc-kicker">Certificate of Completion</div>
+                        <div class="vc-name">Adaeze Okonkwo</div>
+                        <div class="vc-course">Finance for Non-Finance Managers</div>
+                        <div class="vc-sigs">
+                            <div class="sig">Dr. Bode Agusto</div>
+                            <div class="sig">Mrs. Folake Osei</div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Payments -->
+            <div class="bento-card bento-pay reveal reveal-d1">
+                <div class="step">02 / Payments</div>
+                <h3>Verified Payment Gateway</h3>
+                <p>Paystack &amp; Flutterwave integration plus manual transfer verification &mdash; with real-time receipts.</p>
+                <div class="visual">
+                    <div class="viz-card">
+                        <div class="chip"></div>
+                        <div class="digits">4519 &middot;&middot;&middot;&middot; 7264</div>
+                        <div class="row"><span>Card Holder</span><span>06/30</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enrol -->
+            <div class="bento-card bento-enrol reveal">
+                <div class="step">01 / Enrolment</div>
+                <h3>Frictionless Registration</h3>
+                <p>Self-service enrolment for individuals and corporate cohorts, with confirmation flows that route straight to the admin queue.</p>
+                <div class="visual">
+                    <div class="viz-form">
+                        <div class="line">Adaeze Okonkwo</div>
+                        <div class="line focused">adaeze@stanbicibtc.com</div>
+                        <div class="line">Adv. Leadership &mdash; Apr 2026</div>
+                        <div class="btn-mock">Complete Registration</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QR Attendance -->
+            <div class="bento-card bento-qr reveal reveal-d1">
+                <div class="step">03 / Attendance</div>
+                <h3>QR-Code Attendance</h3>
+                <p>Per-session QR codes captured on any device. Late and absent rules gate certification automatically.</p>
+                <div class="visual" style="text-align:center;">
+                    <div class="viz-qr">
+                        <div class="corner tl"></div>
+                        <div class="corner tr"></div>
+                        <div class="corner bl"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Verify -->
+            <div class="bento-card bento-verify reveal reveal-d2">
+                <div class="step">05 / Verification</div>
+                <h3>Public Verification</h3>
+                <p>Anyone can confirm a certificate&rsquo;s authenticity with the unique code printed on it.</p>
+                <div class="visual">
+                    <div class="viz-verify">
+                        <div class="seal">Certificate verified</div>
+                        <div class="code-line">PC&middot;2026&middot;FNF&middot;0847</div>
+                        <div class="name-line">Adaeze Okonkwo</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin -->
+            <div class="bento-card bento-admin dark reveal">
+                <div class="step">06 / Command Centre</div>
+                <h3>The Admin command centre, in one view.</h3>
+                <p>Participant cohorts, payment pipelines, attendance analytics, and feedback trends &mdash; with exportable reporting and full audit trail.</p>
+                <div class="viz-admin">
+                    <div class="tile"><div class="v">347</div><div class="l">Participants</div></div>
+                    <div class="tile"><div class="v">18</div><div class="l">Programmes</div></div>
+                    <div class="tile"><div class="v">94%</div><div class="l">Collection</div></div>
+                    <div class="chart">
+                        <div class="b" style="height:30%"></div>
+                        <div class="b" style="height:48%"></div>
+                        <div class="b" style="height:35%"></div>
+                        <div class="b" style="height:62%"></div>
+                        <div class="b" style="height:70%"></div>
+                        <div class="b" style="height:54%"></div>
+                        <div class="b" style="height:78%"></div>
+                        <div class="b" style="height:88%"></div>
+                        <div class="b" style="height:74%"></div>
+                        <div class="b" style="height:92%"></div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div><!-- /page-payment -->
-
-
-    <!-- TOAST NOTIFICATION -->
-    <div id="toast"
-        style="position:fixed;bottom:24px;right:24px;background:var(--navy);color:#fff;padding:14px 20px;border-radius:8px;font-size:14px;box-shadow:0 8px 30px rgba(0,0,0,.3);z-index:9999;transform:translateY(80px);opacity:0;transition:all .3s;max-width:320px;border-left:4px solid var(--accent);">
-        <span id="toast-msg"></span>
     </div>
+</section>
 
-    <script>
-        function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            const target = document.getElementById(pageId);
-            if (target) {
-                target.classList.add('active');
-                window.scrollTo(0, 0);
-            }
-        }
+<!-- ════════════════════ HOW IT WORKS — 7-stage process flow ════════════════════ -->
+<section class="flow" id="how-it-works">
+    <div class="container">
+        <div class="section-head reveal">
+            <span class="eyebrow eyebrow-line">How it works</span>
+            <h2>Seven stages, one continuous workflow.</h2>
+            <p>From the welcome email to the post-programme feedback &mdash; every stage feeds the next, every action audited.</p>
+        </div>
 
-        function switchTab(tab) { /* handled by showPage */ }
+        <div class="flow-grid">
 
-        function setActiveSideNav(el) {
-            el.closest('nav').querySelectorAll('a').forEach(a => a.classList.remove('active'));
-            el.classList.add('active');
-        }
+            <div class="flow-step reveal">
+                <div class="num">01</div>
+                <span class="role-tag">System</span>
+                <h3>Email Confirmation</h3>
+                <p>Welcome email with programme overview, dates, and a secure link to begin registration.</p>
+            </div>
 
-        function toggleSidebar(id) {
-            document.getElementById(id).classList.toggle('open');
-        }
+            <div class="flow-step reveal reveal-d1">
+                <div class="num">02</div>
+                <span class="role-tag">Participant</span>
+                <h3>Training Registration</h3>
+                <p>Self-service enrolment &mdash; organisation, programme, and contact details captured in minutes.</p>
+            </div>
 
-        function setRating(n) {
-            const stars = document.querySelectorAll('#starRating .star');
-            stars.forEach((s, i) => { s.style.opacity = i < n ? '1' : '0.3'; });
-        }
+            <div class="flow-step reveal reveal-d2">
+                <div class="num">03</div>
+                <span class="role-tag">Participant</span>
+                <h3>Payment</h3>
+                <p>Pay through Paystack or Flutterwave &mdash; or upload bank-transfer proof for review.</p>
+            </div>
 
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toast-msg').textContent = msg;
-            toast.style.transform = 'translateY(0)';
-            toast.style.opacity = '1';
-            setTimeout(() => {
-                toast.style.transform = 'translateY(80px)';
-                toast.style.opacity = '0';
-            }, 3500);
-        }
+            <div class="flow-step reveal accent">
+                <div class="num">04</div>
+                <span class="role-tag admin">Admin</span>
+                <h3>Payment Confirmation</h3>
+                <p>Finance team verifies and confirms payment &mdash; unlocks participant materials and seat.</p>
+            </div>
 
-        // Close mobile sidebar on outside click
-        document.addEventListener('click', (e) => {
-            ['participantSidebar', 'adminSidebar'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el && el.classList.contains('open') && !el.contains(e.target)) {
-                    el.classList.remove('open');
-                }
+            <div class="flow-step reveal reveal-d1">
+                <div class="num">05</div>
+                <span class="role-tag">Participant</span>
+                <h3>Training Attendance</h3>
+                <p>Per-session QR check-in tracks presence, lateness, and absence across every cohort day.</p>
+            </div>
+
+            <div class="flow-step reveal reveal-d2">
+                <div class="num">06</div>
+                <span class="role-tag admin">Admin &middot; System</span>
+                <h3>Training Certificate</h3>
+                <p>Once payment and attendance criteria are met, a branded, uniquely-coded PDF is issued.</p>
+            </div>
+
+            <div class="flow-step reveal">
+                <div class="num">07</div>
+                <span class="role-tag">Participant</span>
+                <h3>Training Feedback</h3>
+                <p>Structured feedback feeds the admin centre &mdash; rolled up by cohort, facilitator, and module.</p>
+            </div>
+
+        </div>
+
+        <div class="flow-outcome reveal">
+            <div>
+                <h3>From welcome email to certified completion &mdash; in one platform.</h3>
+                <p>No spreadsheets, no paper forms, no manual reconciliation. Every stage is audit-logged and every participant sees exactly where they are.</p>
+            </div>
+            <a class="btn btn-on-blue btn-arrow" href="register/">Begin a Programme</a>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════ PROGRAMMES — deck of cards ════════════════════ -->
+<section class="programmes" id="programmes">
+    <div class="container">
+        <div class="section-head reveal">
+            <span class="eyebrow eyebrow-line">Upcoming programmes</span>
+            <h2>Open enrolment, this quarter.</h2>
+            <p>Featured cohorts curated by the Phillips Consulting Professional Development Division.</p>
+        </div>
+
+        <div class="deck-shell reveal">
+            <div class="deck" aria-roledescription="carousel" aria-label="Upcoming programmes">
+
+                <article class="deck-card dark">
+                    <div class="deck-tag">Featured</div>
+                    <div class="deck-top">
+                        <div class="deck-date">
+                            <div class="d">24</div>
+                            <div class="m">Apr</div>
+                        </div>
+                        <div>
+                            <h3>Advanced Leadership &amp; Management</h3>
+                            <div class="deck-meta">
+                                <span>4 Days</span>
+                                <span>In-Person</span>
+                                <span>Landmark, Lagos</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p>A flagship cohort for senior managers transitioning into strategic leadership roles &mdash; led by faculty with cross-sector executive experience.</p>
+                    <div class="deck-foot">
+                        <div class="deck-price">₦485,000<sub>per seat</sub></div>
+                        <a class="deck-cta" href="register/">Register</a>
+                    </div>
+                </article>
+
+                <article class="deck-card">
+                    <div class="deck-tag">Cohort 02</div>
+                    <div class="deck-top">
+                        <div class="deck-date">
+                            <div class="d">15</div>
+                            <div class="m">May</div>
+                        </div>
+                        <div>
+                            <h3>Project Management Professional Prep</h3>
+                            <div class="deck-meta">
+                                <span>5 Days</span>
+                                <span>Hybrid</span>
+                                <span>Zoom + Lagos</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p>An intensive preparation programme for the PMP examination, covering all five PMI process groups with simulated practice exams.</p>
+                    <div class="deck-foot">
+                        <div class="deck-price">₦240,000<sub>per seat</sub></div>
+                        <a class="deck-cta" href="register/">Register</a>
+                    </div>
+                </article>
+
+                <article class="deck-card">
+                    <div class="deck-tag">Cohort 03</div>
+                    <div class="deck-top">
+                        <div class="deck-date">
+                            <div class="d">12</div>
+                            <div class="m">Jun</div>
+                        </div>
+                        <div>
+                            <h3>Finance for Non-Finance Managers</h3>
+                            <div class="deck-meta">
+                                <span>2 Days</span>
+                                <span>In-Person</span>
+                                <span>Phillips HQ, Ikoyi</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p>A practical introduction to financial statements, ratio analysis, and budget interpretation for managers from non-finance disciplines.</p>
+                    <div class="deck-foot">
+                        <div class="deck-price">₦185,000<sub>per seat</sub></div>
+                        <a class="deck-cta" href="register/">Register</a>
+                    </div>
+                </article>
+
+                <article class="deck-card">
+                    <div class="deck-tag">Cohort 04</div>
+                    <div class="deck-top">
+                        <div class="deck-date">
+                            <div class="d">03</div>
+                            <div class="m">Jul</div>
+                        </div>
+                        <div>
+                            <h3>Strategic Human Resources Management</h3>
+                            <div class="deck-meta">
+                                <span>3 Days</span>
+                                <span>In-Person</span>
+                                <span>Phillips HQ, Ikoyi</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p>For HR directors and senior practitioners moving from operational HR to strategic workforce planning aligned with business objectives.</p>
+                    <div class="deck-foot">
+                        <div class="deck-price">₦310,000<sub>per seat</sub></div>
+                        <a class="deck-cta" href="register/">Register</a>
+                    </div>
+                </article>
+
+                <article class="deck-card">
+                    <div class="deck-tag">Cohort 05</div>
+                    <div class="deck-top">
+                        <div class="deck-date">
+                            <div class="d">22</div>
+                            <div class="m">Jul</div>
+                        </div>
+                        <div>
+                            <h3>Data Analytics for Decision Makers</h3>
+                            <div class="deck-meta">
+                                <span>3 Days</span>
+                                <span>Hybrid</span>
+                                <span>Zoom + Lagos</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p>A hands-on programme covering data storytelling, dashboard literacy, and the analytics workflow &mdash; tailored for managerial audiences.</p>
+                    <div class="deck-foot">
+                        <div class="deck-price">₦275,000<sub>per seat</sub></div>
+                        <a class="deck-cta" href="register/">Register</a>
+                    </div>
+                </article>
+
+                <article class="deck-card">
+                    <div class="deck-tag">Cohort 06</div>
+                    <div class="deck-top">
+                        <div class="deck-date">
+                            <div class="d">14</div>
+                            <div class="m">Aug</div>
+                        </div>
+                        <div>
+                            <h3>Executive Communication &amp; Influence</h3>
+                            <div class="deck-meta">
+                                <span>2 Days</span>
+                                <span>In-Person</span>
+                                <span>Landmark, Lagos</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p>Sharpen executive presence, board-level presentation skills, and stakeholder narrative craft with senior communication faculty.</p>
+                    <div class="deck-foot">
+                        <div class="deck-price">₦220,000<sub>per seat</sub></div>
+                        <a class="deck-cta" href="register/">Register</a>
+                    </div>
+                </article>
+
+            </div>
+
+            <div class="deck-nav">
+                <button class="deck-arrow" data-deck-prev aria-label="Previous programme">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 6l-6 6 6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <div class="deck-counter">
+                    <span class="cur">01</span>
+                    <span class="slash">/</span>
+                    <span class="total">06</span>
+                </div>
+                <button class="deck-arrow" data-deck-next aria-label="Next programme">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+            </div>
+
+            <div class="deck-dots" aria-hidden="true"></div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════ ACCREDITATIONS & RECOGNITION ════════════════════ -->
+<section class="accreditations" id="accreditations">
+    <div class="container">
+        <div class="accred-head reveal">
+            <span class="eyebrow eyebrow-line">Accreditations &amp; Recognition</span>
+            <h2>Independently certified, sector-recognised.</h2>
+            <p>Phillips Consulting&rsquo;s training and certification practice operates under recognised quality, professional development, and learning standards.</p>
+        </div>
+
+        <div class="accred-grid">
+
+            <div class="accred-card reveal">
+                <svg class="accred-badge" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="32" cy="32" r="29" stroke="currentColor" stroke-width="1.5" />
+                    <circle cx="32" cy="32" r="22" stroke="currentColor" stroke-width="1" stroke-dasharray="2 3" />
+                    <text x="32" y="29" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-size="11" font-weight="700" fill="currentColor">ISO</text>
+                    <text x="32" y="42" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" font-weight="500" fill="currentColor" letter-spacing="0.3">9001:2015</text>
+                </svg>
+                <div class="accred-name">ISO 9001:2015</div>
+                <div class="accred-meta">Quality Mgmt</div>
+            </div>
+
+            <div class="accred-card reveal reveal-d1">
+                <svg class="accred-badge" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M32 4 L58 14 V34 Q58 50 32 60 Q6 50 6 34 V14 Z" stroke="currentColor" stroke-width="1.5" fill="none" />
+                    <path d="M32 12 L52 19 V33 Q52 45 32 53 Q12 45 12 33 V19 Z" stroke="currentColor" stroke-width="1" fill="none" stroke-dasharray="2 3" />
+                    <text x="32" y="36" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-size="10" font-weight="700" fill="currentColor">CPD</text>
+                    <text x="32" y="46" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" font-weight="500" fill="currentColor" letter-spacing="0.3">CERTIFIED</text>
+                </svg>
+                <div class="accred-name">CPD UK</div>
+                <div class="accred-meta">Provider No. 778291</div>
+            </div>
+
+            <div class="accred-card reveal reveal-d2">
+                <svg class="accred-badge" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <polygon points="32,4 56,18 56,46 32,60 8,46 8,18" stroke="currentColor" stroke-width="1.5" fill="none" />
+                    <polygon points="32,12 49,22 49,42 32,52 15,42 15,22" stroke="currentColor" stroke-width="1" fill="none" stroke-dasharray="2 3" />
+                    <text x="32" y="36" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-size="9" font-weight="700" fill="currentColor">NITDA</text>
+                </svg>
+                <div class="accred-name">NITDA Approved</div>
+                <div class="accred-meta">Digital Skills Cert</div>
+            </div>
+
+            <div class="accred-card reveal">
+                <svg class="accred-badge" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="8" y="10" width="48" height="44" rx="4" stroke="currentColor" stroke-width="1.5" fill="none" />
+                    <rect x="14" y="16" width="36" height="32" rx="2" stroke="currentColor" stroke-width="1" fill="none" stroke-dasharray="2 3" />
+                    <text x="32" y="33" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-size="10" font-weight="700" fill="currentColor">CIPM</text>
+                    <text x="32" y="43" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" font-weight="500" fill="currentColor" letter-spacing="0.2">AFFILIATE</text>
+                </svg>
+                <div class="accred-name">CIPM Affiliate</div>
+                <div class="accred-meta">HR Practice</div>
+            </div>
+
+            <div class="accred-card reveal reveal-d1">
+                <svg class="accred-badge" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="32" cy="32" r="29" stroke="currentColor" stroke-width="1.5" fill="none" />
+                    <path d="M16 32 L28 44 L48 22" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <div class="accred-name">ICAN Approved</div>
+                <div class="accred-meta">Finance Trainer</div>
+            </div>
+
+            <div class="accred-card reveal reveal-d2">
+                <svg class="accred-badge" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M32 6 L40 24 L60 26 L46 40 L50 60 L32 50 L14 60 L18 40 L4 26 L24 24 Z"
+                          stroke="currentColor" stroke-width="1.5" fill="none" stroke-linejoin="round" />
+                    <circle cx="32" cy="34" r="8" stroke="currentColor" stroke-width="1" fill="none" />
+                    <text x="32" y="37" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-size="7" font-weight="700" fill="currentColor">PMI</text>
+                </svg>
+                <div class="accred-name">PMI R.E.P.</div>
+                <div class="accred-meta">Registered Provider</div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════ CTA STRIP ════════════════════ -->
+<section class="cta-strip">
+    <div class="cta-strip-inner">
+        <span class="eyebrow" style="color:var(--blue-300);">Get started</span>
+        <h2 style="margin-top:18px;">Ready to digitise your next training programme?</h2>
+        <p>Bring your cohorts onto a single platform that automates the busy work &mdash; so your team focuses on delivery.</p>
+        <div class="cta-strip-actions">
+            <a class="btn btn-on-blue btn-lg btn-arrow" href="register/">Register a participant</a>
+            <a class="btn btn-outline-light btn-lg" href="verify/">Verify a certificate</a>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════ FOOTER ════════════════════ -->
+<footer>
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <a class="logo" href="/">
+                <span class="logo-mark">phillips</span>
+                <span class="logo-sub">CONSULTING</span>
+            </a>
+            <p>Empowering organisations through structured learning, capability development, and professional certification since 1999.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Platform</h4>
+            <a href="portal/">Participant Portal</a>
+            <a href="admin/">Admin Console</a>
+            <a href="verify/">Certificate Verify</a>
+            <a href="#programmes">Training Calendar</a>
+        </div>
+        <div class="footer-col">
+            <h4>Services</h4>
+            <a href="#">Corporate Training</a>
+            <a href="#">Executive Education</a>
+            <a href="#">Coaching &amp; Mentoring</a>
+            <a href="#">HR Consulting</a>
+        </div>
+        <div class="footer-col">
+            <h4>Contact</h4>
+            <a href="#">27 Gerrard Road, Ikoyi, Lagos</a>
+            <a href="tel:+23412798000">+234 (0) 1 279 8000</a>
+            <a href="mailto:training@phillipsconsulting.net">training@phillipsconsulting.net</a>
+            <a href="https://phillipsconsulting.net">www.phillipsconsulting.net</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2026 Phillips Consulting Limited. All rights reserved.</p>
+        <div class="footer-social">
+            <a href="#" aria-label="LinkedIn">In</a>
+            <a href="#" aria-label="X">X</a>
+            <a href="#" aria-label="Facebook">Fb</a>
+            <a href="#" aria-label="YouTube">Yt</a>
+        </div>
+    </div>
+</footer>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
+<script src="assets/js/three-hero.js"></script>
+<script src="assets/js/scroll.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+    // Hero cursor-follow glow
+    (function () {
+        const hero = document.getElementById('hero');
+        if (!hero) return;
+        let frame = null;
+        hero.addEventListener('mousemove', (e) => {
+            if (frame) return;
+            frame = requestAnimationFrame(() => {
+                const r = hero.getBoundingClientRect();
+                const mx = ((e.clientX - r.left) / r.width) * 100;
+                const my = ((e.clientY - r.top) / r.height) * 100;
+                hero.style.setProperty('--mx', mx + '%');
+                hero.style.setProperty('--my', my + '%');
+                frame = null;
             });
         });
-    </script>
+    })();
+</script>
 </body>
-
 </html>

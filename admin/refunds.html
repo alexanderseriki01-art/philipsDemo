@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Refunds — Phillips Consulting Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/tokens.css" />
+    <link rel="stylesheet" href="../assets/css/base.css" />
+    <link rel="stylesheet" href="../assets/css/admin.css" />
+    <link rel="stylesheet" href="../assets/css/portal.css" />
+</head>
+<body>
+
+<div class="app active">
+    <aside class="sidebar">
+        <a class="logo logo--sm" href="./"><span class="logo-mark">phillips</span><span class="logo-sub">CONSULTING</span></a>
+        <div class="sidebar-section">Operations</div>
+        <nav class="sidebar-nav">
+            <a href="./">Overview</a>
+            <a href="participants.html">Participants</a>
+            <a href="trainings.html">Trainings</a>
+            <a href="attendance.html">Attendance</a>
+        </nav>
+        <div class="sidebar-section">Revenue</div>
+        <nav class="sidebar-nav">
+            <a href="payments.html">Payments</a>
+            <a href="refunds.html" class="active">Refunds</a>
+        </nav>
+        <div class="sidebar-section">Learning</div>
+        <nav class="sidebar-nav">
+            <a href="materials.html">Materials</a>
+            <a href="certificates.html">Certificates</a>
+            <a href="feedback.html">Feedback</a>
+        </nav>
+        <div class="sidebar-section">System</div>
+        <nav class="sidebar-nav">
+            <a href="reports.html">Reports</a>
+            <a href="settings.html">Settings</a>
+            <a href="../">Back to site</a>
+        </nav>
+        <div class="sidebar-user">
+            <div class="avatar blue">TO</div>
+            <div>
+                <div class="name">Tunde Okafor</div>
+                <div class="role">Programme Administrator</div>
+            </div>
+        </div>
+    </aside>
+
+    <main>
+        <header class="topbar">
+            <h1>Refunds</h1>
+            <div class="topbar-right">
+                <div class="bell"><div class="dot"></div></div>
+                <div class="avatar blue">TO</div>
+            </div>
+        </header>
+
+        <div class="page-content">
+
+            <div class="stat-row">
+                <div class="stat"><div class="label">Refunded (YTD)</div><div class="value">₦2.1M</div><span class="delta down">5 transactions</span></div>
+                <div class="stat"><div class="label">Pending Requests</div><div class="value">2</div><span class="delta down">₦510K total</span></div>
+                <div class="stat"><div class="label">Approved (30d)</div><div class="value">3</div><span class="delta up">100% policy match</span></div>
+                <div class="stat"><div class="label">Avg Processing Time</div><div class="value">1.6d</div><span class="delta up">Target ≤ 3d</span></div>
+            </div>
+
+            <div class="card" style="margin-bottom:18px;">
+                <div class="card-head">
+                    <h3>Pending Refund Requests</h3>
+                    <span class="tag tag-warn">2 pending</span>
+                </div>
+                <div class="card-body">
+                    <div style="padding:18px;border:1px solid var(--line);border-radius:var(--radius);margin-bottom:14px;">
+                        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+                            <div>
+                                <div style="font-family:var(--font-display);font-size:16px;color:var(--ink-900);font-weight:600;">Olumide Sanusi &middot; Adv. Leadership</div>
+                                <div style="font-size:12.5px;color:var(--ink-400);margin-top:3px;">Ref: PC-RFD-2026-0042 &middot; Submitted 22 Mar 2026</div>
+                            </div>
+                            <div style="text-align:right;">
+                                <div style="font-family:var(--font-display);font-size:22px;color:var(--ink-900);">₦485,000</div>
+                                <span class="tag tag-warn" style="margin-top:6px;">Awaiting decision</span>
+                            </div>
+                        </div>
+                        <p style="font-size:13px;color:var(--ink-500);margin-bottom:14px;line-height:1.5;"><strong>Reason:</strong> Conflict with a major client deal scheduled for the same week. Requesting transfer to next cohort or full refund per policy clause 4.2.</p>
+                        <div style="display:flex;gap:8px;">
+                            <button class="btn btn-primary btn-sm" onclick="toast('Refund approved &amp; processed')">Approve Refund</button>
+                            <button class="btn btn-outline btn-sm" onclick="toast('Transferred to next cohort')">Transfer to Next Cohort</button>
+                            <button class="btn btn-ghost btn-sm" onclick="toast('Decline draft email opened')">Decline</button>
+                        </div>
+                    </div>
+
+                    <div style="padding:18px;border:1px solid var(--line);border-radius:var(--radius);">
+                        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+                            <div>
+                                <div style="font-family:var(--font-display);font-size:16px;color:var(--ink-900);font-weight:600;">Funmi Ade &middot; Data Analytics</div>
+                                <div style="font-size:12.5px;color:var(--ink-400);margin-top:3px;">Ref: PC-RFD-2026-0043 &middot; Submitted 24 Mar 2026</div>
+                            </div>
+                            <div style="text-align:right;">
+                                <div style="font-family:var(--font-display);font-size:22px;color:var(--ink-900);">₦25,000</div>
+                                <span class="tag tag-warn" style="margin-top:6px;">Awaiting decision</span>
+                            </div>
+                        </div>
+                        <p style="font-size:13px;color:var(--ink-500);margin-bottom:14px;line-height:1.5;"><strong>Reason:</strong> Partial refund for early-bird discount inadvertently not applied at checkout. Verified against pricing matrix.</p>
+                        <div style="display:flex;gap:8px;">
+                            <button class="btn btn-primary btn-sm" onclick="toast('Partial refund approved')">Approve Partial Refund</button>
+                            <button class="btn btn-ghost btn-sm" onclick="toast('Decline draft email opened')">Decline</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-head"><h3>Refund History</h3></div>
+                <table class="table">
+                    <thead><tr><th>Reference</th><th>Participant</th><th>Programme</th><th>Amount</th><th>Reason</th><th>Date</th><th>Status</th></tr></thead>
+                    <tbody>
+                        <tr><td><span style="font-family:var(--font-mono);font-size:12px;">PC-RFD-2026-0040</span></td><td>Seun Adeleke</td><td class="cell-muted">Data Analytics</td><td>₦275,000</td><td class="cell-muted">Programme cancelled</td><td class="cell-muted">02 Aug 2025</td><td><span class="tag tag-blue">Refunded</span></td></tr>
+                        <tr><td><span style="font-family:var(--font-mono);font-size:12px;">PC-RFD-2025-0038</span></td><td>K. Lawal</td><td class="cell-muted">Strategic HR</td><td>₦310,000</td><td class="cell-muted">Medical emergency</td><td class="cell-muted">14 Nov 2025</td><td><span class="tag tag-blue">Refunded</span></td></tr>
+                        <tr><td><span style="font-family:var(--font-mono);font-size:12px;">PC-RFD-2025-0036</span></td><td>D. Iroh</td><td class="cell-muted">PMP Prep</td><td>₦120,000</td><td class="cell-muted">Partial refund (1 day)</td><td class="cell-muted">22 Sep 2025</td><td><span class="tag tag-blue">Partial</span></td></tr>
+                        <tr><td><span style="font-family:var(--font-mono);font-size:12px;">PC-RFD-2025-0032</span></td><td>M. Olukotun</td><td class="cell-muted">Adv. Leadership</td><td>₦485,000</td><td class="cell-muted">Travel restriction</td><td class="cell-muted">04 Jul 2025</td><td><span class="tag tag-blue">Refunded</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<script src="../assets/js/app.js"></script>
+</body>
+</html>

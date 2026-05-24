@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Materials — Phillips Consulting Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/tokens.css" />
+    <link rel="stylesheet" href="../assets/css/base.css" />
+    <link rel="stylesheet" href="../assets/css/admin.css" />
+    <link rel="stylesheet" href="../assets/css/portal.css" />
+</head>
+<body>
+
+<div class="app active">
+    <aside class="sidebar">
+        <a class="logo logo--sm" href="./"><span class="logo-mark">phillips</span><span class="logo-sub">CONSULTING</span></a>
+        <div class="sidebar-section">Operations</div>
+        <nav class="sidebar-nav">
+            <a href="./">Overview</a>
+            <a href="participants.html">Participants</a>
+            <a href="trainings.html">Trainings</a>
+            <a href="attendance.html">Attendance</a>
+        </nav>
+        <div class="sidebar-section">Revenue</div>
+        <nav class="sidebar-nav">
+            <a href="payments.html">Payments</a>
+            <a href="refunds.html">Refunds</a>
+        </nav>
+        <div class="sidebar-section">Learning</div>
+        <nav class="sidebar-nav">
+            <a href="materials.html" class="active">Materials</a>
+            <a href="certificates.html">Certificates</a>
+            <a href="feedback.html">Feedback</a>
+        </nav>
+        <div class="sidebar-section">System</div>
+        <nav class="sidebar-nav">
+            <a href="reports.html">Reports</a>
+            <a href="settings.html">Settings</a>
+            <a href="../">Back to site</a>
+        </nav>
+        <div class="sidebar-user">
+            <div class="avatar blue">TO</div>
+            <div>
+                <div class="name">Tunde Okafor</div>
+                <div class="role">Programme Administrator</div>
+            </div>
+        </div>
+    </aside>
+
+    <main>
+        <header class="topbar">
+            <h1>Materials</h1>
+            <div class="topbar-right">
+                <div class="bell"><div class="dot"></div></div>
+                <div class="avatar blue">TO</div>
+            </div>
+        </header>
+
+        <div class="page-content">
+
+            <div class="stat-row">
+                <div class="stat"><div class="label">Total Files</div><div class="value">214</div><span class="delta up">+12 this month</span></div>
+                <div class="stat"><div class="label">Storage Used</div><div class="value">8.4 GB</div><span class="delta up">of 50 GB plan</span></div>
+                <div class="stat"><div class="label">Downloads (30d)</div><div class="value">1,842</div><span class="delta up">+28% MoM</span></div>
+                <div class="stat"><div class="label">Awaiting Upload</div><div class="value">4</div><span class="delta down">PMP Prep cohort</span></div>
+            </div>
+
+            <div class="card" style="margin-bottom:18px;border:2px dashed var(--blue-200);background:var(--blue-50);">
+                <div class="card-body" style="display:flex;align-items:center;gap:18px;">
+                    <div style="width:54px;height:54px;border-radius:12px;background:var(--blue-100);position:relative;flex-shrink:0;">
+                        <span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--blue-700);font-size:26px;font-weight:300;">+</span>
+                    </div>
+                    <div style="flex:1;">
+                        <div style="font-family:var(--font-display);font-size:16px;color:var(--ink-900);font-weight:600;">Drag &amp; drop files here, or click to browse</div>
+                        <div style="font-size:13px;color:var(--ink-500);margin-top:3px;">PDF, DOCX, ZIP, MP4 &middot; max 250 MB per file. Files attach to a programme + module.</div>
+                    </div>
+                    <button class="btn btn-primary btn-sm" onclick="toast('File picker opened')">Browse Files</button>
+                </div>
+            </div>
+
+            <div class="filter-bar">
+                <button class="filter-chip active">All Programmes</button>
+                <button class="filter-chip">Adv. Leadership</button>
+                <button class="filter-chip">PMP Prep</button>
+                <button class="filter-chip">Finance Mgrs</button>
+                <button class="filter-chip">Strategic HR</button>
+            </div>
+
+            <div class="card">
+                <div class="card-head">
+                    <h3>Material Library</h3>
+                    <div style="display:flex;gap:8px;">
+                        <button class="btn btn-ghost btn-sm" onclick="toast('Switched to grid view')">Grid</button>
+                        <button class="btn btn-ghost btn-sm" onclick="toast('Bulk download started')">Bulk Download</button>
+                    </div>
+                </div>
+                <table class="table">
+                    <thead><tr><th>File</th><th>Programme</th><th>Module</th><th>Size</th><th>Downloads</th><th>Uploaded</th><th></th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Adv-Leadership-Handbook.pdf</strong></td><td class="cell-muted">Adv. Leadership</td><td class="cell-muted">Day 1 &middot; Pre-read</td><td class="cell-muted">4.2 MB</td><td>187</td><td class="cell-muted">2 days ago</td><td style="text-align:right;"><button class="btn btn-ghost btn-sm">Manage</button></td></tr>
+                        <tr><td><strong>Cross-Sector-Cases.zip</strong></td><td class="cell-muted">Adv. Leadership</td><td class="cell-muted">Day 2&ndash;3</td><td class="cell-muted">38.6 MB</td><td>142</td><td class="cell-muted">3 days ago</td><td style="text-align:right;"><button class="btn btn-ghost btn-sm">Manage</button></td></tr>
+                        <tr><td><strong>PMP-Process-Reference.pdf</strong></td><td class="cell-muted">PMP Prep</td><td class="cell-muted">Reference</td><td class="cell-muted">2.8 MB</td><td>312</td><td class="cell-muted">5 days ago</td><td style="text-align:right;"><button class="btn btn-ghost btn-sm">Manage</button></td></tr>
+                        <tr><td><strong>Mock-Exam-Walkthrough.mp4</strong></td><td class="cell-muted">PMP Prep</td><td class="cell-muted">Day 4</td><td class="cell-muted">184 MB</td><td>87</td><td class="cell-muted">1 wk ago</td><td style="text-align:right;"><button class="btn btn-ghost btn-sm">Manage</button></td></tr>
+                        <tr><td><strong>Financial-Ratio-Workbook.xlsx</strong></td><td class="cell-muted">Finance Mgrs</td><td class="cell-muted">Day 1</td><td class="cell-muted">980 KB</td><td>234</td><td class="cell-muted">2 wks ago</td><td style="text-align:right;"><button class="btn btn-ghost btn-sm">Manage</button></td></tr>
+                        <tr><td><strong>HR-Strategy-Toolkit.pdf</strong></td><td class="cell-muted">Strategic HR</td><td class="cell-muted">Post-programme</td><td class="cell-muted">6.1 MB</td><td>56</td><td class="cell-muted">3 wks ago</td><td style="text-align:right;"><button class="btn btn-ghost btn-sm">Manage</button></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<script src="../assets/js/app.js"></script>
+<script>
+    document.querySelectorAll('.filter-chip').forEach((c) => c.addEventListener('click', () => {
+        document.querySelectorAll('.filter-chip').forEach((x) => x.classList.remove('active'));
+        c.classList.add('active');
+        toast('Filter: ' + c.textContent.trim());
+    }));
+</script>
+</body>
+</html>

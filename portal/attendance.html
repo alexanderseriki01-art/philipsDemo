@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Attendance — Phillips Consulting TMS</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="../assets/css/tokens.css" />
+    <link rel="stylesheet" href="../assets/css/base.css" />
+    <link rel="stylesheet" href="../assets/css/admin.css" />
+    <link rel="stylesheet" href="../assets/css/portal.css" />
+</head>
+<body>
+
+<div class="app active portal">
+
+    <aside class="sidebar">
+        <a class="logo logo--sm" href="../"><span class="logo-mark">phillips</span><span class="logo-sub">CONSULTING</span></a>
+        <div class="sidebar-section">My Learning</div>
+        <nav class="sidebar-nav">
+            <a href="./">Dashboard</a>
+            <a href="trainings.html">My Trainings</a>
+            <a href="attendance.html" class="active">Attendance</a>
+            <a href="materials.html">Materials</a>
+        </nav>
+        <div class="sidebar-section">Achievements</div>
+        <nav class="sidebar-nav">
+            <a href="certificate.html">Certificates</a>
+            <a href="feedback.html">Feedback</a>
+        </nav>
+        <div class="sidebar-section">Account</div>
+        <nav class="sidebar-nav">
+            <a href="payments.html">Payments</a>
+            <a href="profile.html">Profile</a>
+            <a href="../">Sign out</a>
+        </nav>
+        <div class="sidebar-user">
+            <div class="avatar">AO</div>
+            <div>
+                <div class="name">Adaeze Okonkwo</div>
+                <div class="role">Participant</div>
+            </div>
+        </div>
+    </aside>
+
+    <main>
+        <header class="topbar">
+            <h1>Attendance</h1>
+            <div class="topbar-right">
+                <input class="search-input" type="text" placeholder="Search by programme…" />
+                <div class="bell"><div class="dot"></div></div>
+                <div class="avatar">AO</div>
+            </div>
+        </header>
+
+        <div class="page-content">
+
+            <div class="stat-row">
+                <div class="stat"><div class="label">Total Sessions</div><div class="value">14</div><span class="delta up">Across 4 programmes</span></div>
+                <div class="stat"><div class="label">Present</div><div class="value">13</div><span class="delta up">93% attendance</span></div>
+                <div class="stat"><div class="label">Late</div><div class="value">1</div><span class="delta down">22 min, 24 Apr</span></div>
+                <div class="stat"><div class="label">Absent</div><div class="value">0</div><span class="delta up">Perfect record</span></div>
+            </div>
+
+            <div class="card" style="margin-bottom:18px;">
+                <div class="card-head">
+                    <h3>Attendance Trend &mdash; Last 8 Sessions</h3>
+                    <span class="tag tag-success">93% present</span>
+                </div>
+                <div class="card-body">
+                    <div style="display:flex;align-items:flex-end;gap:14px;height:140px;padding:8px 4px;">
+                        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;">
+                            <div style="width:100%;height:90%;background:linear-gradient(180deg,var(--blue-400),var(--blue-600));border-radius:6px 6px 0 0;"></div>
+                            <div style="font-size:10px;color:var(--ink-400);">12 Mar</div>
+                        </div>
+                        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;">
+                            <div style="width:100%;height:90%;background:linear-gradient(180deg,var(--blue-400),var(--blue-600));border-radius:6px 6px 0 0;"></div>
+                            <div style="font-size:10px;color:var(--ink-400);">13 Mar</div>
+                        </div>
+                        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;">
+                            <div style="width:100%;height:90%;background:linear-gradient(180deg,var(--blue-400),var(--blue-600));border-radius:6px 6px 0 0;"></div>
+                            <div style="font-size:10px;color:var(--ink-400);">06 Nov</div>
+                        </div>
+                        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;">
+                            <div style="width:100%;height:60%;background:linear-gradient(180deg,#ffd687,var(--warn));border-radius:6px 6px 0 0;"></div>
+                            <div style="font-size:10px;color:var(--ink-400);">24 Apr</div>
+                        </div>
+                        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;">
+                            <div style="width:100%;height:90%;background:linear-gradient(180deg,var(--blue-400),var(--blue-600));border-radius:6px 6px 0 0;"></div>
+                            <div style="font-size:10px;color:var(--ink-400);">25 Apr</div>
+                        </div>
+                        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;">
+                            <div style="width:100%;height:90%;background:linear-gradient(180deg,var(--blue-400),var(--blue-600));border-radius:6px 6px 0 0;"></div>
+                            <div style="font-size:10px;color:var(--ink-400);">26 Apr</div>
+                        </div>
+                        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;">
+                            <div style="width:100%;height:90%;background:linear-gradient(180deg,var(--blue-400),var(--blue-600));border-radius:6px 6px 0 0;"></div>
+                            <div style="font-size:10px;color:var(--ink-400);">27 Apr</div>
+                        </div>
+                        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;">
+                            <div style="width:100%;height:30%;background:var(--paper-2);border:1px dashed var(--line-strong);border-radius:6px 6px 0 0;"></div>
+                            <div style="font-size:10px;color:var(--ink-400);">15 May</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-head">
+                    <h3>Full Attendance Log</h3>
+                    <button class="btn btn-ghost btn-sm" onclick="toast('Export as PDF')">Export</button>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr><th>Programme</th><th>Date</th><th>Day</th><th>Check-in</th><th>Status</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Adv. Leadership Programme</td><td class="cell-muted">27 Apr 2026</td><td class="cell-muted">Day 4</td><td class="cell-muted">9:01 AM</td><td><span class="tag tag-success">Present</span></td></tr>
+                        <tr><td>Adv. Leadership Programme</td><td class="cell-muted">26 Apr 2026</td><td class="cell-muted">Day 3</td><td class="cell-muted">8:55 AM</td><td><span class="tag tag-success">Present</span></td></tr>
+                        <tr><td>Adv. Leadership Programme</td><td class="cell-muted">25 Apr 2026</td><td class="cell-muted">Day 2</td><td class="cell-muted">9:00 AM</td><td><span class="tag tag-success">Present</span></td></tr>
+                        <tr><td>Adv. Leadership Programme</td><td class="cell-muted">24 Apr 2026</td><td class="cell-muted">Day 1</td><td class="cell-muted">9:22 AM</td><td><span class="tag tag-warn">Late (22 min)</span></td></tr>
+                        <tr><td>Strategic Communications</td><td class="cell-muted">06 Nov 2025</td><td class="cell-muted">Day 1</td><td class="cell-muted">8:45 AM</td><td><span class="tag tag-success">Present</span></td></tr>
+                        <tr><td>Finance for Non-Finance Mgrs</td><td class="cell-muted">13 Mar 2025</td><td class="cell-muted">Day 2</td><td class="cell-muted">8:58 AM</td><td><span class="tag tag-success">Present</span></td></tr>
+                        <tr><td>Finance for Non-Finance Mgrs</td><td class="cell-muted">12 Mar 2025</td><td class="cell-muted">Day 1</td><td class="cell-muted">8:50 AM</td><td><span class="tag tag-success">Present</span></td></tr>
+                        <tr><td>PMP Prep Course</td><td class="cell-muted">15 May 2026</td><td class="cell-muted">Day 1</td><td class="cell-muted">—</td><td><span class="tag tag-blue">Upcoming</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<script src="../assets/js/app.js"></script>
+</body>
+</html>

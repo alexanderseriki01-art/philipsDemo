@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register — Phillips Consulting TMS</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="../assets/css/tokens.css" />
+    <link rel="stylesheet" href="../assets/css/base.css" />
+    <link rel="stylesheet" href="../assets/css/auth.css" />
+</head>
+<body>
+
+<div class="auth-page auth-page--immersive">
+
+    <div class="auth-bg" aria-hidden="true">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="grid"></div>
+        <div class="three-mount"></div>
+    </div>
+
+    <header class="auth-top">
+        <a class="logo logo--light" href="../">
+            <span class="logo-mark">phillips</span>
+            <span class="logo-sub">CONSULTING</span>
+        </a>
+        <a class="auth-top-link" href="../">&larr; Back to site</a>
+    </header>
+
+    <main class="auth-main">
+        <section class="auth-card wide" aria-labelledby="auth-title">
+            <span class="eyebrow eyebrow-line">New Participant</span>
+            <h2 id="auth-title">Enrol on your <em>next</em> programme.</h2>
+            <p class="auth-sub">Create your participant account &mdash; under two minutes &mdash; and pay for your first programme right after.</p>
+
+            <form onsubmit="event.preventDefault(); window.location.href='../portal/';">
+                <div class="field-row">
+                    <div class="field">
+                        <label>First Name</label>
+                        <input class="input" type="text" placeholder="Adaeze" value="Adaeze" autocomplete="given-name" />
+                    </div>
+                    <div class="field">
+                        <label>Last Name</label>
+                        <input class="input" type="text" placeholder="Okonkwo" value="Okonkwo" autocomplete="family-name" />
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label>Work Email</label>
+                    <input class="input" type="email" placeholder="adaeze@company.com" value="adaeze.okonkwo@stanbicibtc.com" autocomplete="email" />
+                </div>
+
+                <div class="field">
+                    <label>Organisation</label>
+                    <input class="input" type="text" placeholder="Company name" value="Stanbic IBTC Bank PLC" autocomplete="organization" />
+                </div>
+
+                <div class="field">
+                    <label>Select Training Programme</label>
+                    <select class="select">
+                        <option>Advanced Leadership &amp; Management &mdash; April 2026</option>
+                        <option>Project Management Professional (PMP) Prep &mdash; May 2026</option>
+                        <option>Finance for Non-Finance Managers &mdash; June 2026</option>
+                        <option>Strategic HR Management &mdash; July 2026</option>
+                        <option>Data Analytics for Decision Makers &mdash; July 2026</option>
+                        <option>Executive Communication &amp; Influence &mdash; August 2026</option>
+                    </select>
+                </div>
+
+                <div class="field-row">
+                    <div class="field">
+                        <label>Password</label>
+                        <input class="input" type="password" value="passphrase" autocomplete="new-password" />
+                    </div>
+                    <div class="field">
+                        <label>Confirm Password</label>
+                        <input class="input" type="password" value="passphrase" autocomplete="new-password" />
+                    </div>
+                </div>
+
+                <label class="checkbox" style="margin:8px 0 22px;">
+                    <input type="checkbox" checked />
+                    I agree to the <a class="link-blue" href="#" style="margin-left:4px;">terms of service</a>
+                </label>
+
+                <button class="btn btn-primary btn-block btn-lg btn-arrow" type="submit">Complete Registration</button>
+            </form>
+
+            <div class="auth-or"><span>or sign up with</span></div>
+
+            <div class="auth-provider">
+                <button class="btn" type="button" onclick="alert('SSO flow would launch here')">
+                    <span class="glyph sso"></span>Corporate SSO
+                </button>
+                <button class="btn" type="button" onclick="alert('Microsoft sign-up')">
+                    <span class="glyph org"></span>Microsoft
+                </button>
+            </div>
+
+            <div class="auth-toggle">
+                Already registered? <a href="../login/">Sign in instead</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="auth-bottom">
+        <div class="auth-stats">
+            <span><strong>500+</strong>organisations</span>
+            <span class="dot-sep"></span>
+            <span><strong>50,000+</strong>professionals trained</span>
+            <span class="dot-sep"></span>
+            <span><strong>20+</strong>years of practice</span>
+        </div>
+    </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
+<script src="../assets/js/three-register.js"></script>
+<script src="../assets/js/app.js"></script>
+</body>
+</html>
