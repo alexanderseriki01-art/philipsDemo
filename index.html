@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Phillips Consulting — Digital Training & Certification</title>
-    <meta name="description" content="A centralised platform digitising the end-to-end training participant journey — registration, secure payments, attendance, automated certification, and feedback." />
+    <meta name="description" content="A centralised platform digitising the end-to-end training participant journey: registration, secure payments, attendance, automated certification, and feedback." />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -17,7 +17,7 @@
 <body>
 
 <!-- ════════════════════ NAV ════════════════════ -->
-<header class="site-nav">
+<header class="site-nav" id="siteNav">
     <div class="site-nav-inner">
         <a class="logo" href="/">
             <span class="logo-mark">phillips</span>
@@ -33,590 +33,290 @@
 
         <div class="site-nav-cta">
             <a class="btn btn-ghost btn-sm" href="login/">Sign in</a>
-            <a class="btn btn-primary btn-sm" href="register/">Register</a>
+            <a class="btn btn-primary btn-sm" data-magnetic href="register/">Register</a>
             <button class="nav-burger" aria-label="Menu"><span></span><span></span><span></span></button>
         </div>
     </div>
 </header>
 
-<!-- ════════════════════ HERO (dark, CSS+SVG aurora) ════════════════════ -->
+<!-- ════════════════════ HERO ════════════════════ -->
 <section class="hero" id="hero">
-    <div class="hero-art">
-        <div class="atmosphere"></div>
-        <div class="mesh"></div>
-        <div id="three-hero"></div>
+    <div class="hero-bg">
+        <div class="grid"></div>
+        <div class="glow-2"></div>
+        <div class="glow"></div>
     </div>
-    <div class="hero-cursor-glow"></div>
-    <div class="hero-fade"></div>
 
     <div class="hero-inner">
-        <h1>
-            <span class="word">A</span>
-            <span class="word">refined</span>
-            <span class="word">system</span>
-            <span class="word">for</span>
-            <span class="word">corporate</span>
-            <span class="word"><span class="accent">learning</span></span>
-            <span class="word">&amp;</span>
-            <span class="word"><span class="accent">certification.</span></span>
-        </h1>
-
-        <p class="hero-lead">
-            From enrolment and verified payment to attendance, certification, and feedback &mdash;
-            Phillips Consulting&rsquo;s digital infrastructure replaces spreadsheets, paper forms,
-            and manual approvals with one continuous, audit-ready workflow.
-        </p>
-
-        <div class="hero-actions">
-            <a class="btn btn-primary btn-lg btn-arrow" href="register/">Register for a Programme</a>
-            <a class="btn btn-outline-light btn-lg" href="login/">Sign in to Portal</a>
-        </div>
-    </div>
-
-    <a class="hero-scroll-cue" href="#capabilities">Scroll</a>
-</section>
-
-<!-- ════════════════════ TESTIMONIALS ════════════════════ -->
-<section class="testimonials" id="voices">
-    <div class="container">
-        <div class="section-head reveal">
-            <span class="eyebrow eyebrow-line">Voices from our cohorts</span>
-            <h2>What participants say.</h2>
-            <p>Three thousand professionals have walked through Phillips Consulting programmes. A few of their reflections.</p>
+        <div class="hero-copy">
+            <span class="hero-eyebrow">Digital Training Infrastructure</span>
+            <h1>One platform for the entire <em>training journey</em>.</h1>
+            <p class="hero-lead">
+                From enrolment and verified payment to QR attendance, automated certification,
+                and feedback. One continuous, audit-ready workflow.
+            </p>
+            <div class="hero-actions">
+                <a class="btn btn-primary btn-lg btn-arrow" data-magnetic href="register/">Register for a programme</a>
+                <a class="btn btn-outline-light btn-lg" href="login/">Sign in to portal</a>
+            </div>
         </div>
 
-        <div class="testimonials-bento">
-
-            <article class="quote-card feature bento-feature reveal">
-                <div class="quote-mark">&ldquo;</div>
-                <div class="quote-stars" aria-label="5 out of 5">
-                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-                </div>
-                <p class="quote-body">
-                    The Advanced Leadership programme rewired how I think about strategic decision-making. The faculty challenged us with real cross-sector cases &mdash; not theoretical exercises. Six months on, my executive team meetings run noticeably differently, and three of my direct reports have already booked their own cohorts.
-                </p>
-                <div class="who">
-                    <div class="who-avatar">AO</div>
-                    <div>
-                        <div class="name">Adaeze Okonkwo</div>
-                        <div class="role">Head of Treasury &middot; Stanbic IBTC Bank</div>
-                    </div>
-                </div>
-            </article>
-
-            <article class="quote-card bento-top reveal reveal-d1">
-                <div class="quote-mark">&ldquo;</div>
-                <div class="quote-stars">
-                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-                </div>
-                <p class="quote-body">
-                    The cleanest certification process I&rsquo;ve experienced. Verified payment, digital attendance, certificate in my portal within hours.
-                </p>
-                <div class="who">
-                    <div class="who-avatar">EN</div>
-                    <div>
-                        <div class="name">Emeka Nwosu</div>
-                        <div class="role">Programme Manager &middot; Dangote Industries</div>
-                    </div>
-                </div>
-            </article>
-
-            <article class="quote-card bento-mid reveal reveal-d2">
-                <div class="quote-mark">&ldquo;</div>
-                <div class="quote-stars">
-                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-                </div>
-                <p class="quote-body">
-                    Enrolled twenty-three managers across two cohorts. The admin dashboard tracks attendance and completion in real time &mdash; a week of reporting reduced to a click.
-                </p>
-                <div class="who">
-                    <div class="who-avatar">CE</div>
-                    <div>
-                        <div class="name">Chidinma Ezeh</div>
-                        <div class="role">Head of L&amp;D &middot; Access Holdings</div>
-                    </div>
-                </div>
-            </article>
-
-            <article class="quote-card bento-bl reveal">
-                <div class="quote-mark">&ldquo;</div>
-                <div class="quote-stars">
-                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-                </div>
-                <p class="quote-body">
-                    QR attendance was the game-changer. No more paper sheets, no more guesswork &mdash; every check-in synced to the roster instantly, and absentees flagged automatically before the day was out.
-                </p>
-                <div class="who">
-                    <div class="who-avatar">BA</div>
-                    <div>
-                        <div class="name">Babatunde Alabi</div>
-                        <div class="role">Director, Capacity Development &middot; FIRS</div>
-                    </div>
-                </div>
-            </article>
-
-            <article class="quote-card bento-br reveal reveal-d1">
-                <div class="quote-mark">&ldquo;</div>
-                <div class="quote-stars">
-                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-                </div>
-                <p class="quote-body">
-                    I came in to prepare for the PMP examination and left with something more valuable &mdash; a network of senior project managers across the energy sector I still call on every month. The cohort model genuinely works.
-                </p>
-                <div class="who">
-                    <div class="who-avatar">NE</div>
-                    <div>
-                        <div class="name">Ngozi Eze</div>
-                        <div class="role">Senior Project Manager &middot; NNPC Limited</div>
-                    </div>
-                </div>
-            </article>
-
+        <div class="hero-visual">
+            <div class="shot-frame" data-tilt>
+                <div class="shot-bar"><span></span><span></span><span></span></div>
+                <img src="assets/img/shots/admin-dashboard.png" width="1192" height="860"
+                     alt="Phillips Consulting admin dashboard showing participants, programmes and revenue analytics" />
+            </div>
+            <div class="shot-chip">
+                <span class="tick">✓</span>
+                <span>Certificate verified<br><span class="sub">PC·2026·FNF·0847</span></span>
+            </div>
         </div>
     </div>
 </section>
 
-<!-- ════════════════════ CAPABILITIES (bento) ════════════════════ -->
+<!-- ════════════════════ CAPABILITIES — sticky rail ════════════════════ -->
 <section class="section" id="capabilities">
-    <div class="container">
-        <div class="section-head reveal">
-            <span class="eyebrow eyebrow-line">Capabilities</span>
+    <div class="container cap-grid">
+        <div class="cap-rail">
+            <span class="kicker">Capabilities</span>
             <h2>One platform, every stage of the journey.</h2>
-            <p>Six tightly-integrated modules &mdash; built around the same source of truth &mdash; so registration, payment, attendance, and certification stay perfectly aligned.</p>
+            <div class="cap-list" id="capList">
+                <button class="cap-item active" data-cap="0"><span class="n">01</span><span class="t">Frictionless registration</span></button>
+                <button class="cap-item" data-cap="1"><span class="n">02</span><span class="t">Verified payments</span></button>
+                <button class="cap-item" data-cap="2"><span class="n">03</span><span class="t">QR-code attendance</span></button>
+                <button class="cap-item" data-cap="3"><span class="n">04</span><span class="t">Automated certification</span></button>
+                <button class="cap-item" data-cap="4"><span class="n">05</span><span class="t">Public verification</span></button>
+                <button class="cap-item" data-cap="5"><span class="n">06</span><span class="t">Admin command centre</span></button>
+            </div>
         </div>
 
-        <div class="bento">
-            <!-- Featured: Automated Certification -->
-            <div class="bento-card bento-cert dark reveal">
-                <div class="step">04 / Featured Capability</div>
-                <h3>Automated Certification Engine</h3>
-                <p>Branded PDF certificates are generated only when payment and attendance criteria are met &mdash; each one signed with a unique verification code and a tamper-evident QR.</p>
-                <div class="visual">
-                    <div class="viz-cert">
-                        <div class="vc-kicker">Certificate of Completion</div>
-                        <div class="vc-name">Adaeze Okonkwo</div>
-                        <div class="vc-course">Finance for Non-Finance Managers</div>
-                        <div class="vc-sigs">
-                            <div class="sig">Dr. Bode Agusto</div>
-                            <div class="sig">Mrs. Folake Osei</div>
-                        </div>
-                    </div>
+        <div class="cap-panels" id="capPanels">
+            <article class="cap-panel reveal" id="cap-0" data-cap-panel="0">
+                <div class="pad">
+                    <h3>Frictionless registration</h3>
+                    <p>Self-service enrolment for individuals and corporate cohorts, with confirmation flows that route straight to the admin queue.</p>
                 </div>
-            </div>
+                <div class="cap-shot"><img src="assets/img/shots/portal-dashboard.png" width="1192" height="860" alt="Participant portal dashboard with training journey tracker" loading="lazy" /></div>
+            </article>
 
-            <!-- Payments -->
-            <div class="bento-card bento-pay reveal reveal-d1">
-                <div class="step">02 / Payments</div>
-                <h3>Verified Payment Gateway</h3>
-                <p>Paystack &amp; Flutterwave integration plus manual transfer verification &mdash; with real-time receipts.</p>
-                <div class="visual">
-                    <div class="viz-card">
-                        <div class="chip"></div>
-                        <div class="digits">4519 &middot;&middot;&middot;&middot; 7264</div>
-                        <div class="row"><span>Card Holder</span><span>06/30</span></div>
-                    </div>
+            <article class="cap-panel dark reveal" id="cap-1" data-cap-panel="1">
+                <div class="pad">
+                    <h3>Verified payments</h3>
+                    <p>Paystack and Flutterwave integration, plus manual transfer verification with real-time receipts and finance approval.</p>
                 </div>
-            </div>
+                <div class="cap-figure">
+                    <svg class="glyph" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="38" height="26" rx="4"/><path d="M5 19h38"/><path d="M11 29h9"/></svg>
+                    <div><div class="big">2</div><div class="meta">Gateways, plus verified bank transfer.</div></div>
+                </div>
+            </article>
 
-            <!-- Enrol -->
-            <div class="bento-card bento-enrol reveal">
-                <div class="step">01 / Enrolment</div>
-                <h3>Frictionless Registration</h3>
-                <p>Self-service enrolment for individuals and corporate cohorts, with confirmation flows that route straight to the admin queue.</p>
-                <div class="visual">
-                    <div class="viz-form">
-                        <div class="line">Adaeze Okonkwo</div>
-                        <div class="line focused">adaeze@stanbicibtc.com</div>
-                        <div class="line">Adv. Leadership &mdash; Apr 2026</div>
-                        <div class="btn-mock">Complete Registration</div>
-                    </div>
+            <article class="cap-panel dark reveal" id="cap-2" data-cap-panel="2">
+                <div class="pad">
+                    <h3>QR-code attendance</h3>
+                    <p>Per-session QR codes captured on any device. Late and absent rules gate certification automatically.</p>
                 </div>
-            </div>
+                <div class="cap-figure">
+                    <svg class="glyph" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="6" y="6" width="13" height="13" rx="2"/><rect x="29" y="6" width="13" height="13" rx="2"/><rect x="6" y="29" width="13" height="13" rx="2"/><path d="M29 29h5v5M42 29v13M29 42h13" stroke-linecap="round"/></svg>
+                    <div><div class="big">100%</div><div class="meta">Of check-ins synced to the roster, live.</div></div>
+                </div>
+            </article>
 
-            <!-- QR Attendance -->
-            <div class="bento-card bento-qr reveal reveal-d1">
-                <div class="step">03 / Attendance</div>
-                <h3>QR-Code Attendance</h3>
-                <p>Per-session QR codes captured on any device. Late and absent rules gate certification automatically.</p>
-                <div class="visual" style="text-align:center;">
-                    <div class="viz-qr">
-                        <div class="corner tl"></div>
-                        <div class="corner tr"></div>
-                        <div class="corner bl"></div>
-                    </div>
+            <article class="cap-panel reveal" id="cap-3" data-cap-panel="3">
+                <div class="pad">
+                    <h3>Automated certification</h3>
+                    <p>Branded PDF certificates generate only when payment and attendance criteria are met, each signed with a unique code and tamper-evident QR.</p>
                 </div>
-            </div>
+                <div class="cap-shot"><img src="assets/img/shots/certificate.png" width="1440" height="900" alt="Generated certificate of completion with verification code" loading="lazy" /></div>
+            </article>
 
-            <!-- Verify -->
-            <div class="bento-card bento-verify reveal reveal-d2">
-                <div class="step">05 / Verification</div>
-                <h3>Public Verification</h3>
-                <p>Anyone can confirm a certificate&rsquo;s authenticity with the unique code printed on it.</p>
-                <div class="visual">
-                    <div class="viz-verify">
-                        <div class="seal">Certificate verified</div>
-                        <div class="code-line">PC&middot;2026&middot;FNF&middot;0847</div>
-                        <div class="name-line">Adaeze Okonkwo</div>
-                    </div>
+            <article class="cap-panel dark reveal" id="cap-4" data-cap-panel="4">
+                <div class="pad">
+                    <h3>Public verification</h3>
+                    <p>Anyone can confirm a certificate's authenticity with the unique code printed on it. No login, no friction.</p>
                 </div>
-            </div>
+                <div class="cap-figure">
+                    <svg class="glyph" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M24 5l16 6v11c0 10-7 16-16 20-9-4-16-10-16-20V11z"/><path d="M17 24l5 5 9-10"/></svg>
+                    <div><div class="big">412</div><div class="meta">Public verifications in the last 30 days.</div></div>
+                </div>
+            </article>
 
-            <!-- Admin -->
-            <div class="bento-card bento-admin dark reveal">
-                <div class="step">06 / Command Centre</div>
-                <h3>The Admin command centre, in one view.</h3>
-                <p>Participant cohorts, payment pipelines, attendance analytics, and feedback trends &mdash; with exportable reporting and full audit trail.</p>
-                <div class="viz-admin">
-                    <div class="tile"><div class="v">347</div><div class="l">Participants</div></div>
-                    <div class="tile"><div class="v">18</div><div class="l">Programmes</div></div>
-                    <div class="tile"><div class="v">94%</div><div class="l">Collection</div></div>
-                    <div class="chart">
-                        <div class="b" style="height:30%"></div>
-                        <div class="b" style="height:48%"></div>
-                        <div class="b" style="height:35%"></div>
-                        <div class="b" style="height:62%"></div>
-                        <div class="b" style="height:70%"></div>
-                        <div class="b" style="height:54%"></div>
-                        <div class="b" style="height:78%"></div>
-                        <div class="b" style="height:88%"></div>
-                        <div class="b" style="height:74%"></div>
-                        <div class="b" style="height:92%"></div>
-                    </div>
+            <article class="cap-panel reveal" id="cap-5" data-cap-panel="5">
+                <div class="pad">
+                    <h3>Admin command centre</h3>
+                    <p>Cohorts, payment pipelines, attendance analytics, and feedback trends in one view, with exportable reporting and a full audit trail.</p>
                 </div>
-            </div>
+                <div class="cap-shot"><img src="assets/img/shots/admin-participants.png" width="1192" height="860" alt="Admin participant directory with status management" loading="lazy" /></div>
+            </article>
         </div>
     </div>
 </section>
 
-<!-- ════════════════════ HOW IT WORKS — 7-stage process flow ════════════════════ -->
-<section class="flow" id="how-it-works">
+<!-- ════════════════════ HOW IT WORKS — timeline ════════════════════ -->
+<section class="section section--tint" id="how-it-works">
     <div class="container">
-        <div class="section-head reveal">
-            <span class="eyebrow eyebrow-line">How it works</span>
+        <div class="sec-head reveal" style="margin-inline:auto;text-align:center;">
             <h2>Seven stages, one continuous workflow.</h2>
-            <p>From the welcome email to the post-programme feedback &mdash; every stage feeds the next, every action audited.</p>
+            <p style="margin-inline:auto;">From the welcome email to post-programme feedback, every stage feeds the next and every action is audited.</p>
         </div>
 
-        <div class="flow-grid">
+        <div class="flow-wrap">
+            <div class="flow-line" id="flowLine"><div class="fill"></div></div>
 
-            <div class="flow-step reveal">
-                <div class="num">01</div>
-                <span class="role-tag">System</span>
-                <h3>Email Confirmation</h3>
-                <p>Welcome email with programme overview, dates, and a secure link to begin registration.</p>
+            <div class="flow-row flow-step reveal">
+                <div class="flow-node">01</div>
+                <div class="flow-card"><span class="role-tag">System</span><h3>Email confirmation</h3><p>A welcome email with programme overview, dates, and a secure link to begin registration.</p></div>
             </div>
-
-            <div class="flow-step reveal reveal-d1">
-                <div class="num">02</div>
-                <span class="role-tag">Participant</span>
-                <h3>Training Registration</h3>
-                <p>Self-service enrolment &mdash; organisation, programme, and contact details captured in minutes.</p>
+            <div class="flow-row flow-step reveal">
+                <div class="flow-node">02</div>
+                <div class="flow-card"><span class="role-tag">Participant</span><h3>Training registration</h3><p>Self-service enrolment. Organisation, programme, and contact details captured in minutes.</p></div>
             </div>
-
-            <div class="flow-step reveal reveal-d2">
-                <div class="num">03</div>
-                <span class="role-tag">Participant</span>
-                <h3>Payment</h3>
-                <p>Pay through Paystack or Flutterwave &mdash; or upload bank-transfer proof for review.</p>
+            <div class="flow-row flow-step reveal">
+                <div class="flow-node">03</div>
+                <div class="flow-card"><span class="role-tag">Participant</span><h3>Payment</h3><p>Pay through Paystack or Flutterwave, or upload bank-transfer proof for review.</p></div>
             </div>
-
-            <div class="flow-step reveal accent">
-                <div class="num">04</div>
-                <span class="role-tag admin">Admin</span>
-                <h3>Payment Confirmation</h3>
-                <p>Finance team verifies and confirms payment &mdash; unlocks participant materials and seat.</p>
+            <div class="flow-row flow-step accent reveal">
+                <div class="flow-node">04</div>
+                <div class="flow-card"><span class="role-tag admin">Admin</span><h3>Payment confirmation</h3><p>The finance team verifies payment, which unlocks the participant's materials and seat.</p></div>
             </div>
-
-            <div class="flow-step reveal reveal-d1">
-                <div class="num">05</div>
-                <span class="role-tag">Participant</span>
-                <h3>Training Attendance</h3>
-                <p>Per-session QR check-in tracks presence, lateness, and absence across every cohort day.</p>
+            <div class="flow-row flow-step reveal">
+                <div class="flow-node">05</div>
+                <div class="flow-card"><span class="role-tag">Participant</span><h3>Training attendance</h3><p>Per-session QR check-in tracks presence, lateness, and absence across every cohort day.</p></div>
             </div>
-
-            <div class="flow-step reveal reveal-d2">
-                <div class="num">06</div>
-                <span class="role-tag admin">Admin &middot; System</span>
-                <h3>Training Certificate</h3>
-                <p>Once payment and attendance criteria are met, a branded, uniquely-coded PDF is issued.</p>
+            <div class="flow-row flow-step accent reveal">
+                <div class="flow-node">06</div>
+                <div class="flow-card"><span class="role-tag admin">Admin · System</span><h3>Training certificate</h3><p>Once payment and attendance criteria are met, a branded, uniquely-coded PDF is issued.</p></div>
             </div>
-
-            <div class="flow-step reveal">
-                <div class="num">07</div>
-                <span class="role-tag">Participant</span>
-                <h3>Training Feedback</h3>
-                <p>Structured feedback feeds the admin centre &mdash; rolled up by cohort, facilitator, and module.</p>
+            <div class="flow-row flow-step reveal">
+                <div class="flow-node">07</div>
+                <div class="flow-card"><span class="role-tag">Participant</span><h3>Training feedback</h3><p>Structured feedback rolls up to the admin centre by cohort, facilitator, and module.</p></div>
             </div>
-
         </div>
 
         <div class="flow-outcome reveal">
             <div>
-                <h3>From welcome email to certified completion &mdash; in one platform.</h3>
-                <p>No spreadsheets, no paper forms, no manual reconciliation. Every stage is audit-logged and every participant sees exactly where they are.</p>
+                <h3>From welcome email to certified completion, in one platform.</h3>
+                <p>No spreadsheets, no paper forms, no manual reconciliation. Every stage is audit-logged.</p>
             </div>
-            <a class="btn btn-on-blue btn-arrow" href="register/">Begin a Programme</a>
+            <a class="btn btn-on-blue btn-arrow" data-magnetic href="register/">Register for a programme</a>
         </div>
     </div>
 </section>
 
-<!-- ════════════════════ PROGRAMMES — deck of cards ════════════════════ -->
-<section class="programmes" id="programmes">
+<!-- ════════════════════ PROGRAMMES — draggable rail ════════════════════ -->
+<section class="section" id="programmes">
     <div class="container">
-        <div class="section-head reveal">
-            <span class="eyebrow eyebrow-line">Upcoming programmes</span>
-            <h2>Open enrolment, this quarter.</h2>
-            <p>Featured cohorts curated by the Phillips Consulting Professional Development Division.</p>
+        <div class="prog-head">
+            <div class="sec-head reveal">
+                <h2>Open enrolment this quarter.</h2>
+                <p>Featured cohorts from the Phillips Consulting Professional Development Division. Drag to explore.</p>
+            </div>
+            <div class="prog-controls reveal reveal-d1">
+                <div class="prog-progress"><div class="bar" id="progBar"></div></div>
+                <button class="prog-arrow" id="progPrev" aria-label="Previous programmes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 6l-6 6 6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                <button class="prog-arrow" id="progNext" aria-label="Next programmes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            </div>
         </div>
 
-        <div class="deck-shell reveal">
-            <div class="deck" aria-roledescription="carousel" aria-label="Upcoming programmes">
-
-                <article class="deck-card dark">
-                    <div class="deck-tag">Featured</div>
-                    <div class="deck-top">
-                        <div class="deck-date">
-                            <div class="d">24</div>
-                            <div class="m">Apr</div>
-                        </div>
-                        <div>
-                            <h3>Advanced Leadership &amp; Management</h3>
-                            <div class="deck-meta">
-                                <span>4 Days</span>
-                                <span>In-Person</span>
-                                <span>Landmark, Lagos</span>
-                            </div>
-                        </div>
-                    </div>
-                    <p>A flagship cohort for senior managers transitioning into strategic leadership roles &mdash; led by faculty with cross-sector executive experience.</p>
-                    <div class="deck-foot">
-                        <div class="deck-price">₦485,000<sub>per seat</sub></div>
-                        <a class="deck-cta" href="register/">Register</a>
-                    </div>
-                </article>
-
-                <article class="deck-card">
-                    <div class="deck-tag">Cohort 02</div>
-                    <div class="deck-top">
-                        <div class="deck-date">
-                            <div class="d">15</div>
-                            <div class="m">May</div>
-                        </div>
-                        <div>
-                            <h3>Project Management Professional Prep</h3>
-                            <div class="deck-meta">
-                                <span>5 Days</span>
-                                <span>Hybrid</span>
-                                <span>Zoom + Lagos</span>
-                            </div>
-                        </div>
-                    </div>
-                    <p>An intensive preparation programme for the PMP examination, covering all five PMI process groups with simulated practice exams.</p>
-                    <div class="deck-foot">
-                        <div class="deck-price">₦240,000<sub>per seat</sub></div>
-                        <a class="deck-cta" href="register/">Register</a>
-                    </div>
-                </article>
-
-                <article class="deck-card">
-                    <div class="deck-tag">Cohort 03</div>
-                    <div class="deck-top">
-                        <div class="deck-date">
-                            <div class="d">12</div>
-                            <div class="m">Jun</div>
-                        </div>
-                        <div>
-                            <h3>Finance for Non-Finance Managers</h3>
-                            <div class="deck-meta">
-                                <span>2 Days</span>
-                                <span>In-Person</span>
-                                <span>Phillips HQ, Ikoyi</span>
-                            </div>
-                        </div>
-                    </div>
-                    <p>A practical introduction to financial statements, ratio analysis, and budget interpretation for managers from non-finance disciplines.</p>
-                    <div class="deck-foot">
-                        <div class="deck-price">₦185,000<sub>per seat</sub></div>
-                        <a class="deck-cta" href="register/">Register</a>
-                    </div>
-                </article>
-
-                <article class="deck-card">
-                    <div class="deck-tag">Cohort 04</div>
-                    <div class="deck-top">
-                        <div class="deck-date">
-                            <div class="d">03</div>
-                            <div class="m">Jul</div>
-                        </div>
-                        <div>
-                            <h3>Strategic Human Resources Management</h3>
-                            <div class="deck-meta">
-                                <span>3 Days</span>
-                                <span>In-Person</span>
-                                <span>Phillips HQ, Ikoyi</span>
-                            </div>
-                        </div>
-                    </div>
-                    <p>For HR directors and senior practitioners moving from operational HR to strategic workforce planning aligned with business objectives.</p>
-                    <div class="deck-foot">
-                        <div class="deck-price">₦310,000<sub>per seat</sub></div>
-                        <a class="deck-cta" href="register/">Register</a>
-                    </div>
-                </article>
-
-                <article class="deck-card">
-                    <div class="deck-tag">Cohort 05</div>
-                    <div class="deck-top">
-                        <div class="deck-date">
-                            <div class="d">22</div>
-                            <div class="m">Jul</div>
-                        </div>
-                        <div>
-                            <h3>Data Analytics for Decision Makers</h3>
-                            <div class="deck-meta">
-                                <span>3 Days</span>
-                                <span>Hybrid</span>
-                                <span>Zoom + Lagos</span>
-                            </div>
-                        </div>
-                    </div>
-                    <p>A hands-on programme covering data storytelling, dashboard literacy, and the analytics workflow &mdash; tailored for managerial audiences.</p>
-                    <div class="deck-foot">
-                        <div class="deck-price">₦275,000<sub>per seat</sub></div>
-                        <a class="deck-cta" href="register/">Register</a>
-                    </div>
-                </article>
-
-                <article class="deck-card">
-                    <div class="deck-tag">Cohort 06</div>
-                    <div class="deck-top">
-                        <div class="deck-date">
-                            <div class="d">14</div>
-                            <div class="m">Aug</div>
-                        </div>
-                        <div>
-                            <h3>Executive Communication &amp; Influence</h3>
-                            <div class="deck-meta">
-                                <span>2 Days</span>
-                                <span>In-Person</span>
-                                <span>Landmark, Lagos</span>
-                            </div>
-                        </div>
-                    </div>
-                    <p>Sharpen executive presence, board-level presentation skills, and stakeholder narrative craft with senior communication faculty.</p>
-                    <div class="deck-foot">
-                        <div class="deck-price">₦220,000<sub>per seat</sub></div>
-                        <a class="deck-cta" href="register/">Register</a>
-                    </div>
-                </article>
-
-            </div>
-
-            <div class="deck-nav">
-                <button class="deck-arrow" data-deck-prev aria-label="Previous programme">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 6l-6 6 6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </button>
-                <div class="deck-counter">
-                    <span class="cur">01</span>
-                    <span class="slash">/</span>
-                    <span class="total">06</span>
-                </div>
-                <button class="deck-arrow" data-deck-next aria-label="Next programme">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </button>
-            </div>
-
-            <div class="deck-dots" aria-hidden="true"></div>
+        <div class="prog-rail" id="progRail">
+            <article class="pcard feature">
+                <div class="pcard-top"><div class="pcard-date"><div class="d">24</div><div class="m">Apr</div></div><div><h3>Advanced Leadership &amp; Management</h3><div class="pcard-meta"><span>4 Days</span><span>In-Person</span><span>Landmark, Lagos</span></div></div></div>
+                <p class="pcard-body">A flagship cohort for senior managers moving into strategic leadership roles, led by faculty with cross-sector executive experience.</p>
+                <div class="pcard-foot"><div class="pcard-price">₦485,000<sub>per seat</sub></div><a class="pcard-cta" href="register/">Register</a></div>
+            </article>
+            <article class="pcard">
+                <div class="pcard-top"><div class="pcard-date"><div class="d">15</div><div class="m">May</div></div><div><h3>Project Management Professional Prep</h3><div class="pcard-meta"><span>5 Days</span><span>Hybrid</span><span>Zoom + Lagos</span></div></div></div>
+                <p class="pcard-body">An intensive preparation programme for the PMP examination, covering all five PMI process groups with simulated practice exams.</p>
+                <div class="pcard-foot"><div class="pcard-price">₦240,000<sub>per seat</sub></div><a class="pcard-cta" href="register/">Register</a></div>
+            </article>
+            <article class="pcard">
+                <div class="pcard-top"><div class="pcard-date"><div class="d">12</div><div class="m">Jun</div></div><div><h3>Finance for Non-Finance Managers</h3><div class="pcard-meta"><span>2 Days</span><span>In-Person</span><span>Phillips HQ, Ikoyi</span></div></div></div>
+                <p class="pcard-body">A practical introduction to financial statements, ratio analysis, and budget interpretation for managers from non-finance disciplines.</p>
+                <div class="pcard-foot"><div class="pcard-price">₦185,000<sub>per seat</sub></div><a class="pcard-cta" href="register/">Register</a></div>
+            </article>
+            <article class="pcard">
+                <div class="pcard-top"><div class="pcard-date"><div class="d">03</div><div class="m">Jul</div></div><div><h3>Strategic Human Resources Management</h3><div class="pcard-meta"><span>3 Days</span><span>In-Person</span><span>Phillips HQ, Ikoyi</span></div></div></div>
+                <p class="pcard-body">For HR directors moving from operational HR to strategic workforce planning aligned with business objectives.</p>
+                <div class="pcard-foot"><div class="pcard-price">₦310,000<sub>per seat</sub></div><a class="pcard-cta" href="register/">Register</a></div>
+            </article>
+            <article class="pcard">
+                <div class="pcard-top"><div class="pcard-date"><div class="d">22</div><div class="m">Jul</div></div><div><h3>Data Analytics for Decision Makers</h3><div class="pcard-meta"><span>3 Days</span><span>Hybrid</span><span>Zoom + Lagos</span></div></div></div>
+                <p class="pcard-body">A hands-on programme covering data storytelling, dashboard literacy, and the analytics workflow, tailored for managerial audiences.</p>
+                <div class="pcard-foot"><div class="pcard-price">₦275,000<sub>per seat</sub></div><a class="pcard-cta" href="register/">Register</a></div>
+            </article>
+            <article class="pcard">
+                <div class="pcard-top"><div class="pcard-date"><div class="d">14</div><div class="m">Aug</div></div><div><h3>Executive Communication &amp; Influence</h3><div class="pcard-meta"><span>2 Days</span><span>In-Person</span><span>Landmark, Lagos</span></div></div></div>
+                <p class="pcard-body">Sharpen executive presence, board-level presentation skills, and stakeholder narrative craft with senior communication faculty.</p>
+                <div class="pcard-foot"><div class="pcard-price">₦220,000<sub>per seat</sub></div><a class="pcard-cta" href="register/">Register</a></div>
+            </article>
         </div>
     </div>
 </section>
 
-<!-- ════════════════════ ACCREDITATIONS & RECOGNITION ════════════════════ -->
-<section class="accreditations" id="accreditations">
+<!-- ════════════════════ TESTIMONIALS — marquee ════════════════════ -->
+<section class="section section--tint voices voices-edge" id="voices">
     <div class="container">
-        <div class="accred-head reveal">
-            <span class="eyebrow eyebrow-line">Accreditations &amp; Recognition</span>
-            <h2>Independently certified, sector-recognised.</h2>
-            <p>Phillips Consulting&rsquo;s training and certification practice operates under recognised quality, professional development, and learning standards.</p>
+        <div class="sec-head reveal" style="margin-inline:auto;text-align:center;">
+            <h2>What participants say.</h2>
+            <p style="margin-inline:auto;">Three thousand professionals have walked through Phillips Consulting programmes. A few of their reflections.</p>
+        </div>
+    </div>
+
+    <div class="marquee" id="mq1">
+        <article class="qcard"><div class="stars">★★★★★</div><p>The Advanced Leadership programme rewired how my executive team makes decisions. Three of my reports have since booked their own cohorts.</p><div class="who"><div class="av">AO</div><div><div class="nm">Adaeze Okonkwo</div><div class="rl">Head of Treasury, Stanbic IBTC</div></div></div></article>
+        <article class="qcard"><div class="stars">★★★★★</div><p>The cleanest certification process I have experienced. Verified payment, digital attendance, certificate in my portal within hours.</p><div class="who"><div class="av">EN</div><div><div class="nm">Emeka Nwosu</div><div class="rl">Programme Manager, Dangote Industries</div></div></div></article>
+        <article class="qcard"><div class="stars">★★★★★</div><p>I enrolled twenty-three managers across two cohorts. A week of attendance reporting is now a single click.</p><div class="who"><div class="av">CE</div><div><div class="nm">Chidinma Ezeh</div><div class="rl">Head of L&amp;D, Access Holdings</div></div></div></article>
+        <article class="qcard"><div class="stars">★★★★★</div><p>QR attendance was the game-changer. Every check-in syncs to the roster instantly, and absentees are flagged the same day.</p><div class="who"><div class="av">BA</div><div><div class="nm">Babatunde Alabi</div><div class="rl">Director, Capacity Development, FIRS</div></div></div></article>
+    </div>
+    <div class="marquee rev" id="mq2">
+        <article class="qcard"><div class="stars">★★★★★</div><p>I came for PMP prep and left with a network of senior project managers across the energy sector I still call on every month.</p><div class="who"><div class="av">NE</div><div><div class="nm">Ngozi Eze</div><div class="rl">Senior Project Manager, NNPC Limited</div></div></div></article>
+        <article class="qcard"><div class="stars">★★★★★</div><p>The portal made our finance approvals painless. Receipts, confirmations, and seat unlocks all in one place.</p><div class="who"><div class="av">FA</div><div><div class="nm">Funmi Ade</div><div class="rl">Learning Lead, First Bank</div></div></div></article>
+        <article class="qcard"><div class="stars">★★★★★</div><p>Reporting that used to take our team a full week now takes minutes. The audit trail alone has paid for itself.</p><div class="who"><div class="av">OS</div><div><div class="nm">Olumide Sanusi</div><div class="rl">Operations Lead, Flour Mills</div></div></div></article>
+        <article class="qcard"><div class="stars">★★★★★</div><p>Faculty quality is exceptional, and the cohort model genuinely builds a network you keep long after the programme ends.</p><div class="who"><div class="av">SA</div><div><div class="nm">Seun Adeleke</div><div class="rl">Head of Strategy, MTN Nigeria</div></div></div></article>
+    </div>
+</section>
+
+<!-- ════════════════════ FAQ ════════════════════ -->
+<section class="section" id="faq">
+    <div class="container faq-wrap">
+        <div class="faq-intro reveal">
+            <h2>Common questions.</h2>
+            <p>Everything teams ask before bringing a cohort onto the platform.</p>
+            <div class="faq-contact">Need something specific? <a href="mailto:training@phillipsconsulting.net">training@phillipsconsulting.net</a></div>
         </div>
 
-        <div class="accred-grid">
-
-            <div class="accred-card reveal">
-                <svg class="accred-badge" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="32" cy="32" r="29" stroke="currentColor" stroke-width="1.5" />
-                    <circle cx="32" cy="32" r="22" stroke="currentColor" stroke-width="1" stroke-dasharray="2 3" />
-                    <text x="32" y="29" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-size="11" font-weight="700" fill="currentColor">ISO</text>
-                    <text x="32" y="42" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" font-weight="500" fill="currentColor" letter-spacing="0.3">9001:2015</text>
-                </svg>
-                <div class="accred-name">ISO 9001:2015</div>
-                <div class="accred-meta">Quality Mgmt</div>
-            </div>
-
-            <div class="accred-card reveal reveal-d1">
-                <svg class="accred-badge" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M32 4 L58 14 V34 Q58 50 32 60 Q6 50 6 34 V14 Z" stroke="currentColor" stroke-width="1.5" fill="none" />
-                    <path d="M32 12 L52 19 V33 Q52 45 32 53 Q12 45 12 33 V19 Z" stroke="currentColor" stroke-width="1" fill="none" stroke-dasharray="2 3" />
-                    <text x="32" y="36" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-size="10" font-weight="700" fill="currentColor">CPD</text>
-                    <text x="32" y="46" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" font-weight="500" fill="currentColor" letter-spacing="0.3">CERTIFIED</text>
-                </svg>
-                <div class="accred-name">CPD UK</div>
-                <div class="accred-meta">Provider No. 778291</div>
-            </div>
-
-            <div class="accred-card reveal reveal-d2">
-                <svg class="accred-badge" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <polygon points="32,4 56,18 56,46 32,60 8,46 8,18" stroke="currentColor" stroke-width="1.5" fill="none" />
-                    <polygon points="32,12 49,22 49,42 32,52 15,42 15,22" stroke="currentColor" stroke-width="1" fill="none" stroke-dasharray="2 3" />
-                    <text x="32" y="36" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-size="9" font-weight="700" fill="currentColor">NITDA</text>
-                </svg>
-                <div class="accred-name">NITDA Approved</div>
-                <div class="accred-meta">Digital Skills Cert</div>
-            </div>
-
-            <div class="accred-card reveal">
-                <svg class="accred-badge" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="8" y="10" width="48" height="44" rx="4" stroke="currentColor" stroke-width="1.5" fill="none" />
-                    <rect x="14" y="16" width="36" height="32" rx="2" stroke="currentColor" stroke-width="1" fill="none" stroke-dasharray="2 3" />
-                    <text x="32" y="33" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-size="10" font-weight="700" fill="currentColor">CIPM</text>
-                    <text x="32" y="43" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" font-weight="500" fill="currentColor" letter-spacing="0.2">AFFILIATE</text>
-                </svg>
-                <div class="accred-name">CIPM Affiliate</div>
-                <div class="accred-meta">HR Practice</div>
-            </div>
-
-            <div class="accred-card reveal reveal-d1">
-                <svg class="accred-badge" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="32" cy="32" r="29" stroke="currentColor" stroke-width="1.5" fill="none" />
-                    <path d="M16 32 L28 44 L48 22" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-                <div class="accred-name">ICAN Approved</div>
-                <div class="accred-meta">Finance Trainer</div>
-            </div>
-
-            <div class="accred-card reveal reveal-d2">
-                <svg class="accred-badge" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M32 6 L40 24 L60 26 L46 40 L50 60 L32 50 L14 60 L18 40 L4 26 L24 24 Z"
-                          stroke="currentColor" stroke-width="1.5" fill="none" stroke-linejoin="round" />
-                    <circle cx="32" cy="34" r="8" stroke="currentColor" stroke-width="1" fill="none" />
-                    <text x="32" y="37" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-size="7" font-weight="700" fill="currentColor">PMI</text>
-                </svg>
-                <div class="accred-name">PMI R.E.P.</div>
-                <div class="accred-meta">Registered Provider</div>
-            </div>
-
+        <div class="faq-list reveal reveal-d1">
+            <details class="faq-item" open>
+                <summary>How are payments verified?<span class="ic"></span></summary>
+                <div class="answer"><p>We support Paystack and Flutterwave for instant confirmation, plus manual bank-transfer verification by our finance team, usually within 24 to 48 hours. Once confirmed, materials and the participant seat unlock automatically.</p></div>
+            </details>
+            <details class="faq-item">
+                <summary>Can we enrol a corporate cohort?<span class="ic"></span></summary>
+                <div class="answer"><p>Yes. Organisations can register multiple participants under one account and track attendance, payments, and completion for the whole cohort from a single admin dashboard.</p></div>
+            </details>
+            <details class="faq-item">
+                <summary>Are the certificates verifiable?<span class="ic"></span></summary>
+                <div class="answer"><p>Every certificate carries a unique code and a tamper-evident QR. Anyone can confirm its authenticity on the public verification page, with no login required.</p></div>
+            </details>
+            <details class="faq-item">
+                <summary>Do you offer hybrid and virtual delivery?<span class="ic"></span></summary>
+                <div class="answer"><p>Many programmes run in-person, virtually over Zoom, or as a hybrid of both. The delivery mode and venue are listed on each programme card.</p></div>
+            </details>
+            <details class="faq-item">
+                <summary>What if a participant misses a session?<span class="ic"></span></summary>
+                <div class="answer"><p>QR check-in records attendance per session. Late and absence rules are configurable and gate certification automatically, so completion always reflects real participation.</p></div>
+            </details>
         </div>
     </div>
 </section>
 
-<!-- ════════════════════ CTA STRIP ════════════════════ -->
-<section class="cta-strip">
-    <div class="cta-strip-inner">
-        <span class="eyebrow" style="color:var(--blue-300);">Get started</span>
-        <h2 style="margin-top:18px;">Ready to digitise your next training programme?</h2>
-        <p>Bring your cohorts onto a single platform that automates the busy work &mdash; so your team focuses on delivery.</p>
-        <div class="cta-strip-actions">
-            <a class="btn btn-on-blue btn-lg btn-arrow" href="register/">Register a participant</a>
+<!-- ════════════════════ CTA (dark) ════════════════════ -->
+<section class="cta">
+    <div class="cta-inner reveal">
+        <h2>Ready to digitise your next programme?</h2>
+        <p>Bring your cohorts onto one platform that automates the busy work, so your team focuses on delivery.</p>
+        <div class="cta-actions">
+            <a class="btn btn-on-blue btn-lg btn-arrow" data-magnetic href="register/">Register for a programme</a>
             <a class="btn btn-outline-light btn-lg" href="verify/">Verify a certificate</a>
         </div>
     </div>
@@ -626,10 +326,7 @@
 <footer>
     <div class="footer-grid">
         <div class="footer-brand">
-            <a class="logo" href="/">
-                <span class="logo-mark">phillips</span>
-                <span class="logo-sub">CONSULTING</span>
-            </a>
+            <a class="logo" href="/"><span class="logo-mark">phillips</span><span class="logo-sub">CONSULTING</span></a>
             <p>Empowering organisations through structured learning, capability development, and professional certification since 1999.</p>
         </div>
         <div class="footer-col">
@@ -665,29 +362,8 @@
     </div>
 </footer>
 
-<!-- Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
-<script src="assets/js/three-hero.js"></script>
 <script src="assets/js/scroll.js"></script>
 <script src="assets/js/app.js"></script>
-<script>
-    // Hero cursor-follow glow
-    (function () {
-        const hero = document.getElementById('hero');
-        if (!hero) return;
-        let frame = null;
-        hero.addEventListener('mousemove', (e) => {
-            if (frame) return;
-            frame = requestAnimationFrame(() => {
-                const r = hero.getBoundingClientRect();
-                const mx = ((e.clientX - r.left) / r.width) * 100;
-                const my = ((e.clientY - r.top) / r.height) * 100;
-                hero.style.setProperty('--mx', mx + '%');
-                hero.style.setProperty('--my', my + '%');
-                frame = null;
-            });
-        });
-    })();
-</script>
+<script src="assets/js/landing.js"></script>
 </body>
 </html>
