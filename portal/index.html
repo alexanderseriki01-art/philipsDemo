@@ -247,7 +247,7 @@
                                 </select>
                             </div>
 
-                            <button class="btn btn-primary btn-arrow" onclick="toast('Feedback submitted. Thank you.')">Submit Feedback</button>
+                            <button class="btn btn-primary btn-arrow" id="dash-feedback">Submit Feedback</button>
                         </div>
                     </div>
                 </div>
@@ -263,7 +263,7 @@
                                     <div class="label">Download Materials</div>
                                     <div class="sub">Finance for Non-Finance Mgrs</div>
                                 </div>
-                                <button class="btn btn-ghost btn-sm right" onclick="toast('Downloading Finance_NonFinance_Materials.zip')">Download</button>
+                                <button class="btn btn-ghost btn-sm right" id="dash-dl-materials">Download</button>
                             </div>
                             <div class="action cert">
                                 <div class="glyph"></div>
@@ -287,7 +287,7 @@
                                     <div class="label">View Payment Status</div>
                                     <div class="sub">PMP Prep &mdash; pending</div>
                                 </div>
-                                <button class="btn btn-ghost btn-sm right" onclick="toast('Opening payment status')">View</button>
+                                <button class="btn btn-ghost btn-sm right" onclick="location.href='payments.html'">View</button>
                             </div>
                         </div>
                     </div>
@@ -309,7 +309,7 @@
                                     <div style="font-size:12px;color:var(--ink-500);margin-top:2px;">₦240,000 &middot; awaiting admin approval</div>
                                 </div>
                             </div>
-                            <button class="btn btn-outline btn-block" onclick="toast('Loading payment details')" style="margin-top:8px;">View Payment Details</button>
+                            <button class="btn btn-outline btn-block" onclick="location.href='payments.html'" style="margin-top:8px;">View Payment Details</button>
                         </div>
                     </div>
 
@@ -336,6 +336,30 @@
 
 <script src="../assets/js/app.js"></script>
 <script src="../assets/js/store.js"></script>
+<script src="../assets/js/ui.js"></script>
+<script>
+    // Dashboard quick actions.
+    document.getElementById('dash-dl-materials').addEventListener('click', () => {
+        downloadText('Finance_NonFinance_Materials.txt',
+            'PHILLIPS CONSULTING — Finance for Non-Finance Managers\n\nProgramme material bundle (demo).\n', 'text/plain');
+    });
+    document.getElementById('dash-feedback').addEventListener('click', (e) => {
+        const card = e.target.closest('.card');
+        const areas = card.querySelectorAll('textarea');
+        const sel = card.querySelector('select');
+        Store.add('portalFeedback', {
+            programme: 'Finance for Non-Finance Managers',
+            valuable: areas[0] ? areas[0].value.trim() : '',
+            improve: areas[1] ? areas[1].value.trim() : '',
+            recommend: sel ? sel.value : ''
+        });
+        const btn = e.currentTarget;
+        btn.textContent = '✓ Submitted — thank you';
+        btn.disabled = true;
+        setTimeout(() => { btn.textContent = 'Submit Feedback'; btn.disabled = false; }, 3500);
+        toast('Feedback submitted. Thank you!');
+    });
+</script>
 <script>
     // Latest announcements + newest programme from the admin store.
     (function () {

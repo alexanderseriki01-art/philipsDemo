@@ -96,9 +96,9 @@
                     <div class="card">
                         <div class="card-head">
                             <h3>Personal Information</h3>
-                            <button class="btn btn-ghost btn-sm" onclick="toast('Edit mode enabled')">Edit</button>
+                            <button class="btn btn-ghost btn-sm" id="edit-profile">Edit</button>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" id="personal-form">
                             <div class="field-row">
                                 <div class="field">
                                     <label>First Name</label>
@@ -133,7 +133,7 @@
                                     <input class="input" value="Corporate &amp; Investment Banking" />
                                 </div>
                             </div>
-                            <button class="btn btn-primary btn-arrow" onclick="toast('Profile updated')">Save Changes</button>
+                            <button class="btn btn-primary btn-arrow" id="save-profile">Save Changes</button>
                         </div>
                     </div>
 
@@ -179,7 +179,7 @@
                                     <div style="font-size:13.5px;color:var(--ink-900);font-weight:600;">Password</div>
                                     <div style="font-size:12px;color:var(--ink-400);margin-top:2px;">Last changed 18 February 2026</div>
                                 </div>
-                                <button class="btn btn-outline btn-sm" onclick="toast('Password reset email sent')">Change</button>
+                                <button class="btn btn-outline btn-sm" id="change-pw">Change</button>
                             </div>
                             <div class="toggle-row">
                                 <div>
@@ -189,7 +189,7 @@
                                 <div class="toggle on" data-toggle></div>
                             </div>
                             <div style="padding-top:16px;">
-                                <button class="btn btn-ghost btn-sm" style="color:var(--danger);" onclick="toast('Account deletion requires admin approval')">Request Account Deletion</button>
+                                <button class="btn btn-ghost btn-sm" style="color:var(--danger);" id="req-delete">Request Account Deletion</button>
                             </div>
                         </div>
                     </div>
@@ -202,6 +202,74 @@
 </div>
 
 <script src="../assets/js/app.js"></script>
+<script src="../assets/js/store.js"></script>
+<script src="../assets/js/ui.js"></script>
+<script>
+    function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+    const form = document.getElementById('personal-form');
+    const inputs = () => Array.from(form.querySelectorAll('.field input'));
+    const labelOf = (inp) => inp.closest('.field').querySelector('label').textContent.trim();
+
+    // Apply any saved profile, then lock fields.
+    const saved = Store.override('profile', 'me');
+    if (saved) inputs().forEach((inp) => { const k = labelOf(inp); if (saved[k] != null) inp.value = saved[k]; });
+    let editing = false;
+    function setEditing(on) {
+        editing = on;
+        inputs().forEach((i) => { i.readOnly = !on; });
+        document.getElementById('edit-profile').textContent = on ? 'Cancel' : 'Edit';
+        if (on) inputs()[0].focus();
+    }
+    setEditing(false);
+
+    document.getElementById('edit-profile').addEventListener('click', () => setEditing(!editing));
+
+    document.getElementById('save-profile').addEventListener('click', () => {
+        const data = {};
+        inputs().forEach((i) => { data[labelOf(i)] = i.value; });
+        Store.patch('profile', 'me', data);
+        setEditing(false);
+        // Reflect name across the page.
+        const full = ((data['First Name'] || '') + ' ' + (data['Last Name'] || '')).trim();
+        if (full) {
+            document.querySelectorAll('.sidebar-user .name, .profile-id h3').forEach((el) => { el.textContent = full; });
+            const initials = full.split(/\s+/).map((w) => w[0]).slice(0, 2).join('').toUpperCase();
+            document.querySelectorAll('.avatar, .profile-id .pic').forEach((el) => { if (el.children.length === 0) el.textContent = initials; });
+        }
+        toast('Profile updated');
+    });
+
+    document.getElementById('change-pw').addEventListener('click', () => {
+        openModal('Change password', `
+            <div class="field"><label>Current password</label><input name="cur" type="password" required /></div>
+            <div class="field"><label>New password</label><input name="nw" type="password" required minlength="6" /></div>
+            <div class="field"><label>Confirm new password</label><input name="cf" type="password" required minlength="6" /></div>
+        `, {
+            submitLabel: 'Update password',
+            onSubmit: (f) => {
+                if (!f.nw.value || f.nw.value !== f.cf.value) { toast('Passwords do not match'); return false; }
+                toast('Password updated');
+            }
+        });
+    });
+
+    document.getElementById('req-delete').addEventListener('click', () => {
+        openModal('Request account deletion', `
+            <p style="font-size:14px;color:var(--ink-700);line-height:1.6;">This sends a deletion request to the Phillips Consulting admin team. Your certificates remain verifiable. Continue?</p>
+        `, {
+            submitLabel: 'Request deletion',
+            onSubmit: () => { toast('Deletion request sent for admin approval'); }
+        });
+    });
+
+    // Toggles.
+    document.querySelectorAll('[data-toggle]').forEach((el) => {
+        el.addEventListener('click', () => {
+            el.classList.toggle('on');
+            toast(el.classList.contains('on') ? 'Enabled' : 'Disabled');
+        });
+    });
+</script>
 <script>
     document.querySelectorAll('[data-toggle]').forEach((el) => {
         el.addEventListener('click', () => {

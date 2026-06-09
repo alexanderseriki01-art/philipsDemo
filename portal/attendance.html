@@ -112,13 +112,13 @@
             <div class="card">
                 <div class="card-head">
                     <h3>Full Attendance Log</h3>
-                    <button class="btn btn-ghost btn-sm" onclick="toast('Export as PDF')">Export</button>
+                    <button class="btn btn-ghost btn-sm" id="export-attendance">Export</button>
                 </div>
                 <table class="table">
                     <thead>
                         <tr><th>Programme</th><th>Date</th><th>Day</th><th>Check-in</th><th>Status</th></tr>
                     </thead>
-                    <tbody>
+                    <tbody id="attendance-rows">
                         <tr><td>Adv. Leadership Programme</td><td class="cell-muted">27 Apr 2026</td><td class="cell-muted">Day 4</td><td class="cell-muted">9:01 AM</td><td><span class="tag tag-success">Present</span></td></tr>
                         <tr><td>Adv. Leadership Programme</td><td class="cell-muted">26 Apr 2026</td><td class="cell-muted">Day 3</td><td class="cell-muted">8:55 AM</td><td><span class="tag tag-success">Present</span></td></tr>
                         <tr><td>Adv. Leadership Programme</td><td class="cell-muted">25 Apr 2026</td><td class="cell-muted">Day 2</td><td class="cell-muted">9:00 AM</td><td><span class="tag tag-success">Present</span></td></tr>
@@ -136,5 +136,15 @@
 </div>
 
 <script src="../assets/js/app.js"></script>
+<script src="../assets/js/ui.js"></script>
+<script>
+    document.getElementById('export-attendance').addEventListener('click', () => {
+        const out = [['Programme', 'Date', 'Day', 'Check-in', 'Status']];
+        document.querySelectorAll('#attendance-rows tr').forEach((tr) => {
+            out.push(Array.from(tr.children).map((td) => td.textContent.trim()));
+        });
+        exportCSV('attendance-log.csv', out);
+    });
+</script>
 </body>
 </html>

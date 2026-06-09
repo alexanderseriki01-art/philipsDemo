@@ -85,7 +85,7 @@
                             <span class="tag tag-blue">Paid</span>
                         </div>
                     </div>
-                    <button class="btn btn-ghost btn-sm" onclick="toast('Opening programme details')">View &rarr;</button>
+                    <button class="btn btn-ghost btn-sm js-view">View &rarr;</button>
                 </div>
 
                 <div class="training-item">
@@ -98,7 +98,7 @@
                             <span class="tag tag-warn">Payment Pending</span>
                         </div>
                     </div>
-                    <button class="btn btn-primary btn-sm" onclick="toast('Opening payment')">Pay Now</button>
+                    <button class="btn btn-primary btn-sm js-pay">Pay Now</button>
                 </div>
 
                 <div class="training-item">
@@ -149,12 +149,14 @@
 
 <script src="../assets/js/app.js"></script>
 <script src="../assets/js/store.js"></script>
+<script src="../assets/js/ui.js"></script>
 <script src="../assets/js/filter.js"></script>
 <script>
     const list = document.getElementById('training-list');
     function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+    function slug(s) { return String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''); }
 
-    // Tag existing static items with filter tokens from their status tags.
+    // Tag existing static items with filter tokens + a stable id from the title.
     list.querySelectorAll('.training-item').forEach((it) => {
         const txt = it.textContent.toLowerCase();
         let tokens = [];
@@ -162,6 +164,8 @@
         else if (txt.includes('cancelled')) tokens.push('cancelled');
         else { tokens.push('upcoming'); if (txt.includes('pending') || txt.includes('confirmed')) tokens.push('active'); }
         it.dataset.status = tokens.join(' ');
+        const h = it.querySelector('h4');
+        if (h) it.dataset.id = slug(h.textContent);
     });
 
     // Parse a date string like "12–14 Sep 2026" into a day/month chip.
@@ -176,6 +180,7 @@
         const item = document.createElement('div');
         item.className = 'training-item';
         item.dataset.status = 'upcoming active';
+        item.dataset.id = slug(p.title);
         item.innerHTML = `
             <div class="date-chip"><div class="d">${esc(c.d)}</div><div class="m">${esc(c.mo)}</div></div>
             <div class="training-info">
@@ -186,8 +191,78 @@
                     <span class="tag tag-blue">Open for enrolment</span>
                 </div>
             </div>
-            <button class="btn btn-primary btn-sm" onclick="toast('Enrolment opening soon')">Enrol &rarr;</button>`;
+            <button class="btn btn-primary btn-sm js-enrol">Enrol &rarr;</button>`;
         list.insertBefore(item, list.firstChild);
+    });
+
+    // Apply any saved "paid"/"enrolled" status to items.
+    function applyStatus(it) {
+        const ov = Store.override('trainingStatus', it.dataset.id) || {};
+        const meta = it.querySelector('.training-meta');
+        if (ov.paid && meta) {
+            const pend = Array.from(meta.querySelectorAll('.tag')).find((t) => /pending/i.test(t.textContent));
+            if (pend) { pend.className = 'tag tag-blue'; pend.textContent = 'Paid'; }
+            const payBtn = it.querySelector('.js-pay');
+            if (payBtn) { payBtn.className = 'btn btn-ghost btn-sm js-view'; payBtn.textContent = 'View →'; }
+        }
+        if (ov.enrolled) {
+            const btn = it.querySelector('.js-enrol');
+            if (btn) { btn.className = 'btn btn-outline btn-sm'; btn.textContent = 'Enrolled ✓'; btn.disabled = true; }
+        }
+    }
+    list.querySelectorAll('.training-item').forEach(applyStatus);
+
+    function detail(it) {
+        const title = it.querySelector('h4').textContent.replace('New', '').trim();
+        const where = (it.querySelector('.where') || {}).textContent || '';
+        const when = (it.querySelector('.training-meta span') || {}).textContent || '';
+        openModal(title, `
+            <div class="detail-grid">
+                <div class="detail-item full"><div class="k">Format & venue</div><div class="v">${esc(where)}</div></div>
+                <div class="detail-item"><div class="k">Schedule</div><div class="v">${esc(when)}</div></div>
+                <div class="detail-item"><div class="k">CPD Hours</div><div class="v">14</div></div>
+                <div class="detail-item full"><div class="k">About</div><div class="v" style="font-weight:400;color:var(--ink-600,#4a5b78);">A facilitated Phillips Consulting programme combining expert instruction, real-world case work and post-programme resources.</div></div>
+            </div>`, { wide: true });
+    }
+
+    function payModal(it) {
+        const title = it.querySelector('h4').textContent.replace('New', '').trim();
+        openModal('Complete payment', `
+            <p style="font-size:13.5px;color:var(--ink-500);margin-bottom:14px;">Securing your seat for <strong>${esc(title)}</strong>.</p>
+            <div class="field"><label>Cardholder name</label><input name="name" required value="Adaeze Okonkwo" /></div>
+            <div class="field"><label>Card number</label><input name="card" required placeholder="4084 0000 0000 0000" inputmode="numeric" /></div>
+            <div class="field-row">
+                <div class="field"><label>Expiry</label><input name="exp" required placeholder="08/27" /></div>
+                <div class="field"><label>CVV</label><input name="cvv" required placeholder="123" inputmode="numeric" /></div>
+            </div>
+            <div class="field-hint">Demo only — no real card is charged.</div>
+        `, {
+            submitLabel: 'Pay securely',
+            onSubmit: (form) => {
+                if (!form.card.value.trim()) return false;
+                Store.patch('trainingStatus', it.dataset.id, { paid: true });
+                applyStatus(it);
+                toast('Payment confirmed — your seat is secured');
+            }
+        });
+    }
+
+    list.addEventListener('click', (e) => {
+        const it = e.target.closest('.training-item');
+        if (!it) return;
+        if (e.target.closest('.js-view')) detail(it);
+        else if (e.target.closest('.js-pay')) payModal(it);
+        else if (e.target.closest('.js-enrol')) {
+            const title = it.querySelector('h4').textContent.replace('New', '').trim();
+            openModal('Confirm enrolment', `<p style="font-size:14px;color:var(--ink-700);line-height:1.6;">Reserve your place on <strong>${esc(title)}</strong>? Our team will follow up with payment and joining details.</p>`, {
+                submitLabel: 'Confirm enrolment',
+                onSubmit: () => {
+                    Store.patch('trainingStatus', it.dataset.id, { enrolled: true });
+                    applyStatus(it);
+                    toast('You are enrolled — see you there!');
+                }
+            });
+        }
     });
 </script>
 </body>

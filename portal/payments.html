@@ -85,8 +85,8 @@
                         </div>
                         <p style="font-size:13px;color:var(--ink-500);margin-bottom:14px;">Our team will confirm bank-transfer payments within 24&ndash;48 hours of submission. Once approved, programme materials and certificate access will unlock automatically.</p>
                         <div style="display:flex;gap:10px;">
-                            <button class="btn btn-primary btn-sm" onclick="toast('Receipt downloaded')">Download Receipt</button>
-                            <button class="btn btn-ghost btn-sm" onclick="toast('Reminder sent to admin')">Nudge Admin</button>
+                            <button class="btn btn-primary btn-sm" id="dl-receipt">Download Receipt</button>
+                            <button class="btn btn-ghost btn-sm" id="nudge-admin">Nudge Admin</button>
                         </div>
                     </div>
                 </div>
@@ -100,7 +100,7 @@
                                 <div style="font-size:13.5px;color:var(--ink-900);font-weight:600;">Stanbic IBTC &middot; •••• 4571</div>
                                 <div style="font-size:12px;color:var(--ink-400);">Bank transfer · Primary</div>
                             </div>
-                            <button class="btn btn-ghost btn-sm">Edit</button>
+                            <button class="btn btn-ghost btn-sm js-edit-method">Edit</button>
                         </div>
                         <div style="display:flex;gap:14px;align-items:center;padding:14px 0;">
                             <div style="width:44px;height:30px;border-radius:5px;background:linear-gradient(135deg,#0EA5E9,#0369A1);position:relative;">
@@ -110,9 +110,9 @@
                                 <div style="font-size:13.5px;color:var(--ink-900);font-weight:600;">Paystack &middot; Visa •••• 8842</div>
                                 <div style="font-size:12px;color:var(--ink-400);">Card · Expires 06/30</div>
                             </div>
-                            <button class="btn btn-ghost btn-sm">Edit</button>
+                            <button class="btn btn-ghost btn-sm js-edit-method">Edit</button>
                         </div>
-                        <button class="btn btn-outline btn-sm" style="width:100%;margin-top:10px;" onclick="toast('Add payment method')">+ Add Payment Method</button>
+                        <button class="btn btn-outline btn-sm" style="width:100%;margin-top:10px;" id="add-method">+ Add Payment Method</button>
                     </div>
                 </div>
             </div>
@@ -120,13 +120,13 @@
             <div class="card">
                 <div class="card-head">
                     <h3>Transaction History</h3>
-                    <button class="btn btn-ghost btn-sm" onclick="toast('Exporting all transactions')">Export CSV</button>
+                    <button class="btn btn-ghost btn-sm" id="export-tx">Export CSV</button>
                 </div>
                 <table class="table">
                     <thead>
                         <tr><th>Reference</th><th>Programme</th><th>Method</th><th>Date</th><th>Amount</th><th>Status</th></tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tx-rows">
                         <tr>
                             <td><span style="font-family:var(--font-mono);font-size:12px;">PC-PAY-2026-0518</span></td>
                             <td>PMP Prep</td>
@@ -184,5 +184,82 @@
 </div>
 
 <script src="../assets/js/app.js"></script>
+<script src="../assets/js/store.js"></script>
+<script src="../assets/js/ui.js"></script>
+<script>
+    function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+    // Download a receipt for the outstanding payment.
+    document.getElementById('dl-receipt').addEventListener('click', () => {
+        downloadText('receipt-PC-PAY-2026-0518.txt',
+            'PHILLIPS CONSULTING LIMITED\nPayment Receipt\n' + '-'.repeat(40) +
+            '\nReference:  PC-PAY-2026-0518\nProgramme:  Project Management Professional Prep\nAmount:     NGN 240,000\nMethod:     Bank transfer\nSubmitted:  20 March 2026\nStatus:     Awaiting admin approval\n' +
+            '-'.repeat(40) + '\nThank you.\n', 'text/plain');
+    });
+
+    document.getElementById('nudge-admin').addEventListener('click', (e) => {
+        toast('Reminder sent to admin — they’ll confirm shortly');
+        e.currentTarget.disabled = true;
+        e.currentTarget.style.opacity = '.5';
+    });
+
+    // Edit / add payment methods.
+    const addBtn = document.getElementById('add-method');
+
+    function methodModal(existingEl) {
+        const current = existingEl ? (existingEl.querySelector('div[style*="font-weight:600"]')?.textContent || '').replace('New', '').trim() : '';
+        openModal(existingEl ? 'Edit payment method' : 'Add payment method', `
+            <div class="field"><label>Type</label><select name="type"><option>Card</option><option>Bank transfer</option></select></div>
+            <div class="field"><label>Label</label><input name="label" placeholder="e.g. GTBank Mastercard" value="${esc(current)}" /></div>
+            <div class="field"><label>Number (last 4)</label><input name="last4" maxlength="4" inputmode="numeric" placeholder="4571" /></div>
+            <div class="field-hint">Demo only — no real account is stored.</div>
+        `, {
+            submitLabel: existingEl ? 'Save' : 'Add method',
+            onSubmit: (form) => {
+                const label = form.label.value.trim() || (form.type.value + ' •••• ' + (form.last4.value || '0000'));
+                if (existingEl) {
+                    const bold = existingEl.querySelector('div[style*="font-weight:600"]');
+                    if (bold) bold.textContent = label;
+                    toast('Payment method updated');
+                } else {
+                    Store.add('paymentMethods', { type: form.type.value, label: label, last4: form.last4.value });
+                    renderMethod({ type: form.type.value, label: label });
+                    toast('Payment method added');
+                }
+            }
+        });
+    }
+
+    function renderMethod(m) {
+        const row = document.createElement('div');
+        row.style.cssText = 'display:flex;gap:14px;align-items:center;padding:14px 0;border-top:1px solid var(--line);';
+        row.innerHTML = `
+            <div style="width:44px;height:30px;border-radius:5px;background:linear-gradient(135deg,var(--blue-600),var(--blue-900));"></div>
+            <div style="flex:1;">
+                <div style="font-size:13.5px;color:var(--ink-900);font-weight:600;">${esc(m.label)} <span class="tag tag-success" style="font-size:10px;">New</span></div>
+                <div style="font-size:12px;color:var(--ink-400);">${esc(m.type)}</div>
+            </div>
+            <button class="btn btn-ghost btn-sm js-edit-method">Edit</button>`;
+        addBtn.parentNode.insertBefore(row, addBtn);
+    }
+
+    Store.list('paymentMethods').slice().reverse().forEach(renderMethod);
+
+    addBtn.addEventListener('click', () => methodModal(null));
+    // One delegated handler covers static + dynamically added method rows.
+    addBtn.parentNode.addEventListener('click', (e) => {
+        const b = e.target.closest('.js-edit-method');
+        if (b) methodModal(b.parentElement);
+    });
+
+    // Export transaction history to CSV.
+    document.getElementById('export-tx').addEventListener('click', () => {
+        const out = [['Reference', 'Programme', 'Method', 'Date', 'Amount', 'Status']];
+        document.querySelectorAll('#tx-rows tr').forEach((tr) => {
+            out.push(Array.from(tr.children).map((td) => td.textContent.trim()));
+        });
+        exportCSV('transaction-history.csv', out);
+    });
+</script>
 </body>
 </html>
