@@ -214,11 +214,24 @@
 
             </div>
 
+            <div class="card" style="margin-top:18px;border:1px solid var(--danger-soft);">
+                <div class="card-head"><h3>Demo Data</h3></div>
+                <div class="card-body" style="display:flex;align-items:center;gap:18px;flex-wrap:wrap;">
+                    <div style="flex:1;min-width:260px;">
+                        <div style="font-weight:600;color:var(--ink-900);">Reset demo data</div>
+                        <div style="font-size:13px;color:var(--ink-500);margin-top:3px;">Clears every programme, material, certificate, announcement, invite and status change created during this demo, restoring the original mock content. Use this for a clean slate before a new walkthrough.</div>
+                    </div>
+                    <button class="btn btn-outline btn-sm" id="reset-demo" style="border-color:var(--danger);color:var(--danger);">Reset demo data</button>
+                </div>
+            </div>
+
         </div>
     </main>
 </div>
 
 <script src="../assets/js/app.js"></script>
+<script src="../assets/js/store.js"></script>
+<script src="../assets/js/admin.js"></script>
 <script>
     document.querySelectorAll('[data-toggle]').forEach((el) => {
         el.addEventListener('click', () => {
@@ -231,6 +244,19 @@
         c.classList.add('active');
         toast('Section: ' + c.textContent.trim());
     }));
+
+    document.getElementById('reset-demo').addEventListener('click', () => {
+        openModal('Reset demo data?', `
+            <p style="font-size:14px;color:var(--ink-700);line-height:1.6;">This permanently clears all content created during the demo (programmes, materials, certificates, announcements, invites and status changes) and restores the original mock data.</p>
+        `, {
+            submitLabel: 'Reset everything',
+            onSubmit: () => {
+                Store.reset();
+                toast('Demo data reset — reloading…');
+                setTimeout(() => location.reload(), 700);
+            }
+        });
+    });
 </script>
 </body>
 </html>

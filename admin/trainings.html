@@ -69,23 +69,26 @@
             </div>
 
             <div class="filter-bar">
-                <button class="filter-chip active">All</button>
-                <button class="filter-chip">Active</button>
-                <button class="filter-chip">Upcoming</button>
-                <button class="filter-chip">Draft</button>
-                <button class="filter-chip">Archived</button>
+                <button class="filter-chip active" data-filter="all">All</button>
+                <button class="filter-chip" data-filter="active">Active</button>
+                <button class="filter-chip" data-filter="upcoming">Upcoming</button>
+                <button class="filter-chip" data-filter="draft">Draft</button>
+                <button class="filter-chip" data-filter="archived">Archived</button>
             </div>
 
             <div class="card">
                 <div class="card-head">
                     <h3>Programme Catalogue</h3>
-                    <button class="btn btn-primary btn-sm" onclick="toast('New programme wizard would open')">+ New Programme</button>
+                    <div style="display:flex;gap:8px;">
+                        <button class="btn btn-ghost btn-sm" id="gen-qr">Generate Class QR</button>
+                        <button class="btn btn-primary btn-sm" id="new-programme">+ New Programme</button>
+                    </div>
                 </div>
                 <table class="table">
                     <thead>
                         <tr><th>Programme</th><th>Cohort Dates</th><th>Enrolment</th><th>Revenue</th><th>Status</th><th></th></tr>
                     </thead>
-                    <tbody>
+                    <tbody id="training-rows">
                         <tr>
                             <td><strong>Advanced Leadership &amp; Management</strong><div class="cell-muted" style="font-size:11.5px;">4-day &middot; Landmark Lagos &middot; ₦485,000/seat</div></td>
                             <td class="cell-muted">24–27 Apr 2026</td>
@@ -173,12 +176,124 @@
 </div>
 
 <script src="../assets/js/app.js"></script>
+<script src="../assets/js/store.js"></script>
+<script src="../assets/js/admin.js"></script>
+<script src="../assets/js/vendor/qrcode.min.js"></script>
+<script src="../assets/js/filter.js"></script>
 <script>
-    document.querySelectorAll('.filter-chip').forEach((c) => c.addEventListener('click', () => {
-        document.querySelectorAll('.filter-chip').forEach((x) => x.classList.remove('active'));
-        c.classList.add('active');
-        toast('Filter: ' + c.textContent.trim());
-    }));
+    const tbody = document.getElementById('training-rows');
+    function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+    function slug(s) { return String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''); }
+
+    // Tag existing static rows with filter tokens derived from their status tag.
+    tbody.querySelectorAll('tr:not(.row-new)').forEach((tr, i) => {
+        const t = (tr.querySelector('.tag') || {}).textContent || '';
+        // First two cohorts read as currently "active"; all are upcoming.
+        tr.dataset.status = (i < 2 ? 'active upcoming' : 'upcoming');
+    });
+
+    // Render an admin-created programme row.
+    function programmeRow(p) {
+        const tr = document.createElement('tr');
+        tr.className = 'row-new';
+        tr.dataset.status = 'draft active upcoming';
+        tr.dataset.title = p.title;
+        const seats = parseInt(p.seats, 10) || 0;
+        tr.innerHTML = `
+            <td><strong>${esc(p.title)}</strong> <span class="tag tag-new">New</span><div class="cell-muted" style="font-size:11.5px;">${esc(p.format || '')} &middot; ${esc(p.location || '')} &middot; ₦${esc(Number(p.price || 0).toLocaleString())}/seat</div></td>
+            <td class="cell-muted">${esc(p.dates || 'TBC')}</td>
+            <td>
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <div style="width:80px;"><div class="progress"><span style="width:2%"></span></div></div>
+                    <span style="font-size:12px;color:var(--ink-700);">0/${seats}</span>
+                </div>
+            </td>
+            <td><strong>₦0</strong></td>
+            <td><span class="tag tag-blue">Open</span></td>
+            <td style="text-align:right;"><button class="btn btn-ghost btn-sm js-qr">QR</button></td>`;
+        return tr;
+    }
+
+    // Load saved programmes (newest first -> insert so newest ends up on top).
+    Store.list('trainings').slice().reverse().forEach((p) => {
+        tbody.insertBefore(programmeRow(p), tbody.firstChild);
+    });
+
+    // QR modal for a given class label.
+    function showQR(label) {
+        const url = location.origin + '/verify/?class=' + encodeURIComponent(slug(label));
+        openModal('Class check-in QR', `
+            <div class="qr-box">
+                <div class="qr-target" id="qr-target"></div>
+                <div>
+                    <div style="font-weight:600;margin-bottom:4px;">${esc(label)}</div>
+                    <div class="qr-url">${esc(url)}</div>
+                </div>
+                <div class="field-hint">Participants scan this to mark attendance at the venue.</div>
+            </div>`);
+        renderQR(document.getElementById('qr-target'), url);
+    }
+
+    // Row-level QR buttons (delegated).
+    tbody.addEventListener('click', (e) => {
+        if (e.target.closest('.js-qr')) {
+            const tr = e.target.closest('tr');
+            const label = tr.dataset.title || (tr.querySelector('strong') || {}).textContent || 'Class';
+            showQR(label);
+        }
+    });
+
+    // Header "Generate Class QR" — pick a programme.
+    document.getElementById('gen-qr').addEventListener('click', () => {
+        const opts = Array.from(tbody.querySelectorAll('tr')).map((tr) => {
+            const name = tr.dataset.title || (tr.querySelector('strong') || {}).textContent.trim();
+            return `<option value="${esc(name)}">${esc(name)}</option>`;
+        }).join('');
+        openModal('Generate Class QR', `
+            <div class="field"><label>Programme / cohort</label><select name="cls">${opts}</select></div>
+            <div class="qr-box"><div class="qr-target" id="qr-target"></div><div class="qr-url" id="qr-url"></div></div>
+        `, { submitLabel: null });
+        const sel = document.querySelector('.modal-form select[name="cls"]');
+        const draw = () => {
+            const url = location.origin + '/verify/?class=' + encodeURIComponent(slug(sel.value));
+            renderQR(document.getElementById('qr-target'), url);
+            document.getElementById('qr-url').textContent = url;
+        };
+        sel.addEventListener('change', draw);
+        draw();
+    });
+
+    // New Programme.
+    document.getElementById('new-programme').addEventListener('click', () => {
+        openModal('New training programme', `
+            <div class="field"><label>Programme title</label><input name="title" required placeholder="e.g. Negotiation Mastery" /></div>
+            <div class="field-row">
+                <div class="field"><label>Format</label><input name="format" placeholder="e.g. 3-Day Intensive" /></div>
+                <div class="field"><label>Location</label><input name="location" placeholder="e.g. Phillips HQ, Ikoyi" /></div>
+            </div>
+            <div class="field-row">
+                <div class="field"><label>Price per seat (₦)</label><input name="price" type="number" min="0" placeholder="250000" /></div>
+                <div class="field"><label>Seats</label><input name="seats" type="number" min="1" placeholder="40" /></div>
+            </div>
+            <div class="field"><label>Cohort dates</label><input name="dates" placeholder="e.g. 12–14 Sep 2026" /></div>
+        `, {
+            submitLabel: 'Create programme',
+            onSubmit: (form) => {
+                const p = {
+                    title: form.title.value.trim(),
+                    format: form.format.value.trim(),
+                    location: form.location.value.trim(),
+                    price: form.price.value.trim(),
+                    seats: form.seats.value.trim(),
+                    dates: form.dates.value.trim()
+                };
+                if (!p.title) return false;
+                Store.add('trainings', p);
+                tbody.insertBefore(programmeRow(p), tbody.firstChild);
+                toast('Programme created — now live in the participant portal');
+            }
+        });
+    });
 </script>
 </body>
 </html>

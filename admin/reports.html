@@ -72,22 +72,22 @@
                 <div class="card-head"><h3>Quick Reports</h3></div>
                 <div class="card-body">
                     <div class="quick-actions" style="margin-bottom:0;">
-                        <button class="quick-action add" onclick="toast('Generating Revenue Report')">
+                        <button class="quick-action add js-quick" data-report="revenue">
                             <div class="glyph"></div><div class="lbl">Revenue Report</div>
                         </button>
-                        <button class="quick-action up" onclick="toast('Generating Cohort Performance Report')">
+                        <button class="quick-action up js-quick" data-report="cohort">
                             <div class="glyph"></div><div class="lbl">Cohort Performance</div>
                         </button>
-                        <button class="quick-action check" onclick="toast('Generating Attendance Report')">
+                        <button class="quick-action check js-quick" data-report="attendance">
                             <div class="glyph"></div><div class="lbl">Attendance Report</div>
                         </button>
-                        <button class="quick-action card" onclick="toast('Generating Payment Report')">
+                        <button class="quick-action card js-quick" data-report="payment">
                             <div class="glyph"></div><div class="lbl">Payment Aging</div>
                         </button>
-                        <button class="quick-action cert" onclick="toast('Generating Certification Report')">
+                        <button class="quick-action cert js-quick" data-report="certification">
                             <div class="glyph"></div><div class="lbl">Certification Roll</div>
                         </button>
-                        <button class="quick-action report" onclick="toast('Generating Feedback Report')">
+                        <button class="quick-action report js-quick" data-report="feedback">
                             <div class="glyph"></div><div class="lbl">Feedback Summary</div>
                         </button>
                     </div>
@@ -103,11 +103,11 @@
                     <table class="table">
                         <thead><tr><th>Report</th><th>Schedule</th><th>Last Run</th><th></th></tr></thead>
                         <tbody>
-                            <tr><td><strong>Monthly Revenue P&amp;L</strong><div class="cell-muted" style="font-size:11.5px;">Filtered by programme &middot; PDF</div></td><td class="cell-muted">1st of month</td><td class="cell-muted">01 May 2026</td><td style="text-align:right;"><button class="btn btn-ghost btn-sm" onclick="toast('Running…')">Run</button></td></tr>
-                            <tr><td><strong>Weekly Cohort Snapshot</strong><div class="cell-muted" style="font-size:11.5px;">All active cohorts &middot; XLSX</div></td><td class="cell-muted">Every Mon 8:00</td><td class="cell-muted">20 May 2026</td><td style="text-align:right;"><button class="btn btn-ghost btn-sm" onclick="toast('Running…')">Run</button></td></tr>
-                            <tr><td><strong>Quarterly Faculty Performance</strong><div class="cell-muted" style="font-size:11.5px;">Feedback scoring &middot; PDF</div></td><td class="cell-muted">End of quarter</td><td class="cell-muted">31 Mar 2026</td><td style="text-align:right;"><button class="btn btn-ghost btn-sm" onclick="toast('Running…')">Run</button></td></tr>
-                            <tr><td><strong>Outstanding Payments</strong><div class="cell-muted" style="font-size:11.5px;">Aging buckets &middot; CSV</div></td><td class="cell-muted">Every Fri 17:00</td><td class="cell-muted">17 May 2026</td><td style="text-align:right;"><button class="btn btn-ghost btn-sm" onclick="toast('Running…')">Run</button></td></tr>
-                            <tr><td><strong>Board-Level KPI Pack</strong><div class="cell-muted" style="font-size:11.5px;">Custom dashboard &middot; PDF</div></td><td class="cell-muted">Monthly &middot; 25th</td><td class="cell-muted">25 Apr 2026</td><td style="text-align:right;"><button class="btn btn-ghost btn-sm" onclick="toast('Running…')">Run</button></td></tr>
+                            <tr><td><strong>Monthly Revenue P&amp;L</strong><div class="cell-muted" style="font-size:11.5px;">Filtered by programme &middot; PDF</div></td><td class="cell-muted">1st of month</td><td class="cell-muted">01 May 2026</td><td style="text-align:right;"><button class="btn btn-ghost btn-sm js-run">Run</button></td></tr>
+                            <tr><td><strong>Weekly Cohort Snapshot</strong><div class="cell-muted" style="font-size:11.5px;">All active cohorts &middot; XLSX</div></td><td class="cell-muted">Every Mon 8:00</td><td class="cell-muted">20 May 2026</td><td style="text-align:right;"><button class="btn btn-ghost btn-sm js-run">Run</button></td></tr>
+                            <tr><td><strong>Quarterly Faculty Performance</strong><div class="cell-muted" style="font-size:11.5px;">Feedback scoring &middot; PDF</div></td><td class="cell-muted">End of quarter</td><td class="cell-muted">31 Mar 2026</td><td style="text-align:right;"><button class="btn btn-ghost btn-sm js-run">Run</button></td></tr>
+                            <tr><td><strong>Outstanding Payments</strong><div class="cell-muted" style="font-size:11.5px;">Aging buckets &middot; CSV</div></td><td class="cell-muted">Every Fri 17:00</td><td class="cell-muted">17 May 2026</td><td style="text-align:right;"><button class="btn btn-ghost btn-sm js-run">Run</button></td></tr>
+                            <tr><td><strong>Board-Level KPI Pack</strong><div class="cell-muted" style="font-size:11.5px;">Custom dashboard &middot; PDF</div></td><td class="cell-muted">Monthly &middot; 25th</td><td class="cell-muted">25 Apr 2026</td><td style="text-align:right;"><button class="btn btn-ghost btn-sm js-run">Run</button></td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -115,20 +115,20 @@
                 <div class="card">
                     <div class="card-head"><h3>Export Centre</h3></div>
                     <div class="card-body">
-                        <p style="font-size:13.5px;color:var(--ink-500);margin-bottom:18px;">Download raw data for any time range or programme.</p>
+                        <p style="font-size:13.5px;color:var(--ink-500);margin-bottom:14px;">Revenue (₦M) for the selected range &amp; programme.</p>
+                        <svg id="report-chart" style="width:100%;height:180px;margin-bottom:18px;"></svg>
                         <div class="field">
                             <label>Date Range</label>
-                            <select class="select">
-                                <option>Last 7 days</option>
-                                <option>Last 30 days</option>
-                                <option>This quarter</option>
-                                <option>This year to date</option>
-                                <option>Custom range…</option>
+                            <select class="select" id="rep-range">
+                                <option value="2">Last 7 days</option>
+                                <option value="3">Last 30 days</option>
+                                <option value="6">This quarter</option>
+                                <option value="12" selected>This year to date</option>
                             </select>
                         </div>
                         <div class="field">
                             <label>Programme</label>
-                            <select class="select">
+                            <select class="select" id="rep-prog">
                                 <option>All programmes</option>
                                 <option>Adv. Leadership</option>
                                 <option>PMP Prep</option>
@@ -138,14 +138,12 @@
                         </div>
                         <div class="field">
                             <label>Format</label>
-                            <select class="select">
+                            <select class="select" id="rep-format">
                                 <option>CSV</option>
-                                <option>XLSX</option>
-                                <option>PDF</option>
                                 <option>JSON</option>
                             </select>
                         </div>
-                        <button class="btn btn-primary btn-block btn-arrow" onclick="toast('Export queued. You will be emailed when ready.')">Generate Export</button>
+                        <button class="btn btn-primary btn-block btn-arrow" id="generate-export">Generate Export</button>
                     </div>
                 </div>
             </div>
@@ -155,5 +153,113 @@
 </div>
 
 <script src="../assets/js/app.js"></script>
+<script src="../assets/js/store.js"></script>
+<script src="../assets/js/admin.js"></script>
+<script>
+    const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const REVENUE = {
+        'Adv. Leadership': [3.1,3.4,2.9,4.2,5.0,4.4,5.6,6.1,5.4,6.8,7.2,8.1],
+        'PMP Prep':        [1.8,2.1,1.9,2.4,2.8,2.6,3.0,3.3,3.0,3.6,3.9,4.2],
+        'Finance Mgrs':    [1.2,1.4,1.3,1.7,2.0,1.8,2.1,2.4,2.2,2.6,2.8,3.0],
+        'Strategic HR':    [0.9,1.1,1.0,1.3,1.6,1.5,1.8,2.0,1.9,2.2,2.4,2.6]
+    };
+
+    function series(prog, months) {
+        let arr;
+        if (prog === 'All programmes') {
+            arr = MONTHS.map((_, i) => Object.keys(REVENUE).reduce((s, k) => s + REVENUE[k][i], 0));
+        } else {
+            arr = REVENUE[prog].slice();
+        }
+        const start = Math.max(0, arr.length - months);
+        return { labels: MONTHS.slice(start), values: arr.slice(start).map((v) => +v.toFixed(1)) };
+    }
+
+    function drawBars(data) {
+        const svg = document.getElementById('report-chart');
+        const W = svg.clientWidth || 360, H = 180, pad = { l: 28, r: 8, t: 10, b: 22 };
+        const innerW = W - pad.l - pad.r, innerH = H - pad.t - pad.b;
+        const max = Math.max(...data.values, 1) * 1.15;
+        const n = data.values.length;
+        const bw = innerW / n * 0.6, gap = innerW / n;
+        svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+        let bars = '';
+        data.values.forEach((v, i) => {
+            const h = (v / max) * innerH;
+            const x = pad.l + i * gap + (gap - bw) / 2;
+            const y = pad.t + innerH - h;
+            bars += `<rect x="${x}" y="${pad.t + innerH}" width="${bw}" height="0" rx="3" fill="#2f6bf2">
+                        <animate attributeName="height" from="0" to="${h}" dur="0.7s" fill="freeze" calcMode="spline" keySplines="0.22 1 0.36 1" keyTimes="0;1"/>
+                        <animate attributeName="y" from="${pad.t + innerH}" to="${y}" dur="0.7s" fill="freeze" calcMode="spline" keySplines="0.22 1 0.36 1" keyTimes="0;1"/>
+                     </rect>`;
+            bars += `<text x="${x + bw / 2}" y="${H - 8}" text-anchor="middle" font-size="9" font-family="Manrope, sans-serif" fill="#8c9bb4">${data.labels[i]}</text>`;
+        });
+        svg.innerHTML = bars;
+    }
+
+    function currentData() {
+        const months = parseInt(document.getElementById('rep-range').value, 10);
+        const prog = document.getElementById('rep-prog').value;
+        return { prog, data: series(prog, months) };
+    }
+
+    function redraw() { drawBars(currentData().data); }
+    document.getElementById('rep-range').addEventListener('change', redraw);
+    document.getElementById('rep-prog').addEventListener('change', redraw);
+    redraw();
+
+    function downloadJSON(name, obj) {
+        const blob = new Blob([JSON.stringify(obj, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+        toast('Exported ' + name);
+    }
+
+    document.getElementById('generate-export').addEventListener('click', () => {
+        const { prog, data } = currentData();
+        const fmt = document.getElementById('rep-format').value;
+        if (fmt === 'JSON') {
+            downloadJSON('revenue-export.json', { programme: prog, unit: '₦M', months: data.labels, revenue: data.values });
+        } else {
+            const rows = [['Month', 'Revenue (NGN M)', 'Programme']];
+            data.labels.forEach((m, i) => rows.push([m, data.values[i], prog]));
+            exportCSV('revenue-export.csv', rows);
+        }
+    });
+
+    // Quick reports — each downloads a representative CSV.
+    const QUICK = {
+        revenue: ['revenue-report.csv', [['Programme','Cohorts','Seats Sold','Revenue (NGN M)'],
+            ['Adv. Leadership',6,284,'58.9'],['PMP Prep',5,196,'34.6'],['Finance Mgrs',4,142,'23.5'],['Strategic HR',3,96,'19.3']]],
+        cohort: ['cohort-performance.csv', [['Cohort','Enrolment','Attendance %','Completion %','Avg Rating'],
+            ['ALM-Apr26','42/50','96','94','4.8'],['PMP-May26','38/40','91','89','4.7'],['FNF-Jun26','29/35','100','100','4.6']]],
+        attendance: ['attendance-report.csv', [['Participant','Programme','Sessions','Attended','Rate %'],
+            ['Adaeze Okonkwo','Adv. Leadership',4,4,'100'],['Emeka Nwosu','PMP Prep',5,4,'80'],['Seun Adeleke','PMP Prep',5,3,'60']]],
+        payment: ['payment-aging.csv', [['Participant','Programme','Amount (NGN)','Status','Days Outstanding'],
+            ['Emeka Nwosu','PMP Prep','240000','Pending','12'],['Funmi Ade','Data Analytics','275000','Pending','5']]],
+        certification: ['certification-roll.csv', [['Cert. No.','Participant','Programme','Issued','Status'],
+            ['PC-2026-FNF-0847','Adaeze Okonkwo','Finance for Non-Finance Mgrs','14 Mar 2026','Valid'],
+            ['PC-2026-PMP-0501','Chidinma Ezeh','PMP Prep','22 Feb 2026','Valid']]],
+        feedback: ['feedback-summary.csv', [['Programme','Responses','Avg Rating'],
+            ['Adv. Leadership',84,'4.8'],['PMP Prep',62,'4.7'],['Finance Mgrs',71,'4.6'],['Strategic HR',48,'4.8']]]
+    };
+    document.querySelectorAll('.js-quick').forEach((b) => {
+        b.addEventListener('click', () => {
+            const r = QUICK[b.dataset.report];
+            if (r) exportCSV(r[0], r[1]);
+        });
+    });
+
+    // Saved report "Run" -> export a CSV named after the report.
+    document.querySelectorAll('.js-run').forEach((b) => {
+        b.addEventListener('click', () => {
+            const title = b.closest('tr').querySelector('strong').textContent.trim();
+            const file = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') + '.csv';
+            exportCSV(file, [['Report', title], ['Generated', 'on demand'], ['Source', 'Phillips Consulting TMS']]);
+        });
+    });
+</script>
 </body>
 </html>

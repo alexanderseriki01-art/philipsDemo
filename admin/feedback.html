@@ -122,7 +122,7 @@
             <div class="card">
                 <div class="card-head">
                     <h3>Recent Feedback</h3>
-                    <button class="btn btn-ghost btn-sm" onclick="toast('Exporting all feedback')">Export</button>
+                    <button class="btn btn-ghost btn-sm" id="export-feedback">Export</button>
                 </div>
                 <div class="card-body" style="padding:0;">
                     <div style="padding:20px 22px;border-bottom:1px solid var(--line);">
@@ -134,10 +134,11 @@
                             <div style="color:var(--blue-600);font-size:13px;letter-spacing:0.04em;">★★★★<span style="color:var(--ink-200);">★</span></div>
                         </div>
                         <p style="font-size:14px;color:var(--ink-700);line-height:1.6;">Day 1 was spectacular. Day 2's sectoral cases felt rushed &mdash; I'd trade two of them for deeper time on one. Faculty quality is exceptional throughout.</p>
-                        <div style="margin-top:10px;display:flex;gap:8px;">
+                        <div class="fb-actions" data-id="adaeze-adv" style="margin-top:10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
                             <span class="tag tag-warn" style="font-size:10.5px;">Action Item</span>
-                            <button class="btn btn-ghost btn-sm" onclick="toast('Reply draft opened')">Reply</button>
+                            <button class="btn btn-ghost btn-sm js-reply">Reply</button>
                         </div>
+                        <div class="fb-replies" data-id="adaeze-adv"></div>
                     </div>
                     <div style="padding:20px 22px;border-bottom:1px solid var(--line);">
                         <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
@@ -148,6 +149,10 @@
                             <div style="color:var(--blue-600);font-size:13px;letter-spacing:0.04em;">★★★★★</div>
                         </div>
                         <p style="font-size:14px;color:var(--ink-700);line-height:1.6;">The cleanest certification process I've experienced. Verified payment, digital attendance, certificate in my portal within hours of completion.</p>
+                        <div class="fb-actions" data-id="emeka-pmp" style="margin-top:10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                            <button class="btn btn-ghost btn-sm js-reply">Reply</button>
+                        </div>
+                        <div class="fb-replies" data-id="emeka-pmp"></div>
                     </div>
                     <div style="padding:20px 22px;">
                         <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
@@ -158,6 +163,10 @@
                             <div style="color:var(--blue-600);font-size:13px;letter-spacing:0.04em;">★★★★★</div>
                         </div>
                         <p style="font-size:14px;color:var(--ink-700);line-height:1.6;">Enrolled 23 managers across two cohorts. Admin dashboard tracks attendance and completion in real time &mdash; a week of reporting reduced to a click.</p>
+                        <div class="fb-actions" data-id="chidinma-hr" style="margin-top:10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                            <button class="btn btn-ghost btn-sm js-reply">Reply</button>
+                        </div>
+                        <div class="fb-replies" data-id="chidinma-hr"></div>
                     </div>
                 </div>
             </div>
@@ -167,5 +176,55 @@
 </div>
 
 <script src="../assets/js/app.js"></script>
+<script src="../assets/js/store.js"></script>
+<script src="../assets/js/admin.js"></script>
+<script>
+    function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+    function replyHTML(text) {
+        return `<div class="fb-reply"><span class="fb-reply-who">Phillips Consulting</span>${esc(text)}</div>`;
+    }
+
+    // Render saved replies.
+    document.querySelectorAll('.fb-replies').forEach((box) => {
+        const fid = box.dataset.id;
+        Store.list('feedback').filter((r) => r.fid === fid).reverse().forEach((r) => {
+            box.insertAdjacentHTML('beforeend', replyHTML(r.text));
+        });
+    });
+
+    document.querySelectorAll('.js-reply').forEach((btn) => {
+        btn.addEventListener('click', () => {
+            const actions = btn.closest('.fb-actions');
+            const fid = actions.dataset.id;
+            const box = document.querySelector('.fb-replies[data-id="' + fid + '"]');
+            openModal('Reply to feedback', `
+                <div class="field"><label>Your reply</label><textarea name="text" required placeholder="Thanks for the feedback…"></textarea></div>
+                <div class="field-hint">Posted publicly under this comment.</div>
+            `, {
+                submitLabel: 'Post reply',
+                onSubmit: (form) => {
+                    const text = form.text.value.trim();
+                    if (!text) return false;
+                    Store.add('feedback', { fid, text });
+                    if (box) box.insertAdjacentHTML('beforeend', replyHTML(text));
+                    toast('Reply posted');
+                }
+            });
+        });
+    });
+
+    document.getElementById('export-feedback').addEventListener('click', () => {
+        const out = [['Participant', 'Programme', 'Comment']];
+        document.querySelectorAll('.fb-actions').forEach((a) => {
+            const item = a.parentElement;
+            const name = (item.querySelector('strong') || {}).textContent || '';
+            const prog = (item.querySelector('.cell-muted') || {}).textContent.replace(/^[·\s]+/, '') || '';
+            const p = (item.querySelector('p') || {}).textContent || '';
+            out.push([name.trim(), prog.trim(), p.trim()]);
+        });
+        exportCSV('feedback.csv', out);
+    });
+</script>
 </body>
 </html>

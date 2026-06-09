@@ -68,14 +68,14 @@
             <input class="page-search" type="search" placeholder="Search materials by name, programme, or type…" />
 
             <div class="filter-bar">
-                <button class="filter-chip active">All</button>
-                <button class="filter-chip">Adv. Leadership</button>
-                <button class="filter-chip">PMP Prep</button>
-                <button class="filter-chip">Finance Mgrs</button>
-                <button class="filter-chip">Strategic Comms</button>
+                <button class="filter-chip active" data-filter="all">All</button>
+                <button class="filter-chip" data-filter="adv-leadership">Adv. Leadership</button>
+                <button class="filter-chip" data-filter="pmp">PMP Prep</button>
+                <button class="filter-chip" data-filter="finance">Finance Mgrs</button>
+                <button class="filter-chip" data-filter="comms">Strategic Comms</button>
             </div>
 
-            <div class="materials-grid">
+            <div class="materials-grid" id="materials-grid">
 
                 <div class="material-card">
                     <div class="file-icon"><span class="ext">PDF</span></div>
@@ -186,13 +186,53 @@
 </div>
 
 <script src="../assets/js/app.js"></script>
+<script src="../assets/js/store.js"></script>
+<script src="../assets/js/filter.js"></script>
 <script>
-    document.querySelectorAll('.filter-chip').forEach((c) => {
-        c.addEventListener('click', () => {
-            document.querySelectorAll('.filter-chip').forEach((x) => x.classList.remove('active'));
-            c.classList.add('active');
-            toast('Filtering: ' + c.textContent.trim());
-        });
+    const grid = document.getElementById('materials-grid');
+    function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+    function token(text) {
+        const t = text.toLowerCase();
+        if (t.includes('pmp') || t.includes('exam')) return 'pmp';
+        if (t.includes('finance') || t.includes('financial')) return 'finance';
+        if (t.includes('comm')) return 'comms';
+        if (t.includes('leadership') || t.includes('cross-sector')) return 'adv-leadership';
+        return 'other';
+    }
+
+    // Tag existing static cards.
+    grid.querySelectorAll('.material-card').forEach((card) => {
+        const h = (card.querySelector('h4') || {}).textContent || '';
+        card.dataset.status = token(h);
+    });
+
+    function extOf(type) {
+        const t = (type || '').toLowerCase();
+        if (t.includes('pdf')) return 'PDF';
+        if (t.includes('zip')) return 'ZIP';
+        if (t.includes('video') || t.includes('mp4')) return 'MP4';
+        if (t.includes('sheet') || t.includes('excel') || t.includes('xls')) return 'XLS';
+        if (t.includes('word') || t.includes('doc')) return 'DOC';
+        return 'FILE';
+    }
+    const PROG_TOKEN = { 'Adv. Leadership': 'adv-leadership', 'PMP Prep': 'pmp', 'Finance Mgrs': 'finance', 'Strategic HR': 'other' };
+
+    Store.list('materials').slice().reverse().forEach((m) => {
+        const card = document.createElement('div');
+        card.className = 'material-card';
+        card.dataset.status = PROG_TOKEN[m.programme] || token(m.programme || '');
+        const dl = m.dataUrl
+            ? `<a class="btn btn-primary btn-sm" href="${m.dataUrl}" download="${esc(m.title)}">Download</a>`
+            : `<button class="btn btn-primary btn-sm" onclick="toast('This file is available at the venue')">Download</button>`;
+        card.innerHTML = `
+            <div class="file-icon"><span class="ext">${extOf(m.type)}</span></div>
+            <div>
+                <h4>${esc(m.title)} <span class="tag tag-success" style="font-size:10px;">New</span></h4>
+                <div class="meta"><span>${esc(m.sizeLabel || '')}</span><span>${esc(m.programme || '')}</span><span>${esc(m.module || '')}</span></div>
+            </div>
+            <div class="actions">${dl}</div>`;
+        grid.insertBefore(card, grid.firstChild);
     });
 </script>
 </body>

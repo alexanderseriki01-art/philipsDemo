@@ -74,7 +74,7 @@
                     <h3>Ready to Issue</h3>
                     <div style="display:flex;gap:8px;">
                         <button class="btn btn-ghost btn-sm" onclick="toast('All selected')">Select All</button>
-                        <button class="btn btn-primary btn-sm" onclick="toast('14 certificates queued for generation')">Issue 14 Certificates</button>
+                        <button class="btn btn-primary btn-sm" id="issue-cert">+ Issue Certificate</button>
                     </div>
                 </div>
                 <table class="table">
@@ -111,16 +111,16 @@
             <div class="card">
                 <div class="card-head">
                     <h3>Certificate Ledger</h3>
-                    <button class="btn btn-ghost btn-sm" onclick="toast('Exporting ledger')">Export</button>
+                    <button class="btn btn-ghost btn-sm" id="export-ledger">Export</button>
                 </div>
                 <table class="table">
-                    <thead><tr><th>Cert. No.</th><th>Participant</th><th>Programme</th><th>Issued</th><th>Verifications</th><th>Status</th></tr></thead>
-                    <tbody>
-                        <tr><td><span style="font-family:var(--font-mono);font-size:12px;">PC&middot;2026&middot;FNF&middot;0847</span></td><td>Adaeze Okonkwo</td><td class="cell-muted">Finance for Non-Finance Mgrs</td><td class="cell-muted">14 Mar 2026</td><td>23</td><td><span class="tag tag-success">Valid</span></td></tr>
-                        <tr><td><span style="font-family:var(--font-mono);font-size:12px;">PC&middot;2025&middot;SCM&middot;0721</span></td><td>Adaeze Okonkwo</td><td class="cell-muted">Strategic Comms</td><td class="cell-muted">07 Nov 2025</td><td>18</td><td><span class="tag tag-success">Valid</span></td></tr>
-                        <tr><td><span style="font-family:var(--font-mono);font-size:12px;">PC&middot;2026&middot;PMP&middot;0501</span></td><td>Chidinma Ezeh</td><td class="cell-muted">PMP Prep</td><td class="cell-muted">22 Feb 2026</td><td>9</td><td><span class="tag tag-success">Valid</span></td></tr>
-                        <tr><td><span style="font-family:var(--font-mono);font-size:12px;">PC&middot;2026&middot;ALM&middot;0312</span></td><td>Emeka Nwosu</td><td class="cell-muted">Adv. Leadership</td><td class="cell-muted">15 Jan 2026</td><td>42</td><td><span class="tag tag-success">Valid</span></td></tr>
-                        <tr><td><span style="font-family:var(--font-mono);font-size:12px;">PC&middot;2025&middot;ALM&middot;0228</span></td><td>K. Lawal</td><td class="cell-muted">Adv. Leadership</td><td class="cell-muted">28 Aug 2025</td><td>0</td><td><span class="tag tag-danger">Revoked</span></td></tr>
+                    <thead><tr><th>Cert. No.</th><th>Participant</th><th>Programme</th><th>Issued</th><th>Verifications</th><th>Status</th><th></th></tr></thead>
+                    <tbody id="cert-ledger">
+                        <tr data-id="PC-2026-FNF-0847" data-state="valid"><td><span style="font-family:var(--font-mono);font-size:12px;">PC&middot;2026&middot;FNF&middot;0847</span></td><td>Adaeze Okonkwo</td><td class="cell-muted">Finance for Non-Finance Mgrs</td><td class="cell-muted">14 Mar 2026</td><td>23</td><td class="cell-cert-status"></td><td class="cell-cert-act" style="text-align:right;"></td></tr>
+                        <tr data-id="PC-2025-SCM-0721" data-state="valid"><td><span style="font-family:var(--font-mono);font-size:12px;">PC&middot;2025&middot;SCM&middot;0721</span></td><td>Adaeze Okonkwo</td><td class="cell-muted">Strategic Comms</td><td class="cell-muted">07 Nov 2025</td><td>18</td><td class="cell-cert-status"></td><td class="cell-cert-act" style="text-align:right;"></td></tr>
+                        <tr data-id="PC-2026-PMP-0501" data-state="valid"><td><span style="font-family:var(--font-mono);font-size:12px;">PC&middot;2026&middot;PMP&middot;0501</span></td><td>Chidinma Ezeh</td><td class="cell-muted">PMP Prep</td><td class="cell-muted">22 Feb 2026</td><td>9</td><td class="cell-cert-status"></td><td class="cell-cert-act" style="text-align:right;"></td></tr>
+                        <tr data-id="PC-2026-ALM-0312" data-state="valid"><td><span style="font-family:var(--font-mono);font-size:12px;">PC&middot;2026&middot;ALM&middot;0312</span></td><td>Emeka Nwosu</td><td class="cell-muted">Adv. Leadership</td><td class="cell-muted">15 Jan 2026</td><td>42</td><td class="cell-cert-status"></td><td class="cell-cert-act" style="text-align:right;"></td></tr>
+                        <tr data-id="PC-2025-ALM-0228" data-state="revoked"><td><span style="font-family:var(--font-mono);font-size:12px;">PC&middot;2025&middot;ALM&middot;0228</span></td><td>K. Lawal</td><td class="cell-muted">Adv. Leadership</td><td class="cell-muted">28 Aug 2025</td><td>0</td><td class="cell-cert-status"></td><td class="cell-cert-act" style="text-align:right;"></td></tr>
                     </tbody>
                 </table>
             </div>
@@ -130,5 +130,104 @@
 </div>
 
 <script src="../assets/js/app.js"></script>
+<script src="../assets/js/store.js"></script>
+<script src="../assets/js/admin.js"></script>
+<script>
+    const ledger = document.getElementById('cert-ledger');
+    function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+    function renderCert(tr) {
+        const ov = Store.override('certificates', tr.dataset.id);
+        if (ov && ov.state) tr.dataset.state = ov.state;
+        const revoked = tr.dataset.state === 'revoked';
+        tr.querySelector('.cell-cert-status').innerHTML = revoked
+            ? '<span class="tag tag-danger">Revoked</span>'
+            : '<span class="tag tag-success">Valid</span>';
+        tr.querySelector('.cell-cert-act').innerHTML = revoked
+            ? '<button class="btn btn-ghost btn-sm js-restore">Restore</button>'
+            : '<button class="btn btn-ghost btn-sm js-revoke">Revoke</button>';
+    }
+
+    function certRow(c) {
+        const tr = document.createElement('tr');
+        tr.className = 'row-new';
+        tr.dataset.id = c.certNo;
+        tr.dataset.state = 'valid';
+        tr.innerHTML = `
+            <td><span style="font-family:var(--font-mono);font-size:12px;">${esc(c.certNo)}</span> <span class="tag tag-new">New</span></td>
+            <td>${esc(c.name)}</td>
+            <td class="cell-muted">${esc(c.programme)}</td>
+            <td class="cell-muted">${esc(c.date || 'Today')}</td>
+            <td>0</td>
+            <td class="cell-cert-status"></td>
+            <td class="cell-cert-act" style="text-align:right;"></td>`;
+        return tr;
+    }
+
+    Store.list('certificates').slice().reverse().forEach((c) => {
+        const tr = certRow(c);
+        ledger.insertBefore(tr, ledger.firstChild);
+    });
+    ledger.querySelectorAll('tr').forEach(renderCert);
+
+    ledger.addEventListener('click', (e) => {
+        const tr = e.target.closest('tr');
+        if (!tr) return;
+        if (e.target.closest('.js-revoke')) {
+            tr.dataset.state = 'revoked';
+            Store.patch('certificates', tr.dataset.id, { state: 'revoked' });
+            renderCert(tr); toast('Certificate ' + tr.dataset.id + ' revoked');
+        } else if (e.target.closest('.js-restore')) {
+            tr.dataset.state = 'valid';
+            Store.patch('certificates', tr.dataset.id, { state: 'valid' });
+            renderCert(tr); toast('Certificate ' + tr.dataset.id + ' restored');
+        }
+    });
+
+    function genCertNo(programme) {
+        const init = (programme || 'GEN').replace(/[^A-Za-z]+/g, ' ').trim().split(/\s+/).map(w => w[0]).join('').slice(0, 3).toUpperCase() || 'GEN';
+        const n = String(Math.floor(1000 + Math.random() * 8999));
+        return 'PC-2026-' + init + '-' + n;
+    }
+
+    document.getElementById('issue-cert').addEventListener('click', () => {
+        openModal('Issue certificate', `
+            <div class="field"><label>Participant name</label><input name="name" required placeholder="e.g. Adaeze Okonkwo" /></div>
+            <div class="field"><label>Programme</label><input name="programme" required placeholder="e.g. Advanced Leadership & Management" /></div>
+            <div class="field"><label>Date issued</label><input name="date" placeholder="e.g. 09 Jun 2026" /></div>
+            <div class="field-hint">Appears in the participant's Certificates page immediately.</div>
+        `, {
+            submitLabel: 'Issue',
+            onSubmit: (form) => {
+                const c = {
+                    name: form.name.value.trim(),
+                    programme: form.programme.value.trim(),
+                    date: form.date.value.trim(),
+                    certNo: genCertNo(form.programme.value.trim())
+                };
+                if (!c.name || !c.programme) return false;
+                Store.add('certificates', c);
+                const tr = certRow(c);
+                ledger.insertBefore(tr, ledger.firstChild);
+                renderCert(tr);
+                toast('Certificate issued to ' + c.name);
+            }
+        });
+    });
+
+    document.getElementById('export-ledger').addEventListener('click', () => {
+        const out = [['Cert. No.', 'Participant', 'Programme', 'Issued', 'Status']];
+        ledger.querySelectorAll('tr').forEach((tr) => {
+            out.push([
+                tr.children[0].textContent.trim().replace(' New', ''),
+                tr.children[1].textContent.trim(),
+                tr.children[2].textContent.trim(),
+                tr.children[3].textContent.trim(),
+                tr.dataset.state === 'revoked' ? 'Revoked' : 'Valid'
+            ]);
+        });
+        exportCSV('certificate-ledger.csv', out);
+    });
+</script>
 </body>
 </html>

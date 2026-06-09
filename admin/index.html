@@ -175,22 +175,22 @@
 
             <!-- Quick actions -->
             <div class="quick-actions">
-                <button class="quick-action add" onclick="toast('Open: Create new training')">
+                <button class="quick-action add" onclick="window.location.href='trainings.html'">
                     <div class="glyph"></div><div class="lbl">New Training</div>
                 </button>
-                <button class="quick-action up" onclick="toast('Open: Upload materials')">
+                <button class="quick-action up" onclick="window.location.href='materials.html'">
                     <div class="glyph"></div><div class="lbl">Upload Materials</div>
                 </button>
-                <button class="quick-action check" onclick="toast('Open: Mark attendance')">
-                    <div class="glyph"></div><div class="lbl">Mark Attendance</div>
+                <button class="quick-action report" id="post-announcement">
+                    <div class="glyph"></div><div class="lbl">Post Announcement</div>
                 </button>
-                <button class="quick-action card" onclick="toast('Open: Payment approvals')">
+                <button class="quick-action card" onclick="window.location.href='payments.html'">
                     <div class="glyph"></div><div class="lbl">Approve Payments</div>
                 </button>
                 <button class="quick-action cert" onclick="window.location.href='certificates.html'">
                     <div class="glyph"></div><div class="lbl">Issue Certificates</div>
                 </button>
-                <button class="quick-action report" onclick="toast('Report exported as PDF')">
+                <button class="quick-action check" onclick="window.location.href='reports.html'">
                     <div class="glyph"></div><div class="lbl">Export Reports</div>
                 </button>
             </div>
@@ -352,6 +352,26 @@
 </div>
 
 <script src="../assets/js/app.js"></script>
+<script src="../assets/js/store.js"></script>
 <script src="../assets/js/admin.js"></script>
+<script>
+    const pa = document.getElementById('post-announcement');
+    if (pa) pa.addEventListener('click', () => {
+        openModal('Post announcement', `
+            <div class="field"><label>Title</label><input name="title" required placeholder="e.g. Venue change for May cohort" /></div>
+            <div class="field"><label>Message</label><textarea name="body" required placeholder="Write the announcement participants will see…"></textarea></div>
+            <div class="field-hint">Appears on every participant's dashboard immediately.</div>
+        `, {
+            submitLabel: 'Publish',
+            onSubmit: (form) => {
+                const title = form.title.value.trim();
+                const body = form.body.value.trim();
+                if (!title || !body) return false;
+                Store.add('announcements', { title, body });
+                toast('Announcement published to all participants');
+            }
+        });
+    });
+</script>
 </body>
 </html>

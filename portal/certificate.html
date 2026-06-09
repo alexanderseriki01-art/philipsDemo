@@ -22,7 +22,9 @@
         <a class="logo logo--sm" href="../"><span class="logo-mark">phillips</span><span class="logo-sub">CONSULTING</span></a>
     </div>
 
-    <div class="cert-paper">
+    <div class="cert-mylist" id="cert-mylist" style="max-width:840px;margin:0 auto 26px;"></div>
+
+    <div class="cert-paper" id="cert-paper">
         <div class="cert-watermark">phillips</div>
 
         <div class="cert-head">
@@ -87,11 +89,52 @@
 </div>
 
 <script src="../assets/js/app.js"></script>
+<script src="../assets/js/store.js"></script>
 <script>
     function copyVerifyLink() {
         const url = new URL('../verify/?code=PC-2026-FNF-0847', window.location.href).href;
         navigator.clipboard?.writeText(url);
         toast('Verification link copied');
+    }
+
+    function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+    // The participant's existing certificates (from the admin ledger).
+    const baseCerts = [
+        { certNo: 'PC-2026-FNF-0847', programme: 'Finance for Non-Finance Managers', date: '14 Mar 2026', isNew: false },
+        { certNo: 'PC-2025-SCM-0721', programme: 'Strategic Communications', date: '07 Nov 2025', isNew: false }
+    ];
+    // Admin-issued certificates (any name — single demo participant).
+    const issued = Store.list('certificates').map((c) => ({ certNo: c.certNo, programme: c.programme, date: c.date || 'Recently', isNew: true }));
+
+    function stateOf(certNo) {
+        const ov = Store.override('certificates', certNo);
+        return ov && ov.state === 'revoked' ? 'revoked' : 'valid';
+    }
+
+    const all = issued.concat(baseCerts);
+    const box = document.getElementById('cert-mylist');
+    box.innerHTML = `<h3 style="font-size:18px;margin-bottom:12px;">My Certificates (${all.length})</h3>` + all.map((c) => {
+        const revoked = stateOf(c.certNo) === 'revoked';
+        const tag = revoked
+            ? '<span class="tag tag-danger">Revoked</span>'
+            : (c.isNew ? '<span class="tag tag-success">New · Valid</span>' : '<span class="tag tag-success">Valid</span>');
+        return `<div style="background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;gap:12px;${revoked ? 'opacity:.6;' : ''}">
+            <div>
+                <strong style="color:var(--ink-900);">${esc(c.programme)}</strong>
+                <div class="cell-muted" style="font-size:12px;color:var(--ink-400);font-family:var(--font-mono);">${esc(c.certNo)} &middot; ${esc(c.date)}</div>
+            </div>
+            ${tag}
+        </div>`;
+    }).join('');
+
+    // Reflect revocation on the displayed certificate.
+    if (stateOf('PC-2026-FNF-0847') === 'revoked') {
+        const paper = document.getElementById('cert-paper');
+        const banner = document.createElement('div');
+        banner.style.cssText = 'background:var(--danger-soft);color:var(--danger);text-align:center;font-weight:600;padding:10px;border-radius:8px;margin-bottom:14px;';
+        banner.textContent = 'This certificate has been revoked.';
+        paper.parentNode.insertBefore(banner, paper);
     }
 </script>
 

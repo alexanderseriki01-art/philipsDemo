@@ -71,6 +71,8 @@
                 <p>You have 1 upcoming training this week. Your certificate for Finance for Non-Finance Managers is ready to download.</p>
             </div>
 
+            <div id="portal-announce"></div>
+
             <!-- Your Journey — 7-stage participant tracker for the active programme -->
             <section class="journey" aria-label="Your training journey">
                 <div class="journey-head">
@@ -333,7 +335,39 @@
 </div>
 
 <script src="../assets/js/app.js"></script>
+<script src="../assets/js/store.js"></script>
 <script>
+    // Latest announcements + newest programme from the admin store.
+    (function () {
+        function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+        const wrap = document.getElementById('portal-announce');
+        if (!wrap) return;
+        let html = '';
+
+        const ann = Store.list('announcements');
+        ann.slice(0, 3).forEach((a) => {
+            html += `<div style="background:var(--blue-50);border:1px solid var(--blue-100);border-left:3px solid var(--blue-500);border-radius:12px;padding:14px 18px;margin-bottom:12px;">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+                    <span class="tag tag-blue" style="font-size:10px;">Announcement</span>
+                    <strong style="color:var(--ink-900);">${esc(a.title)}</strong>
+                </div>
+                <div style="font-size:13.5px;color:var(--ink-600,#4a5b78);line-height:1.55;">${esc(a.body)}</div>
+            </div>`;
+        });
+
+        const newest = Store.list('trainings')[0];
+        if (newest) {
+            html += `<div style="background:var(--success-soft);border:1px solid #bfe6d6;border-left:3px solid var(--success);border-radius:12px;padding:14px 18px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;">
+                <div>
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px;"><span class="tag tag-success" style="font-size:10px;">New programme</span><strong style="color:var(--ink-900);">${esc(newest.title)}</strong></div>
+                    <div style="font-size:13px;color:var(--ink-500,#4a5b78);">${esc(newest.format || '')}${newest.dates ? ' &middot; ' + esc(newest.dates) : ''}</div>
+                </div>
+                <a class="btn btn-primary btn-sm" href="trainings.html">View &rarr;</a>
+            </div>`;
+        }
+        wrap.innerHTML = html;
+    })();
+
     // Counter animation (reuse logic locally)
     document.querySelectorAll('[data-count]').forEach((el) => {
         const target = parseFloat(el.dataset.count);
