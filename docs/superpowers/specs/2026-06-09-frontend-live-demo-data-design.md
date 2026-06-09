@@ -41,17 +41,44 @@ badge. The portal always looks populated.
 
 ### `assets/js/store.js` (new)
 
-Tiny wrapper over `localStorage` under the `pcl.` namespace.
+Tiny wrapper over `localStorage` under the `pcl.` namespace, with an in-memory
+fallback if `localStorage` is unavailable.
 
-API:
+**Add mode** (new records):
 
 - `Store.list(type)` → array of records, newest first
 - `Store.add(type, record)` → assigns `id` (timestamp + random suffix),
   `createdAt`, and `isNew: true`; persists; returns the saved record
-- `Store.reset()` → removes all `pcl.*` keys
+- Key: `pcl.<type>` holding a JSON array.
 
-Records are plain objects whose shape depends on `type` (see forms below).
-Storage key per type: `pcl.<type>` holding a JSON array.
+**Override/patch mode** (status changes on existing *static* rows):
+
+- `Store.patch(entity, id, patch)` → merges `patch` into an overrides map keyed
+  by the row's stable `data-id` (e.g. email or slug)
+- `Store.overrides(entity)` → the overrides map for that entity
+- Key: `pcl.overrides.<entity>` holding a JSON object `{ id: {...patch} }`
+- On load, each page re-applies overrides to its static rows (e.g. swap the
+  status tag). This is what makes reactivate / KYC / revoke work on seeded
+  people and certificates without converting every mockup to data.
+
+**Reset:**
+
+- `Store.reset()` → removes all `pcl.*` keys (added items + overrides)
+
+Add-types: `trainings`, `materials`, `certificates`, `announcements`,
+`participants`. Override-entities: `participants`, `certificates` (extendable).
+
+### `assets/js/filter.js` (new)
+
+Generic filter helper. Given a `.filter-bar` and a target table/list, shows or
+hides rows by a `data-status` / `data-category` attribute matching the active
+chip's `data-filter`. Replaces the current toast-only chip behaviour across all
+pages. Existing static rows get `data-status` attributes added.
+
+### Vendored QR (`assets/js/vendor/qrcode.min.js`, new)
+
+A tiny MIT pure-JS QR generator (no deps, no network) used to render a real,
+scannable class check-in QR code into a canvas inside a modal.
 
 ### Admin modal (added to `admin.css` + `admin.js`)
 
@@ -62,19 +89,57 @@ A single reusable modal component:
   visual language (tokens, card, btn styles already exist)
 - Closes on overlay click, Esc, or Cancel
 
-### Admin forms
+### Admin auth fix (Overview bug)
 
-Each "+ New …" button opens the modal with the relevant form. On submit:
-`Store.add(type, data)` → toast confirmation → **prepend the new row into the
-current admin table/list** so the admin sees it live → close modal.
+`admin/index.html` currently always renders the login screen and only reveals
+the dashboard after the form submits, so navigating back to Overview from any
+other admin page re-shows login. Fix:
 
-Form fields per type:
+- On successful login, set `sessionStorage['pcl.adminAuth'] = '1'`.
+- On `index.html` load, if the flag is set, skip the login screen and show the
+  dashboard directly (run the chart/counter animations immediately).
+- "Sign out" / "Back to site" links clear the flag.
+
+### Admin features
+
+Each action is frontend-only and persists through the store.
+
+- **New Training / Material / Certificate / Announcement**: "+ New …" opens the
+  modal; on submit `Store.add(type, data)` → toast → **prepend the new row into
+  the current admin table/list** → close modal.
+- **View participant (detailed)**: "View" opens a detail modal — name, org,
+  email, programmes, KYC/status, recent activity — built from the row's data
+  attributes plus any store override.
+- **Reactivate account**: `Store.patch('participants', id, {status:'Active'})`;
+  row + any open detail update live.
+- **Request KYC**: `Store.patch('participants', id, {status:'KYC Requested'})`.
+- **Invite participant via email**: modal collects name/email/org → adds a
+  `participants` record with `status:'Pending (Invited)'` (prepended into the
+  directory) and opens a prefilled `mailto:` draft.
+- **Class QR code**: button opens a modal rendering a real QR (vendored lib)
+  encoding a check-in URL such as `…/verify/?class=<id>`.
+- **Upload materials**: modal with `<input type="file">` browse; on submit store
+  filename/type/size (+ a data-URL for small files, ≲1 MB, so it stays openable
+  after reload) as a `materials` record.
+- **Issue / revoke certificate**: issue → `Store.add('certificates', …)`;
+  revoke → `Store.patch('certificates', id, {status:'Revoked'})`.
+- **Reply feedback**: reply modal appends a persisted reply under the feedback
+  item.
+
+Form fields per add-type:
 
 - **Training**: title, format (e.g. "4-Day Intensive"), location, price (₦),
   seats, start date
-- **Material**: title, type (PDF / Video / Slides), linked programme
+- **Material**: title, type (PDF / Video / Slides), linked programme, file
 - **Certificate**: participant name, programme, date issued
 - **Announcement**: title, body
+- **Invite**: name, email, organisation
+
+### Reports
+
+Live charts render on load; filter chips / date-range controls re-draw them;
+**Export** buttons generate and download a real `.csv` client-side (Blob +
+object URL) from the visible data.
 
 ### Portal rendering
 
@@ -116,15 +181,22 @@ native. Each injected item carries a `tag tag-success` style **"New"** badge.
 
 ## Files touched
 
-- New: `assets/js/store.js`
-- Edit: `assets/css/admin.css` (modal), `assets/js/admin.js` (modal helper)
-- Edit admin: `trainings.html`, `materials.html`, `certificates.html`,
-  `feedback.html`, `settings.html`
+- New: `assets/js/store.js`, `assets/js/filter.js`,
+  `assets/js/vendor/qrcode.min.js`
+- Edit: `assets/css/admin.css` (modal + detail styles), `assets/js/admin.js`
+  (modal helper, auth persistence)
+- Edit admin: `index.html`, `participants.html`, `trainings.html`,
+  `materials.html`, `certificates.html`, `feedback.html`, `reports.html`,
+  `settings.html`, and `attendance.html` / `payments.html` / `refunds.html`
+  (filters)
 - Edit portal: `index.html`, `trainings.html`, `materials.html`,
   `certificate.html`
 
 ## Out of scope
 
-- Editing/deleting individual created items (create + reset only)
+- Editing/deleting individual created items (create + reset only; certificates
+  can be revoked)
 - Multiple participant accounts / targeting specific participants
-- Cross-browser or cross-device sync (no backend)
+- Cross-browser or cross-device sync (no backend); object-URL/data-URL file
+  previews are best-effort within storage limits
+- Real email delivery (invite uses a `mailto:` draft)
