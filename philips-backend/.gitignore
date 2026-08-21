@@ -1,0 +1,5 @@
+.env
+storage/tokens/*
+storage/throttle/*
+!storage/tokens/.gitkeep
+!storage/throttle/.gitkeep

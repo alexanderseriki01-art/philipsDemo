@@ -177,5 +177,22 @@ p { color: var(--ink-500); }
 /* Scroll utility */
 .no-scroll { overflow: hidden; }
 
+/* ==========================================================================
+   Scrollbars
+   --------------------------------------------------------------------------
+   Hidden everywhere while scrolling still works. On the console shell this also
+   fixes the panel corners: the scrollbar track was painting inside the rounded
+   right edge, which squared off the top-right and bottom-right corners.
+   ========================================================================== */
+* {
+    scrollbar-width: none;        /* Firefox */
+    -ms-overflow-style: none;     /* legacy Edge */
+}
+*::-webkit-scrollbar {            /* Chrome, Safari, Edge */
+    width: 0;
+    height: 0;
+    display: none;
+}
+
 /* Selection */
 ::selection { background: var(--blue-100); color: var(--ink-900); }

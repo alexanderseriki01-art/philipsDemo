@@ -15,70 +15,80 @@
 </head>
 <body>
 
-<!-- ═════════════════════ LOGIN GATE — two-card console ═════════════════════ -->
+<!-- ═════════════════════ SIGN-IN GATE ═════════════════════ -->
 <section class="admin-login" id="admin-login">
+    <div class="signin-grid">
 
-    <div class="admin-login-bg" aria-hidden="true">
-        <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=2400&q=80"
-             alt=""
-             loading="eager" />
-    </div>
+        <!-- Brand and system panel -->
+        <aside class="signin-brand">
+            <a class="logo logo--light" href="https://www.phillipsconsulting.net/" target="_blank" rel="noopener">
+                <span class="logo-mark">phillips</span>
+                <span class="logo-sub">CONSULTING</span>
+            </a>
 
-    <header class="admin-login-top">
-        <a class="logo logo--light" href="../">
-            <span class="logo-mark">phillips</span>
-            <span class="logo-sub">CONSULTING</span>
-        </a>
-        <a class="admin-login-back" href="../">&larr; Back to site</a>
-    </header>
-
-    <main class="admin-login-stage">
-        <section class="admin-card" aria-labelledby="admin-title">
-            <span class="eyebrow eyebrow-line">Restricted access</span>
-            <h2 id="admin-title">Administrator <em>sign-in.</em></h2>
-            <p class="sub">Use your work credentials. Participant accounts sign in on the main site. Sessions are audit-logged.</p>
-
-            <form id="admin-login-form">
-                <div class="field">
-                    <label>Work Email</label>
-                    <input class="input" type="email" value="tunde.okafor@phillipsconsulting.net" autocomplete="email" />
-                </div>
-                <div class="field">
-                    <label>Password</label>
-                    <div class="password-field">
-                        <input class="input" type="password" value="passphrase" autocomplete="current-password" id="admin-pwd" />
-                        <button type="button" class="pwd-toggle" aria-label="Show password" onclick="togglePwd(this)">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
-                                <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" stroke-linecap="round" stroke-linejoin="round"/>
-                                <circle cx="12" cy="12" r="3" />
-                                <line class="eye-strike" x1="4" y1="4" x2="20" y2="20" stroke-linecap="round"/>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-                <div style="display:flex;justify-content:space-between;align-items:center;margin:4px 0 22px;">
-                    <label class="checkbox"><input type="checkbox" />Keep me signed in</label>
-                    <a class="link-blue" href="#" style="font-size:13px;">Reset password</a>
-                </div>
-                <button class="btn btn-primary btn-block btn-lg btn-arrow" type="submit">Enter Console</button>
-            </form>
-
-            <div class="sec-strip">
-                <span class="sec-chip">Encrypted</span>
-                <span class="sec-chip">Audit logged</span>
-                <span class="sec-chip">2FA enforced</span>
+            <div class="signin-brand-body">
+                <h1>Training operations, <strong>end to end.</strong></h1>
+                <p>Participants, programmes, payments, attendance and certification, managed from one console.</p>
             </div>
 
-            <p class="admin-toggle">
-                Not an administrator? <a href="../login/">Sign in as a participant</a>
-            </p>
-        </section>
-    </main>
+            <div class="signin-brand-foot">
+                <p class="signin-legal">
+                    <span>&copy; 2026 Phillips Consulting Limited</span>
+                    <a href="https://www.phillipsconsulting.net/" target="_blank" rel="noopener">phillipsconsulting.net</a>
+                </p>
+            </div>
+        </aside>
 
-    <footer class="admin-login-foot">
-        <span class="left">Your session is encrypted and every action is <em>audited</em>.</span>
-        <span>© 2026 Phillips Consulting Limited <span class="sep">·</span> Lagos</span>
-    </footer>
+        <!-- Form panel -->
+        <main class="signin-panel">
+            <div class="signin-inner">
+                <h2 id="admin-title">Administrator access</h2>
+
+                <form id="admin-login-form" aria-labelledby="admin-title" novalidate>
+                    <div class="field">
+                        <label for="admin-email">Email</label>
+                        <input class="input"
+                               id="admin-email"
+                               name="email"
+                               type="email"
+                               value="tunde.okafor@phillipsconsulting.net"
+                               autocomplete="username"
+                               autocapitalize="none"
+                               spellcheck="false"
+                               required />
+                    </div>
+
+                    <div class="field">
+                        <label for="admin-pwd">Password</label>
+                        <div class="password-field">
+                            <input class="input"
+                                   id="admin-pwd"
+                                   name="password"
+                                   type="password"
+                                   value="passphrase"
+                                   autocomplete="current-password"
+                                   required />
+                            <button type="button" class="pwd-toggle" aria-label="Show password" aria-controls="admin-pwd" onclick="togglePwd(this)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+                                    <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <circle cx="12" cy="12" r="3" />
+                                    <line class="eye-strike" x1="4" y1="4" x2="20" y2="20" stroke-linecap="round"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="signin-row">
+                        <label class="checkbox"><input type="checkbox" />Keep me signed in</label>
+                    </div>
+
+                    <button class="btn btn-primary btn-block btn-lg" type="submit">Sign in</button>
+                </form>
+
+            </div>
+        </main>
+
+    </div>
 </section>
 
 <script>
@@ -125,7 +135,7 @@
         <nav class="sidebar-nav">
             <a href="reports.html">Reports</a>
             <a href="settings.html">Settings</a>
-            <a href="../">Back to site</a>
+            <a href="#" data-signout>Sign out</a>
         </nav>
 
         <div class="sidebar-user">
@@ -351,6 +361,8 @@
     </main>
 </div>
 
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/api.js"></script>
 <script src="../assets/js/app.js"></script>
 <script src="../assets/js/store.js"></script>
 <script src="../assets/js/ui.js"></script>

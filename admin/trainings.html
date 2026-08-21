@@ -11,6 +11,22 @@
     <link rel="stylesheet" href="../assets/css/base.css" />
     <link rel="stylesheet" href="../assets/css/admin.css" />
     <link rel="stylesheet" href="../assets/css/portal.css" />
+    <!-- Pre-render auth guard: bounce to sign-in before any console content
+         paints, so an unauthenticated visitor never glimpses the shell.
+         api.js revalidates the token against the server once loaded. -->
+    <script>
+        (function () {
+            try {
+                var key = 'pcl.admin.session';
+                var raw = localStorage.getItem(key) || sessionStorage.getItem(key);
+                if (!raw || !JSON.parse(raw).token) {
+                    location.replace('index.html');
+                }
+            } catch (e) {
+                location.replace('index.html');
+            }
+        })();
+    </script>
 </head>
 <body>
 
@@ -39,7 +55,7 @@
         <nav class="sidebar-nav">
             <a href="reports.html">Reports</a>
             <a href="settings.html">Settings</a>
-            <a href="../">Back to site</a>
+            <a href="#" data-signout>Sign out</a>
         </nav>
         <div class="sidebar-user">
             <div class="avatar blue">TO</div>
@@ -100,7 +116,7 @@
                             </td>
                             <td><strong>₦20.3M</strong></td>
                             <td><span class="tag tag-success">Confirmed</span></td>
-                            <td style="text-align:right;"><button class="btn btn-ghost btn-sm">Manage</button></td>
+                            <td style="text-align:right;"><button class="btn btn-ghost btn-sm js-edit">Edit</button></td>
                         </tr>
                         <tr>
                             <td><strong>Project Management Professional Prep</strong><div class="cell-muted" style="font-size:11.5px;">5-day &middot; Hybrid (Zoom + Lagos) &middot; ₦240,000/seat</div></td>
@@ -113,7 +129,7 @@
                             </td>
                             <td><strong>₦9.1M</strong></td>
                             <td><span class="tag tag-warn">Nearly Full</span></td>
-                            <td style="text-align:right;"><button class="btn btn-ghost btn-sm">Manage</button></td>
+                            <td style="text-align:right;"><button class="btn btn-ghost btn-sm js-edit">Edit</button></td>
                         </tr>
                         <tr>
                             <td><strong>Finance for Non-Finance Managers</strong><div class="cell-muted" style="font-size:11.5px;">2-day &middot; Phillips HQ &middot; ₦185,000/seat</div></td>
@@ -126,7 +142,7 @@
                             </td>
                             <td><strong>₦5.4M</strong></td>
                             <td><span class="tag tag-success">Confirmed</span></td>
-                            <td style="text-align:right;"><button class="btn btn-ghost btn-sm">Manage</button></td>
+                            <td style="text-align:right;"><button class="btn btn-ghost btn-sm js-edit">Edit</button></td>
                         </tr>
                         <tr>
                             <td><strong>Strategic HR Management</strong><div class="cell-muted" style="font-size:11.5px;">3-day &middot; Phillips HQ &middot; ₦310,000/seat</div></td>
@@ -139,7 +155,7 @@
                             </td>
                             <td><strong>₦6.8M</strong></td>
                             <td><span class="tag tag-warn">Under Target</span></td>
-                            <td style="text-align:right;"><button class="btn btn-ghost btn-sm" onclick="toast('Marketing boost scheduled')">Boost</button></td>
+                            <td style="text-align:right;"><button class="btn btn-ghost btn-sm js-edit">Edit</button></td>
                         </tr>
                         <tr>
                             <td><strong>Data Analytics for Decision Makers</strong><div class="cell-muted" style="font-size:11.5px;">3-day &middot; Hybrid &middot; ₦275,000/seat</div></td>
@@ -152,7 +168,7 @@
                             </td>
                             <td><strong>₦4.7M</strong></td>
                             <td><span class="tag tag-blue">Open</span></td>
-                            <td style="text-align:right;"><button class="btn btn-ghost btn-sm">Manage</button></td>
+                            <td style="text-align:right;"><button class="btn btn-ghost btn-sm js-edit">Edit</button></td>
                         </tr>
                         <tr>
                             <td><strong>Executive Communication &amp; Influence</strong><div class="cell-muted" style="font-size:11.5px;">2-day &middot; Landmark Lagos &middot; ₦220,000/seat</div></td>
@@ -165,7 +181,7 @@
                             </td>
                             <td><strong>₦2.0M</strong></td>
                             <td><span class="tag tag-blue">Open</span></td>
-                            <td style="text-align:right;"><button class="btn btn-ghost btn-sm">Manage</button></td>
+                            <td style="text-align:right;"><button class="btn btn-ghost btn-sm js-edit">Edit</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -175,6 +191,8 @@
     </main>
 </div>
 
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/api.js"></script>
 <script src="../assets/js/app.js"></script>
 <script src="../assets/js/store.js"></script>
 <script src="../assets/js/ui.js"></script>
@@ -194,15 +212,58 @@
     });
 
     // Render an admin-created programme row.
+    // Cohort dates are stored as ISO yyyy-mm-dd and rendered as a readable range.
+    // Records created before this field existed still carry a free-text `dates`.
+    const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+    function parseISO(value) {
+        const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(value || ''));
+        if (!m) return null;
+        const d = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+        return isNaN(d.getTime()) ? null : d;
+    }
+
+    function cohortLabel(p) {
+        const start = parseISO(p.startDate);
+        const end = parseISO(p.endDate);
+
+        if (!start) return p.dates || 'TBC';
+        if (!end) return start.getDate() + ' ' + MONTHS[start.getMonth()] + ' ' + start.getFullYear();
+
+        // Collapse the shared parts: same month prints the month once.
+        if (start.getFullYear() === end.getFullYear() && start.getMonth() === end.getMonth()) {
+            if (start.getDate() === end.getDate()) {
+                return start.getDate() + ' ' + MONTHS[start.getMonth()] + ' ' + start.getFullYear();
+            }
+            return start.getDate() + ' - ' + end.getDate() + ' ' + MONTHS[start.getMonth()] + ' ' + start.getFullYear();
+        }
+        if (start.getFullYear() === end.getFullYear()) {
+            return start.getDate() + ' ' + MONTHS[start.getMonth()] + ' - '
+                 + end.getDate() + ' ' + MONTHS[end.getMonth()] + ' ' + start.getFullYear();
+        }
+        return start.getDate() + ' ' + MONTHS[start.getMonth()] + ' ' + start.getFullYear() + ' - '
+             + end.getDate() + ' ' + MONTHS[end.getMonth()] + ' ' + end.getFullYear();
+    }
+
     function programmeRow(p) {
         const tr = document.createElement('tr');
         tr.className = 'row-new';
         tr.dataset.status = 'draft active upcoming';
+        tr.dataset.id = p.title;
         tr.dataset.title = p.title;
+        tr.dataset.format = p.format || '';
+        tr.dataset.location = p.location || '';
+        tr.dataset.price = p.price || '';
+        tr.dataset.seats = p.seats || '';
+        tr.dataset.tutor = p.tutor || '';
+        tr.dataset.startDate = p.startDate || '';
+        tr.dataset.endDate = p.endDate || '';
+        tr.dataset.datesText = cohortLabel(p);
+        tr.dataset.statuskey = 'open';
         const seats = parseInt(p.seats, 10) || 0;
         tr.innerHTML = `
-            <td><strong>${esc(p.title)}</strong> <span class="tag tag-new">New</span><div class="cell-muted" style="font-size:11.5px;">${esc(p.format || '')} &middot; ${esc(p.location || '')} &middot; ₦${esc(Number(p.price || 0).toLocaleString())}/seat</div></td>
-            <td class="cell-muted">${esc(p.dates || 'TBC')}</td>
+            <td><strong>${esc(p.title)}</strong> <span class="tag tag-new">New</span><div class="cell-muted" style="font-size:11.5px;">${esc(p.format || '')} &middot; ${esc(p.location || '')} &middot; ₦${esc(Number(p.price || 0).toLocaleString())}/seat${p.tutor ? ' &middot; Tutor: ' + esc(p.tutor) : ''}</div></td>
+            <td class="cell-muted">${esc(cohortLabel(p))}</td>
             <td>
                 <div style="display:flex;align-items:center;gap:10px;">
                     <div style="width:80px;"><div class="progress"><span style="width:2%"></span></div></div>
@@ -211,7 +272,7 @@
             </td>
             <td><strong>₦0</strong></td>
             <td><span class="tag tag-blue">Open</span></td>
-            <td style="text-align:right;"><button class="btn btn-ghost btn-sm js-qr">QR</button></td>`;
+            <td style="text-align:right;"><button class="btn btn-ghost btn-sm js-qr">QR</button> <button class="btn btn-ghost btn-sm js-edit">Edit</button></td>`;
         return tr;
     }
 
@@ -264,6 +325,175 @@
         draw();
     });
 
+    /* ── Editing a programme ──────────────────────────────────────────────
+       Seeded rows carry their values only as rendered text, so each row is
+       parsed once into its dataset. Edits are saved as an override keyed by the
+       programme title and re-applied on load, which is the same mechanism the
+       participants page uses for status changes. */
+
+    const STATUSES = {
+        'open':         { label: 'Open',         cls: 'tag-blue' },
+        'confirmed':    { label: 'Confirmed',    cls: 'tag-success' },
+        'nearly-full':  { label: 'Nearly Full',  cls: 'tag-warn' },
+        'under-target': { label: 'Under Target', cls: 'tag-warn' },
+        'archived':     { label: 'Archived',     cls: '' }
+    };
+
+    function hydrateProgramme(tr) {
+        const c = tr.querySelectorAll('td');
+        if (c.length < 5) return;
+        const d = tr.dataset;
+
+        if (!d.id) {
+            const strong = c[0].querySelector('strong');
+            d.id = strong ? strong.textContent.trim() : '';
+            d.title = d.id;
+        }
+
+        if (d.format === undefined) {
+            // "4-day · Landmark Lagos · ₦485,000/seat"
+            const sub = c[0].querySelector('.cell-muted');
+            const parts = (sub ? sub.textContent : '').split('·').map((s) => s.trim());
+            d.format = parts[0] || '';
+            d.location = parts[1] || '';
+            d.price = (parts[2] || '').replace(/[^0-9]/g, '');
+            const tut = parts.filter((x) => /^Tutor:/i.test(x))[0];
+            d.tutor = tut ? tut.replace(/^Tutor:\s*/i, '') : '';
+        }
+
+        if (d.datesText === undefined) d.datesText = c[1].textContent.trim();
+
+        if (d.seats === undefined) {
+            const m = /(\d+)\s*\/\s*(\d+)/.exec(c[2].textContent || '');
+            d.enrolled = m ? m[1] : '0';
+            d.seats = m ? m[2] : '';
+        }
+
+        if (d.statuskey === undefined) {
+            const tag = c[4].querySelector('.tag');
+            d.statuskey = tag ? tag.textContent.trim().toLowerCase().replace(/\s+/g, '-') : 'open';
+        }
+
+        const ov = Store.override('trainings', d.id);
+        if (ov) {
+            Object.keys(ov).forEach((k) => { d[k] = ov[k]; });
+            paintProgramme(tr);
+        }
+    }
+
+    function paintProgramme(tr) {
+        const c = tr.querySelectorAll('td');
+        const d = tr.dataset;
+
+        const strong = c[0].querySelector('strong');
+        if (strong) strong.textContent = d.title || '';
+
+        const bits = [];
+        if (d.format) bits.push(esc(d.format));
+        if (d.location) bits.push(esc(d.location));
+        if (d.price) bits.push('₦' + Number(d.price).toLocaleString() + '/seat');
+        if (d.tutor) bits.push('Tutor: ' + esc(d.tutor));
+        const sub = c[0].querySelector('.cell-muted');
+        if (sub) sub.innerHTML = bits.join(' &middot; ');
+
+        c[1].textContent = d.datesText || 'TBC';
+
+        const seatSpan = c[2].querySelector('span');
+        if (seatSpan && d.seats) seatSpan.textContent = (d.enrolled || '0') + '/' + d.seats;
+
+        const st = STATUSES[d.statuskey] || STATUSES.open;
+        c[4].innerHTML = '<span class="tag ' + st.cls + '">' + st.label + '</span>';
+    }
+
+    function openEdit(tr) {
+        const d = tr.dataset;
+        const opts = Object.keys(STATUSES).map((k) =>
+            '<option value="' + k + '"' + (k === d.statuskey ? ' selected' : '') + '>' +
+            STATUSES[k].label + '</option>').join('');
+
+        openModal('Edit programme', `
+            <div class="field">
+                <label for="ep-title">Programme title</label>
+                <input id="ep-title" name="title" required value="${esc(d.title || '')}" />
+            </div>
+            <div class="field-row">
+                <div class="field"><label for="ep-format">Format</label><input id="ep-format" name="format" value="${esc(d.format || '')}" /></div>
+                <div class="field"><label for="ep-location">Location</label><input id="ep-location" name="location" value="${esc(d.location || '')}" /></div>
+            </div>
+            <div class="field-row">
+                <div class="field"><label for="ep-price">Price per seat (₦)</label><input id="ep-price" name="price" type="number" min="0" value="${esc(d.price || '')}" /></div>
+                <div class="field"><label for="ep-seats">Seats</label><input id="ep-seats" name="seats" type="number" min="1" value="${esc(d.seats || '')}" /></div>
+            </div>
+            <div class="field">
+                <label for="ep-tutor">Tutor / facilitator</label>
+                <input id="ep-tutor" name="tutor" list="tp-tutor-options" value="${esc(d.tutor || '')}" placeholder="Select a facilitator or type a new name" />
+            </div>
+            <div class="field-row">
+                <div class="field"><label for="ep-start">Cohort start date</label><input id="ep-start" name="startDate" type="date" value="${esc(d.startDate || '')}" /></div>
+                <div class="field"><label for="ep-end">Cohort end date</label><input id="ep-end" name="endDate" type="date" value="${esc(d.endDate || '')}" /></div>
+            </div>
+            <div class="field">
+                <label for="ep-status">Status</label>
+                <select id="ep-status" name="statuskey">${opts}</select>
+            </div>
+            <div class="field-hint">Leave the dates blank to keep the current cohort dates.</div>
+        `, {
+            submitLabel: 'Save changes',
+            onSubmit: (form) => {
+                const setError = (msg) => {
+                    let box = form.querySelector('.form-error');
+                    if (!box) {
+                        box = document.createElement('p');
+                        box.className = 'form-error';
+                        box.setAttribute('role', 'alert');
+                        const body = form.querySelector('.modal-body');
+                        body.insertBefore(box, body.firstChild);
+                    }
+                    box.textContent = msg || '';
+                    box.classList.toggle('show', !!msg);
+                };
+
+                setError('');
+                const title = form.title.value.trim();
+                if (!title) { setError('A programme title is required.'); return false; }
+
+                const start = form.startDate.value;
+                const end = form.endDate.value;
+                if (end && !start) { setError('Add a start date as well as an end date.'); return false; }
+                if (start && end && end < start) { setError('The end date cannot fall before the start date.'); return false; }
+
+                const patch = {
+                    title: title,
+                    format: form.format.value.trim(),
+                    location: form.location.value.trim(),
+                    price: form.price.value.trim(),
+                    seats: form.seats.value.trim(),
+                    tutor: form.tutor.value.trim(),
+                    startDate: start,
+                    endDate: end,
+                    statuskey: form.statuskey.value
+                };
+                // Blank dates keep whatever the row already shows.
+                patch.datesText = start ? cohortLabel(patch) : (d.datesText || 'TBC');
+
+                Object.keys(patch).forEach((k) => { tr.dataset[k] = patch[k]; });
+                Store.patch('trainings', d.id, patch);
+                paintProgramme(tr);
+                toast('Programme updated');
+            }
+        });
+    }
+
+    tbody.addEventListener('click', (e) => {
+        const btn = e.target.closest('.js-edit');
+        if (!btn) return;
+        const tr = btn.closest('tr');
+        if (tr) openEdit(tr);
+    });
+
+    // Hydrate every row, seeded and in-session alike.
+    tbody.querySelectorAll('tr').forEach(hydrateProgramme);
+
     // New Programme.
     document.getElementById('new-programme').addEventListener('click', () => {
         openModal('New training programme', `
@@ -273,25 +503,74 @@
                 <div class="field"><label>Location</label><input name="location" placeholder="e.g. Phillips HQ, Ikoyi" /></div>
             </div>
             <div class="field-row">
-                <div class="field"><label>Price per seat (₦)</label><input name="price" type="number" min="0" placeholder="250000" /></div>
-                <div class="field"><label>Seats</label><input name="seats" type="number" min="1" placeholder="40" /></div>
+                <div class="field"><label for="tp-price">Price per seat (₦)</label><input id="tp-price" name="price" type="number" min="0" placeholder="250000" /></div>
+                <div class="field"><label for="tp-seats">Seats</label><input id="tp-seats" name="seats" type="number" min="1" placeholder="40" /></div>
             </div>
-            <div class="field"><label>Cohort dates</label><input name="dates" placeholder="e.g. 12–14 Sep 2026" /></div>
+            <div class="field">
+                <label for="tp-tutor">Tutor / facilitator</label>
+                <input id="tp-tutor" name="tutor" list="tp-tutor-options" placeholder="Select a facilitator or type a new name" />
+                <datalist id="tp-tutor-options">
+                    <option value="Dr. Folake Aderinto"></option>
+                    <option value="Ikechukwu Nwankwo"></option>
+                    <option value="Halima Bello"></option>
+                    <option value="Segun Oyelaran"></option>
+                    <option value="Dr. Chiamaka Umeh"></option>
+                    <option value="Yusuf Danjuma"></option>
+                </datalist>
+            </div>
+            <div class="field-row">
+                <div class="field"><label for="tp-start">Cohort start date</label><input id="tp-start" name="startDate" type="date" /></div>
+                <div class="field"><label for="tp-end">Cohort end date</label><input id="tp-end" name="endDate" type="date" /></div>
+            </div>
         `, {
             submitLabel: 'Create programme',
             onSubmit: (form) => {
+                const setError = (msg) => {
+                    let box = form.querySelector('.form-error');
+                    if (!box) {
+                        box = document.createElement('p');
+                        box.className = 'form-error';
+                        box.setAttribute('role', 'alert');
+                        const body = form.querySelector('.modal-body');
+                        body.insertBefore(box, body.firstChild);
+                    }
+                    box.textContent = msg || '';
+                    box.classList.toggle('show', !!msg);
+                };
+
+                setError('');
+
                 const p = {
                     title: form.title.value.trim(),
                     format: form.format.value.trim(),
                     location: form.location.value.trim(),
                     price: form.price.value.trim(),
                     seats: form.seats.value.trim(),
-                    dates: form.dates.value.trim()
+                    tutor: form.tutor.value.trim(),
+                    startDate: form.startDate.value,
+                    endDate: form.endDate.value
                 };
-                if (!p.title) return false;
+
+                if (!p.title) {
+                    setError('A programme title is required.');
+                    return false;
+                }
+                if (p.endDate && !p.startDate) {
+                    setError('Add a start date as well as an end date.');
+                    return false;
+                }
+                if (p.startDate && p.endDate && p.endDate < p.startDate) {
+                    setError('The end date cannot fall before the start date.');
+                    return false;
+                }
+
+                // Keep a rendered range on the record so the portal, which reads
+                // the store directly, does not need the formatting logic.
+                p.dates = cohortLabel(p);
+
                 Store.add('trainings', p);
                 tbody.insertBefore(programmeRow(p), tbody.firstChild);
-                toast('Programme created — now live in the participant portal');
+                toast('Programme created, now live in the participant portal');
             }
         });
     });

@@ -11,6 +11,22 @@
     <link rel="stylesheet" href="../assets/css/base.css" />
     <link rel="stylesheet" href="../assets/css/admin.css" />
     <link rel="stylesheet" href="../assets/css/portal.css" />
+    <!-- Pre-render auth guard: bounce to sign-in before any console content
+         paints, so an unauthenticated visitor never glimpses the shell.
+         api.js revalidates the token against the server once loaded. -->
+    <script>
+        (function () {
+            try {
+                var key = 'pcl.admin.session';
+                var raw = localStorage.getItem(key) || sessionStorage.getItem(key);
+                if (!raw || !JSON.parse(raw).token) {
+                    location.replace('index.html');
+                }
+            } catch (e) {
+                location.replace('index.html');
+            }
+        })();
+    </script>
 </head>
 <body>
 
@@ -39,7 +55,7 @@
         <nav class="sidebar-nav">
             <a href="reports.html">Reports</a>
             <a href="settings.html">Settings</a>
-            <a href="../">Back to site</a>
+            <a href="#" data-signout>Sign out</a>
         </nav>
         <div class="sidebar-user">
             <div class="avatar blue">TO</div>
@@ -142,6 +158,8 @@
     </main>
 </div>
 
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/api.js"></script>
 <script src="../assets/js/app.js"></script>
 </body>
 </html>
