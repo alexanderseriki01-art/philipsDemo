@@ -1,48 +1,159 @@
-/* Admin dashboard: login transition, chart drawing, sidebar nav */
+/* Admin console: authentication against the TMS API, chart drawing, session chrome.
+ *
+ * Requires config.js and api.js to be loaded first.
+ */
 
 (function () {
-    // Login flow → reveal app
     const loginForm = document.getElementById('admin-login-form');
     const loginScreen = document.getElementById('admin-login');
     const app = document.getElementById('admin-app');
 
-    const AUTH_KEY = 'pcl.adminAuth';
+    // Only the console's index page carries a sign-in screen; every other admin
+    // page is a guarded sub-page.
+    const isSignInPage = !!(loginForm && loginScreen && app);
 
-    function revealApp() {
-        if (!app) return;
-        if (loginScreen) loginScreen.style.display = 'none';
-        app.classList.add('active');
-        window.scrollTo(0, 0);
+    /* ── session chrome ─────────────────────────────────────────────────── */
+
+    // Show whoever is actually signed in, rather than the seeded placeholder.
+    function paintAdmin(admin) {
+        if (!admin) return;
+
+        document.querySelectorAll('.sidebar-user .name').forEach((el) => { el.textContent = admin.name; });
+        document.querySelectorAll('.sidebar-user .role').forEach((el) => { el.textContent = admin.role; });
+        document.querySelectorAll('.sidebar-user .avatar, .topbar-right .avatar').forEach((el) => {
+            el.textContent = admin.initials || '';
+            el.title = admin.name;
+        });
+    }
+
+    function runDashboardAnimations() {
         drawLineChart();
         animateDonut();
         animateProgressBars();
         animateCounters();
     }
 
-    // Already signed in this session? Skip the login screen (fixes the
-    // "Overview re-shows login" bug when navigating back to index.html).
-    let authed = false;
-    try { authed = sessionStorage.getItem(AUTH_KEY) === '1'; } catch (e) {}
+    /* ── sign-in page ───────────────────────────────────────────────────── */
 
-    if (loginForm && app && loginScreen) {
-        if (authed) {
-            revealApp();
-        } else {
-            loginForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                try { sessionStorage.setItem(AUTH_KEY, '1'); } catch (err) {}
-                loginScreen.style.transition = 'opacity .35s ease, transform .35s ease';
-                loginScreen.style.opacity = '0';
-                loginScreen.style.transform = 'scale(0.98)';
-                setTimeout(revealApp, 360);
-            });
-        }
+    function revealApp() {
+        if (!app) return;
+        if (loginScreen) loginScreen.style.display = 'none';
+        app.classList.add('active');
+        window.scrollTo(0, 0);
+        runDashboardAnimations();
     }
 
-    // Signing out (any "Back to site" link) clears the session flag.
-    document.querySelectorAll('a[href="../"], a[href="../index.html"], [data-signout]').forEach((a) => {
-        a.addEventListener('click', () => {
-            try { sessionStorage.removeItem(AUTH_KEY); } catch (e) {}
+    function showLogin() {
+        if (!loginScreen || !app) return;
+        app.classList.remove('active');
+        loginScreen.style.display = '';
+        loginScreen.style.opacity = '';
+        loginScreen.style.transform = '';
+    }
+
+    function setFormError(message) {
+        if (!loginForm) return;
+
+        let box = loginForm.querySelector('.form-error');
+        if (!box) {
+            box = document.createElement('p');
+            box.className = 'form-error';
+            box.setAttribute('role', 'alert');
+            loginForm.insertBefore(box, loginForm.firstChild);
+        }
+
+        box.textContent = message || '';
+        box.classList.toggle('show', !!message);
+    }
+
+    function setSubmitting(submitting) {
+        if (!loginForm) return;
+
+        const button = loginForm.querySelector('button[type="submit"]');
+        if (!button) return;
+
+        if (submitting) {
+            button.dataset.label = button.dataset.label || button.textContent;
+            button.textContent = 'Signing in…';
+        } else if (button.dataset.label) {
+            button.textContent = button.dataset.label;
+        }
+
+        button.disabled = submitting;
+        loginForm.classList.toggle('is-submitting', submitting);
+    }
+
+    if (isSignInPage) {
+        // A live session skips the sign-in screen. The app is revealed straight
+        // away and the token revalidated behind it, so a returning admin never
+        // waits on a round trip — and is dropped back to sign-in if it has been
+        // revoked.
+        if (window.Auth && Auth.isAuthenticated()) {
+            revealApp();
+            paintAdmin(Auth.admin());
+
+            Auth.check().then(paintAdmin).catch((err) => {
+                if (err && err.status === 401) {
+                    setFormError('Your session expired. Please sign in again.');
+                    showLogin();
+                }
+            });
+        } else {
+            showLogin();
+        }
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            setFormError('');
+
+            const email = (loginForm.querySelector('input[type="email"]').value || '').trim();
+            const password = loginForm.querySelector('input[type="password"]').value || '';
+            const rememberBox = loginForm.querySelector('input[type="checkbox"]');
+            const remember = !!(rememberBox && rememberBox.checked);
+
+            if (!email || !password) {
+                setFormError('Enter your work email and password.');
+                return;
+            }
+
+            setSubmitting(true);
+
+            Auth.login(email, password, remember)
+                .then((admin) => {
+                    paintAdmin(admin);
+                    loginScreen.style.transition = 'opacity .35s ease, transform .35s ease';
+                    loginScreen.style.opacity = '0';
+                    loginScreen.style.transform = 'scale(0.98)';
+                    setTimeout(revealApp, 360);
+                })
+                .catch((err) => {
+                    setSubmitting(false);
+                    setFormError(err && err.firstError ? err.firstError() : 'Sign-in failed. Try again.');
+                });
+        });
+    } else if (document.querySelector('.app')) {
+        // Guarded sub-page. The <head> already redirected anyone without a
+        // stored token; this revalidates it against the server.
+        paintAdmin(window.Auth ? Auth.admin() : null);
+
+        if (window.Auth) {
+            Auth.guard().then(paintAdmin).catch(() => {});
+        }
+
+        runDashboardAnimations();
+    }
+
+    /* ── signing out ────────────────────────────────────────────────────── */
+
+    document.querySelectorAll('[data-signout]').forEach((el) => {
+        el.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            const done = () => window.location.replace('index.html');
+            if (!window.Auth) return done();
+
+            // Navigate whether or not the revoke call succeeds.
+            Auth.logout().then(done, done);
         });
     });
 

@@ -11,6 +11,22 @@
     <link rel="stylesheet" href="../assets/css/base.css" />
     <link rel="stylesheet" href="../assets/css/admin.css" />
     <link rel="stylesheet" href="../assets/css/portal.css" />
+    <!-- Pre-render auth guard: bounce to sign-in before any console content
+         paints, so an unauthenticated visitor never glimpses the shell.
+         api.js revalidates the token against the server once loaded. -->
+    <script>
+        (function () {
+            try {
+                var key = 'pcl.admin.session';
+                var raw = localStorage.getItem(key) || sessionStorage.getItem(key);
+                if (!raw || !JSON.parse(raw).token) {
+                    location.replace('index.html');
+                }
+            } catch (e) {
+                location.replace('index.html');
+            }
+        })();
+    </script>
 </head>
 <body>
 
@@ -39,7 +55,7 @@
         <nav class="sidebar-nav">
             <a href="reports.html">Reports</a>
             <a href="settings.html">Settings</a>
-            <a href="../">Back to site</a>
+            <a href="#" data-signout>Sign out</a>
         </nav>
         <div class="sidebar-user">
             <div class="avatar blue">TO</div>
@@ -169,6 +185,8 @@
     </main>
 </div>
 
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/api.js"></script>
 <script src="../assets/js/app.js"></script>
 <script src="../assets/js/store.js"></script>
 <script src="../assets/js/ui.js"></script>
@@ -278,39 +296,100 @@
     // Hydrate the static rows.
     rows.querySelectorAll('tr:not(.row-new)').forEach(hydrate);
 
-    // Invite participant.
+    // Invite participant. Sends a real email through the API; the row is only
+    // added once the provider has accepted the message.
     document.getElementById('invite-participant').addEventListener('click', () => {
         openModal('Invite participant', `
-            <div class="field"><label>Full name</label><input name="name" required placeholder="e.g. Tobi Balogun" /></div>
-            <div class="field"><label>Email address</label><input name="email" type="email" required placeholder="name@company.com" /></div>
-            <div class="field"><label>Organisation</label><input name="org" placeholder="e.g. GTBank" /></div>
-            <div class="field-hint">Adds a pending participant and opens a prefilled email draft.</div>
+            <div class="field">
+                <label for="inv-name">Full name</label>
+                <input id="inv-name" name="name" required placeholder="e.g. Tobi Balogun" />
+            </div>
+            <div class="field">
+                <label for="inv-email">Email address</label>
+                <input id="inv-email" name="email" type="email" required placeholder="name@company.com" />
+            </div>
+            <div class="field-row">
+                <div class="field">
+                    <label for="inv-org">Organisation</label>
+                    <input id="inv-org" name="org" placeholder="e.g. GTBank" />
+                </div>
+                <div class="field">
+                    <label for="inv-prog">Programme</label>
+                    <input id="inv-prog" name="programme" placeholder="e.g. Advanced Leadership" />
+                </div>
+            </div>
+            <div class="field">
+                <label for="inv-msg">Invitation message</label>
+                <textarea id="inv-msg" name="message" rows="6"
+                          placeholder="Write or paste the note this person should read. Line breaks are kept."></textarea>
+            </div>
+            <div class="field-hint">
+                Sent from Phillips Consulting. Your message appears in the email above the activation button.
+            </div>
         `, {
             submitLabel: 'Send invite',
-            onSubmit: (form) => {
+            onSubmit: (form, close) => {
                 const name = form.name.value.trim();
                 const email = form.email.value.trim();
                 const org = form.org.value.trim();
-                if (!name || !email) return false;
-                Store.add('participants', { name, email, org });
-                const tr = document.createElement('tr');
-                tr.className = 'row-new';
-                tr.dataset.id = email; tr.dataset.status = 'pending-kyc';
-                tr.dataset.statekey = 'invited'; tr.dataset.name = name;
-                tr.dataset.org = org || '—'; tr.dataset.prog = '0'; tr.dataset.last = 'Just invited';
-                tr.innerHTML = `
-                    <td><strong>${esc(name)}</strong> <span class="tag tag-new">New</span><div class="cell-muted" style="font-size:11.5px;">${esc(email)}</div></td>
-                    <td class="cell-muted">${esc(org || '—')}</td>
-                    <td class="cell-muted">0</td>
-                    <td class="cell-muted">Just invited</td>
-                    <td class="cell-status"></td>
-                    <td class="cell-actions" style="text-align:right;"></td>`;
-                rows.insertBefore(tr, rows.firstChild);
-                renderRow(tr);
-                toast('Invitation created for ' + name);
-                const subject = encodeURIComponent('Your Phillips Consulting training invitation');
-                const body = encodeURIComponent('Hi ' + name + ',\n\nYou have been invited to join the Phillips Consulting training portal. Click the link in this email to activate your account.\n\nRegards,\nPhillips Consulting');
-                window.location.href = 'mailto:' + email + '?subject=' + subject + '&body=' + body;
+                const programme = form.programme.value.trim();
+                const message = form.message.value;
+
+                const setError = (msg) => {
+                    let box = form.querySelector('.form-error');
+                    if (!box) {
+                        box = document.createElement('p');
+                        box.className = 'form-error';
+                        box.setAttribute('role', 'alert');
+                        form.querySelector('.modal-body').insertBefore(
+                            box, form.querySelector('.modal-body').firstChild);
+                    }
+                    box.textContent = msg || '';
+                    box.classList.toggle('show', !!msg);
+                };
+
+                setError('');
+                if (!name || !email) {
+                    setError('A name and email address are both required.');
+                    return false;
+                }
+
+                const btn = form.querySelector('button[type="submit"]');
+                const label = btn.textContent;
+                btn.disabled = true;
+                btn.textContent = 'Sending…';
+
+                Api.post('/api/v1/admin/participants/invite', {
+                    name: name,
+                    email: email,
+                    organisation: org,
+                    programme: programme,
+                    message: message
+                }).then(() => {
+                    Store.add('participants', { name, email, org });
+                    const tr = document.createElement('tr');
+                    tr.className = 'row-new';
+                    tr.dataset.id = email; tr.dataset.status = 'pending-kyc';
+                    tr.dataset.statekey = 'invited'; tr.dataset.name = name;
+                    tr.dataset.org = org || '—'; tr.dataset.prog = '0'; tr.dataset.last = 'Just invited';
+                    tr.innerHTML = `
+                        <td><strong>${esc(name)}</strong> <span class="tag tag-new">New</span><div class="cell-muted" style="font-size:11.5px;">${esc(email)}</div></td>
+                        <td class="cell-muted">${esc(org || '—')}</td>
+                        <td class="cell-muted">0</td>
+                        <td class="cell-muted">Just invited</td>
+                        <td class="cell-status"></td>
+                        <td class="cell-actions" style="text-align:right;"></td>`;
+                    rows.insertBefore(tr, rows.firstChild);
+                    renderRow(tr);
+                    toast('Invitation emailed to ' + email);
+                    close();
+                }).catch((err) => {
+                    btn.disabled = false;
+                    btn.textContent = label;
+                    setError(err && err.firstError ? err.firstError() : 'The invitation could not be sent.');
+                });
+
+                return false; // stay open until the send resolves
             }
         });
     });

@@ -1,205 +1,175 @@
 /* ==========================================================================
-   Admin console — login + analytics dashboard
+   Admin console - sign-in + analytics dashboard
    ========================================================================== */
 
 /* ==========================================================================
-   Admin login — focused single sign-in card over a photo backdrop
+   Sign-in
+   --------------------------------------------------------------------------
+   A two-panel split: a dark brand/system panel beside a light form panel.
+   The split is a composition, not a theme flip. The console behind this page
+   is a light-theme product, so the page stays light-locked to match; the
+   dark panel is a surface, not a second theme.
+
+   Shape rule for this page, and there are only two: full-bleed panels carry
+   no radius, controls keep the console's 6px (--radius-sm). Accent is
+   --blue-600 throughout. The only other colours are the semantic service
+   states, which report real status rather than decorate.
    ========================================================================== */
+
 .admin-login {
-    min-height: 100vh;
-    position: relative;
-    overflow: hidden;
-    background: #02061a;
-    color: var(--white);
-    display: flex;
-    flex-direction: column;
-}
-
-/* Background image + overlay */
-.admin-login-bg {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    overflow: hidden;
-}
-.admin-login-bg img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: 22% center;   /* anchor focal point to the left */
-    filter: brightness(0.7) saturate(0.85) blur(1px);
-    transform: scale(1.04);
-    animation: bgDrift 30s ease-in-out infinite alternate;
-}
-@keyframes bgDrift {
-    from { transform: scale(1.04) translate(0, 0); }
-    to   { transform: scale(1.10) translate(-2%, -1.5%); }
-}
-.admin-login-bg::after {
-    /* Horizontal shading: light on the left (image readable), heavy on the right (card area) */
-    content: "";
-    position: absolute;
-    inset: 0;
-    background:
-        linear-gradient(
-            to right,
-            rgba(2, 6, 26, 0.30) 0%,
-            rgba(2, 6, 26, 0.45) 30%,
-            rgba(2, 6, 26, 0.75) 60%,
-            rgba(2, 6, 26, 0.95) 100%
-        ),
-        radial-gradient(ellipse at 80% 50%, rgba(47, 107, 242, 0.22), transparent 55%),
-        linear-gradient(180deg, rgba(2, 6, 26, 0.25) 0%, transparent 30%, rgba(2, 6, 26, 0.55) 100%);
-}
-
-@keyframes cardEnter {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: none; }
-}
-
-/* Top bar */
-.admin-login-top {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 24px 36px;
-}
-.admin-login-back {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13px;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.65);
-    text-decoration: none;
-    padding: 8px 16px;
-    border-radius: 99px;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    transition: color 0.2s, border-color 0.2s, background 0.2s;
-}
-.admin-login-back:hover {
-    color: var(--white);
-    border-color: rgba(255, 255, 255, 0.4);
-    background: rgba(255, 255, 255, 0.04);
-}
-
-/* Sign-in stage — card pinned to the right on desktop */
-.admin-login-stage {
-    position: relative;
-    z-index: 2;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding: 30px clamp(28px, 7vw, 110px) 30px 28px;
-}
-
-/* ── Sign-in card ────────────────────────────────────────────────────── */
-.admin-card {
-    width: 100%;
-    max-width: 460px;
-    animation: cardEnter 0.6s var(--ease-out) both;
-    position: relative;
+    min-height: 100dvh;
     background: var(--white);
     color: var(--ink-700);
-    padding: 44px 44px 36px;
-    border-radius: var(--radius-lg);
-    box-shadow:
-        0 40px 100px -20px rgba(0, 0, 0, 0.55),
-        0 0 0 1px rgba(255, 255, 255, 0.05);
-}
-.admin-card::before {
-    content: "";
-    position: absolute;
-    inset: -1px;
-    border-radius: var(--radius-lg);
-    background: linear-gradient(135deg, rgba(47, 107, 242, 0.6), transparent 45%, rgba(136, 177, 255, 0.4));
-    z-index: -1;
-    filter: blur(28px);
-    opacity: 0.55;
-}
-.admin-card::after {
-    content: "";
-    position: absolute;
-    top: 14px; right: 14px;
-    width: 22px; height: 22px;
-    border-top: 1px solid var(--blue-300);
-    border-right: 1px solid var(--blue-300);
-    opacity: 0.7;
-}
-.admin-card .eyebrow-line {
-    display: inline-flex;
-    margin-bottom: 18px;
-}
-.admin-card h2 {
-    font-size: 28px;
-    color: var(--ink-900);
-    line-height: 1.15;
-    letter-spacing: -0.018em;
-    margin-bottom: 6px;
-}
-.admin-card h2 em {
-    color: var(--blue-600);
-    font-style: italic;
-    font-weight: 400;
-}
-.admin-card .sub {
-    color: var(--ink-500);
-    font-size: 14px;
-    margin-bottom: 28px;
-    line-height: 1.55;
+    overflow-x: hidden;
 }
 
-.admin-card .sec-strip {
+.signin-grid {
+    min-height: 100dvh;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 8px;
-    margin-top: 22px;
-    padding-top: 18px;
-    border-top: 1px solid var(--line);
+    /* Deliberately uneven: the brand panel carries the wider measure. */
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
 }
-.sec-chip {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--ink-400);
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
+
+/* ── Brand and system panel ──────────────────────────────────────────── */
+.signin-brand {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: clamp(28px, 4.5vh, 48px);
+    padding: clamp(32px, 4vw, 60px);
+    background: linear-gradient(163deg, #0d2244 0%, #071730 48%, #050f22 100%);
+    color: var(--white);
+    overflow: hidden;
 }
-.sec-chip::before {
+
+/* A single soft light source for depth. Low opacity, brand hue, no glow. */
+.signin-brand::after {
     content: "";
-    width: 12px; height: 12px;
-    border-radius: 50%;
-    background: var(--success-soft);
-    position: relative;
-    background-image:
-        linear-gradient(45deg, transparent 49%, var(--success) 49%, var(--success) 51%, transparent 51%),
-        linear-gradient(-45deg, transparent 47%, var(--success) 47%, var(--success) 53%, transparent 53%);
-    background-size: 7px 1.5px, 5px 1.5px;
-    background-repeat: no-repeat;
-    background-position: center 7px, center 5.5px;
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(120% 80% at 14% -10%, rgba(47, 107, 242, 0.22), transparent 62%);
+    pointer-events: none;
 }
 
-.admin-card .admin-toggle {
-    margin-top: 22px;
-    text-align: center;
+.signin-brand > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Logo holds the top; headline and readout settle together at the foot. */
+.signin-brand > .logo { margin-bottom: auto; }
+
+.signin-brand-body {
+    /* Explicit px, not ch: ch here resolves against this element's 15.5px font
+       rather than the h1's, which collapsed the headline to four lines. Sized
+       so the headline breaks once, after the comma. */
+    max-width: 500px;
+}
+
+.signin-brand h1 {
+    font-family: var(--font-display);
+    font-size: clamp(29px, 3.1vw, 43px);
+    font-weight: 500;
+    line-height: 1.14;
+    letter-spacing: -0.025em;
+    color: var(--white);
+}
+
+/* Emphasis stays in the same family: weight and colour, never a second face. */
+.signin-brand h1 strong {
+    font-weight: 600;
+    color: var(--blue-300);
+}
+
+/* Hold the emphasis phrase together only where there is room for it. */
+@media (min-width: 901px) {
+    .signin-brand h1 strong { white-space: nowrap; }
+}
+
+.signin-brand-body p {
+    margin-top: 18px;
+    max-width: 44ch;
+    font-size: 15px;
+    line-height: 1.62;
+    color: rgba(255, 255, 255, 0.68);
+}
+
+.signin-brand-foot {
+    display: grid;
+    gap: 22px;
+    /* Shares the headline measure so the rule lines up with the text above. */
+    max-width: 500px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(255, 255, 255, 0.13);
+}
+
+.signin-legal {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 18px;
     font-size: 12px;
-    color: var(--ink-400);
+    /* 0.52, not 0.4: measured 3.79:1 against the panel, below AA. */
+    color: rgba(255, 255, 255, 0.52);
 }
-.admin-card .admin-toggle a { color: var(--blue-600); font-weight: 500; }
-.admin-card .admin-toggle a:hover { text-decoration: underline; }
 
-/* Password field with visibility toggle */
-.password-field {
-    position: relative;
+.signin-legal a {
+    color: rgba(255, 255, 255, 0.6);
+    border-bottom: 1px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
 }
+
+.signin-legal a:hover {
+    color: var(--white);
+    border-bottom-color: rgba(255, 255, 255, 0.45);
+}
+
+/* ── Form panel ──────────────────────────────────────────────────────── */
+.signin-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(36px, 5vw, 72px) clamp(24px, 5vw, 60px);
+    background: var(--white);
+}
+
+.signin-inner {
+    width: 100%;
+    max-width: 396px;
+}
+
+.signin-inner h2 {
+    font-family: var(--font-display);
+    font-size: 27px;
+    font-weight: 600;
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+    color: var(--ink-900);
+    /* Carries the gap the subtitle used to hold. */
+    margin-bottom: 30px;
+}
+
+
+
+.signin-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 2px 0 24px;
+}
+
+/* Tactile press on the primary action. */
+.signin-inner .btn-primary:active { transform: translateY(1px) scale(0.995); }
+
+/* Pill submit, scoped to this form so the console's controls keep their 6px. */
+.signin-inner button[type="submit"] { border-radius: 50px; }
+
+/* ── Password field with visibility toggle ───────────────────────────── */
+.password-field { position: relative; }
 .password-field .input { padding-right: 46px; }
+
 .pwd-toggle {
     position: absolute;
     right: 6px;
@@ -209,7 +179,7 @@
     height: 36px;
     border: 0;
     background: transparent;
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     cursor: pointer;
     display: inline-flex;
     align-items: center;
@@ -218,96 +188,90 @@
     transition: color 0.2s, background 0.2s;
     padding: 0;
 }
+
 .pwd-toggle:hover {
     color: var(--blue-700);
     background: var(--paper-2);
 }
+
 .pwd-toggle:focus-visible {
     outline: 2px solid var(--blue-400);
     outline-offset: 2px;
 }
-.pwd-toggle svg {
-    width: 18px;
-    height: 18px;
-    display: block;
-}
+
+.pwd-toggle svg { width: 18px; height: 18px; display: block; }
 .pwd-toggle .eye-strike { display: none; }
 .pwd-toggle.showing .eye-strike { display: block; }
 
-/* Bottom bar — softer typography */
-.admin-login-foot {
-    position: relative;
-    z-index: 2;
-    padding: 18px 36px 28px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 12px;
-    font-family: var(--font-sans);
-    font-size: 12.5px;
-    font-weight: 400;
-    letter-spacing: normal;
-    text-transform: none;
-    color: rgba(255, 255, 255, 0.55);
-}
-.admin-login-foot em {
-    color: rgba(255, 255, 255, 0.8);
-    font-style: italic;
-    font-family: var(--font-serif);
-    font-weight: 400;
-}
-.admin-login-foot .sep {
-    color: rgba(255, 255, 255, 0.25);
-    margin: 0 8px;
-}
-.admin-login-foot .left {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-}
-.admin-login-foot .left::before {
-    content: "";
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--blue-300);
-    box-shadow: 0 0 10px var(--blue-300);
+/* ── Entry motion ────────────────────────────────────────────────────── */
+/* One motivated moment: the form arrives to draw the eye to the task. */
+@media (prefers-reduced-motion: no-preference) {
+    .signin-inner {
+        animation: signinRise 0.5s var(--ease-out) both;
+    }
 }
 
-@media (max-width: 720px) {
-    .admin-login-top { padding: 18px 22px; }
-    .admin-login-stage {
-        justify-content: center;
-        padding: 16px 18px;
+@keyframes signinRise {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: none; }
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+    .signin-grid {
+        grid-template-columns: minmax(0, 1fr);
+        min-height: 100dvh;
     }
-    .admin-card { padding: 32px 28px; }
-    .admin-login-bg::after {
-        background:
-            linear-gradient(180deg, rgba(2, 6, 26, 0.78) 0%, rgba(2, 6, 26, 0.65) 40%, rgba(2, 6, 26, 0.92) 100%),
-            radial-gradient(ellipse at 50% 50%, rgba(47, 107, 242, 0.22), transparent 60%);
+
+    .signin-brand {
+        gap: 30px;
+        padding: 28px 24px 32px;
     }
-    .admin-login-bg img { object-position: center; }
-    .admin-login-foot { padding: 16px 22px 24px; flex-direction: column; align-items: flex-start; }
+
+    /* Supporting copy gives way so the form is reachable without scrolling. */
+    .signin-brand-body { max-width: none; }
+    .signin-brand-body p { display: none; }
+    .signin-brand h1 { font-size: 25px; }
+
+    .signin-panel {
+        padding: 34px 24px 48px;
+        align-items: flex-start;
+    }
+
+    .signin-inner { max-width: none; }
+}
+
+@media (max-width: 380px) {
+    .signin-legal { font-size: 11.5px; }
 }
 
 /* ── App shell (post-login dashboard) ──────────────────────────────── */
 .app {
+    /* Inset shell: the nav sits on the page canvas and the content rides in a
+       rounded panel floating clear of every edge.
+
+       The panel, not the window, is the scroll container. That is what lets the
+       rounded corners clip their content and keeps the topbar sticking to the
+       panel rather than to the viewport, which would otherwise detach it from
+       the panel and float it over the gap on scroll. */
+    --shell-gap: 16px;
+
     display: none;
-    min-height: 100vh;
     grid-template-columns: var(--sidebar-w) 1fr;
-    background: var(--paper);
+    height: 100dvh;
+    overflow: hidden;
+    background: var(--paper-2);
 }
 .app.active { display: grid; }
 
 .sidebar {
-    background: var(--white);
-    border-right: 1px solid var(--line);
+    /* Transparent so the canvas reads as one surface behind the floating panel. */
+    background: transparent;
     padding: 24px 18px;
     display: flex;
     flex-direction: column;
-    position: sticky;
-    top: 0;
-    height: 100vh;
+    height: 100%;
+    overflow-y: auto;
 }
 .sidebar .logo { padding: 4px 8px 24px; border-bottom: 1px solid var(--line); margin-bottom: 18px; }
 .sidebar-section {
@@ -350,7 +314,8 @@
     gap: 10px;
     align-items: center;
     padding: 12px;
-    background: var(--paper);
+    /* White, not --paper: the canvas behind it is now tinted. */
+    background: var(--white);
     border-radius: var(--radius-sm);
     border: 1px solid var(--line);
 }
@@ -371,6 +336,17 @@
 .sidebar-user .role { font-size: 11px; color: var(--ink-400); }
 
 /* Top bar */
+main {
+    min-width: 0;
+    margin: var(--shell-gap);
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
 .topbar {
     height: 68px;
     padding: 0 36px;
@@ -638,8 +614,22 @@
     .col-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 720px) {
-    .app { grid-template-columns: 1fr; }
-    .sidebar { position: relative; height: auto; }
+    /* Stacked: hand scrolling back to the document, or the fixed-height shell
+       would clip everything below the fold. */
+    .app {
+        grid-template-columns: 1fr;
+        height: auto;
+        min-height: 100dvh;
+        overflow: visible;
+    }
+    .sidebar { height: auto; overflow: visible; }
+    main {
+        margin: 0;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+        overflow: visible;
+    }
     .page-content { padding: 24px 20px 60px; }
     .quick-actions { grid-template-columns: 1fr 1fr; }
     .stat-row { grid-template-columns: 1fr; }
@@ -742,6 +732,32 @@
 .field-row .field { flex: 1; }
 .field-hint { font-size: 11.5px; color: var(--ink-400); margin-top: 5px; }
 
+/* Sign-in failure message. Hidden until the API returns an error, and animated
+   in so it reads as a response to the submit rather than part of the form. */
+.form-error {
+    display: none;
+    margin: 0 0 16px;
+    padding: 11px 14px;
+    border: 1px solid rgba(214, 69, 69, 0.32);
+    border-left: 3px solid #d64545;
+    border-radius: 7px;
+    background: rgba(214, 69, 69, 0.07);
+    color: #b83232;
+    font-size: 13px;
+    line-height: 1.5;
+}
+.form-error.show {
+    display: block;
+    animation: form-error-in 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes form-error-in {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: none; }
+}
+
+form.is-submitting { opacity: 0.75; pointer-events: none; }
+form.is-submitting button[type="submit"] { cursor: progress; }
+
 /* Detail modal rows (View participant) */
 .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 20px; }
 .detail-grid .full { grid-column: 1 / -1; }
@@ -776,7 +792,7 @@
 }
 
 /* "New" badge for live-created items */
-.tag-new { background: var(--success-soft); color: var(--success); }
+.tag-new { color: var(--success); }
 .row-new td:first-child { box-shadow: inset 3px 0 0 var(--success); }
 
 /* Feedback replies */
